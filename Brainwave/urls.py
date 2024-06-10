@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from idea.views import ideas_list_view
 from category.views import category_list_view
 from comment.views import comments_list_view
@@ -23,6 +23,7 @@ from user.views import users_list_view
 
 
 urlpatterns = [
+    path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
     path('', ideas_list_view),
     path('idea/', ideas_list_view),

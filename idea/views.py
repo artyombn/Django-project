@@ -5,5 +5,5 @@ from .models import Idea
 
 def ideas_list_view(request):
 
-    ideas = Idea.objects.all()
+    ideas = Idea.objects.select_related("category").select_related("author").all()
     return render(request, 'ideas/list.html', {'ideas': ideas})

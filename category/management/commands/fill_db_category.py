@@ -1,32 +1,22 @@
-# from django.core.management.base import BaseCommand
-# from animals.models import Category, Animal
-#
-#
-# class Command(BaseCommand):
-#     def handle(self, *args, **options):
-#         # здесь мы можем писать любые скрипты, связанные с проектом
-#         print("Filling db ...")
-#         # 1. Удаление
-#         Category.objects.all().delete()
-#
-#         # 2. Создание
-#         bear = Category.objects.create(name="Медведь Неправильный")
-#
-#         # 3. Изменение
-#         bear.name = "Медведь"
-#         bear.save()
-#
-#         # 4. Все данные
-#         print(Category.objects.all())
-#
-#         Animal.objects.all().delete()
-#
-#         # 5. Получить только 1 объект
-#         # bear = Category.objects.get(id=bear.id)  # если известно
-#         bear = Category.objects.get(name="Медведь")  # по имени
-#
-#         Animal.objects.create(
-#             name="Маша",
-#             category=bear,
-#         )
-#         print("Done")
+from django.core.management.base import BaseCommand
+from category.models import Category
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+
+        Category.objects.all().delete()
+
+        print("Filling db ...")
+
+        categories = [
+            Category(title="Tech", description="Startups and technology projects including AI, software and blockchain"),
+            Category(title="Society", description="Social aspects of life such as education and health"),
+            Category(title="Creative", description="Art, design, music and movie etc"),
+        ]
+
+        Category.objects.bulk_create(categories)
+
+        print("Done")
+
+        print(Category.objects.all())

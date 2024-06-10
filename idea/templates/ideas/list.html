@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Ideas</title>
 </head>
 <body>
     <h1>Ideas:</h1>
-    Idea #1
-    Idea #2
-    Idea #3
+    <ul>
+    {% for idea in ideas %}
+        <li>
+            {{ idea }}
+        </li>
+    {% endfor %}
+    </ul>
 </body>
 </html>

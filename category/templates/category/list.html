@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Categories</title>
 </head>
 <body>
     <h1>Categories</h1>
-        #1 --A
-        #2 --B
-        #3 --C
+
+    <ul>
+    {% for category in categories %}
+        <li>{{ category }}</li>
+    {% endfor %}
+    </ul>
+
 </body>
 </html>
