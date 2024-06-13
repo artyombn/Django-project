@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete {{ object.name }} ???
+{%  endblock %}
+
+{% block body %}
+
+    <h1>{{ object.title }}</h1>
+    <h2>Description: {{ object.description }}</h2>
+    <h2>Category: {{ object.category }}</h2>
+    <h3>Author: {{ object.author }}</h3>
+    <h3>Created at: {{ object.created_at }}</h3>
+
+
+Do you confirm the deletion?
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes</button>
+    <button type="button" onclick="handleNoClick()">No</button>
+</form>
+
+    <script>
+        function handleNoClick() {
+            window.location.href = '{% url 'ideas:list' %}';
+        }
+    </script>
+
+
+<a href="{% url 'ideas:list' %}">Back to the Idea list</a>
+
+{% endblock %}

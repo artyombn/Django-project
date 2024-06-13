@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.name }}
+{%  endblock %}
+
+{% block body %}
+
+    <a href="{% url 'ideas:update' pk=idea.id %}">
+        Update
+    </a>
+
+    <a href="{% url 'ideas:delete' pk=idea.id %}">
+        / Delete
+    </a>
+
+    <h1>Idea title: {{ object.title }}</h1>
+    <h2>Description: {{ object.description }}</h2>
+    <h2>Category: {{ object.category }}</h2>
+    <h3>Author: {{ object.author }}</h3>
+    <h3>Created at: {{ object.created_at }}</h3>
+
+
+<div class="container" style="margin-top: 50px;">
+    <a href="{% url 'ideas:list' %}">Back to the Idea list</a>
+</div>
+
+
+
+{% endblock %}

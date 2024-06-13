@@ -1,17 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Categories</title>
-</head>
-<body>
-    <h1>Categories</h1>
+{% extends 'base.html' %}
 
-    <ul>
-    {% for category in categories %}
-        <li>{{ category }}</li>
-    {% endfor %}
-    </ul>
+{% block title %}
+    Categories
+{%  endblock %}
 
-</body>
-</html>
+{% block body %}
+    <h1>Categories:</h1>
+
+    <a href="{% url 'category:create' %}">Create Category</a>
+    <br>
+        <ul>
+        {% for category in object_list %}
+            <li>
+                <a href="{% url 'category:detail' pk=category.id %}">
+                    {{ category }}
+                </a>
+
+                <a href="{% url 'category:update' pk=category.id %}">
+                   || update
+                </a>
+
+                <a href="{% url 'category:delete' pk=category.id %}">
+                   || delete
+                </a>
+
+            </li>
+        {% endfor %}
+        </ul>
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

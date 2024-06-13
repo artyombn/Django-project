@@ -1,17 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ideas</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Ideas
+{%  endblock %}
+
+{% block body %}
     <h1>Ideas:</h1>
-    <ul>
-    {% for idea in ideas %}
-        <li>
-            {{ idea }}
-        </li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+
+    <a href="{% url 'ideas:create' %}">Create Idea</a>
+    <br>
+        <ul>
+        {% for idea in object_list %}
+            <li>
+                <a href="{% url 'ideas:detail' pk=idea.id %}">
+                    {{ idea }}
+                </a>
+
+                <a href="{% url 'ideas:update' pk=idea.id %}">
+                   || update
+                </a>
+
+                <a href="{% url 'ideas:delete' pk=idea.id %}">
+                   || delete
+                </a>
+
+            </li>
+        {% endfor %}
+        </ul>
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

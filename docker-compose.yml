@@ -1,0 +1,15 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+        - 5672:5672
+        - 15672:15672
+
+
+# Если рассматривать запуск всех связанных приложений через docker compose
+# 1. postgres
+# 2. django-backend + gunicorn (uwsgi) - celery
+# 3. nginx (apache)
+# 4. celery
+

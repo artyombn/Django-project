@@ -1,13 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Comments:</h1>
-        Comment #1
-        Comment #2
-        Comment #3
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+    Comments
+{%  endblock %}
+
+{% block body %}
+
+
+    <h1>Comments</h1>
+
+    <ul>
+    {% for comment in comments %}
+        <li>{{ comment }}</li>
+    {% endfor %}
+    </ul>
+
+<br>
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}
+html>

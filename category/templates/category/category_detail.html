@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object.name }}
+{%  endblock %}
+
+{% block body %}
+
+    <a href="{% url 'category:update' pk=category.id %}">
+        Update
+    </a>
+
+    <a href="{% url 'category:delete' pk=category.id %}">
+        / Delete
+    </a>
+
+    <h1>Category: {{ object.title }}</h1>
+    <h2>Description: {{ object.description }}</h2>
+    <h2>Created at: {{ object.created_at }}</h2>
+    <h3>Updated at: {{ object.updated_at }}</h3>
+
+    <br>
+    <br>
+    <h3>Ideas in this Category:</h3>
+    <ul>
+        {% for idea in ideas %}
+            <li>
+                <a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a> - {{ idea.description }}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'ideas:list' %}">Go to the Idea list</a>
+
+<div class="container" style="margin-top: 50px;">
+    <a href="{% url 'category:list' %}">Back to the Category list</a>
+</div>
+
+
+{% endblock %}

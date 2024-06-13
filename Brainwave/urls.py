@@ -1,33 +1,19 @@
-"""
-URL configuration for Brainwave project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
-from idea.views import ideas_list_view
-from category.views import category_list_view
-from comment.views import comments_list_view
+from django.views.generic import TemplateView
+
 from user.views import users_list_view
+from contacts.views import contact_view, status_view
 
 
 urlpatterns = [
+    path('ideas/', include('idea.urls')),
+    path('categories/', include('category.urls')),
+    path('comments/', include('comment.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
-    path('', ideas_list_view),
-    path('idea/', ideas_list_view),
-    path('category/', category_list_view),
-    path('comment/', comments_list_view),
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('user/', users_list_view),
+    path("contacts/", contact_view),
+    path("status/<str:task_id>/", status_view),
 ]

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Index
+{%  endblock %}
+
+{% block body %}
+    <h1>BrainWave - share your ideas with other</h1>
+
+<ul>
+    <li>
+        <a href="{% url 'ideas:list' %}">Idea list</a>
+    </li>
+</ul>
+
+<ul>
+    <li>
+        <a href="{% url 'category:list' %}">Categories list</a>
+    </li>
+</ul>
+
+<ul>
+    <li>
+        <a href="{% url 'comment:comments_index' %}">Comments list</a>
+    </li>
+</ul>
+
+
+{% endblock %}

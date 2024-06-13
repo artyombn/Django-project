@@ -29,8 +29,4 @@ class Idea(models.Model):
 
 
     def __str__(self):
-        return (f"Idea: {self.title} -- \n"
-                f"Description: {self.description} -- \n"
-                f"Category: {self.category.title} -- \n"
-                f"Author: {self.author.username} -- \n"
-                f"Created_at: {self.created_at}")
+        return (f"{self.title}")

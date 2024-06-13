@@ -14,5 +14,4 @@ class User(models.Model):
     # is_superuser =
 
     def __str__(self):
-        return (f"Username: {self.username} -- \n"
-                f"Email: {self.email}")
+        return (f"{self.username}")

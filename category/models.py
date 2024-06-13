@@ -7,6 +7,4 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return (f"{self.title} -- \n"
-                f"{self.description} -- \n"
-                f"Created at: {self.created_at}")
+        return (f"{self.title}")
