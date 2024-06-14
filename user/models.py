@@ -1,12 +1,13 @@
 from django.db import models
-from django.db.models import EmailField
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
-    username = models.CharField(max_length=15)
+class User(AbstractUser):
+    username = models.CharField(max_length=15, unique=True)
     first_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=15, blank=True)
-    email = EmailField()
+    age = models.PositiveIntegerField(default=0)
+    email = models.EmailField(unique=True)
 
     # password =
     # date_joined =

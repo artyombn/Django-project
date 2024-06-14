@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Registration
+{%  endblock %}
+
+{% block body %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="button56">Register</button>
+    </div>
+</form>
+
+<br>
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

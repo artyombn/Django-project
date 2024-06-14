@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -19,11 +21,11 @@ class IdeasListView(ListView):
     # context_object_name = 'ideas'
 
 
-class IdeasDetailView(DetailView):
+class IdeasDetailView(LoginRequiredMixin, DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
 
-class IdeasCreateView(CreateView):
+class IdeasCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Idea
     form_class = IdeasForm
     template_name = 'ideas/idea_form.html'
@@ -31,8 +33,15 @@ class IdeasCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
+    def test_func(self):
+        return self.only_staff_permission()
 
-class IdeasUpdateView(UpdateView):
+    def only_staff_permission(self):
+        user = self.request.user
+        return user.is_staff
+
+
+class IdeasUpdateView(LoginRequiredMixin, UpdateView):
     model = Idea
     fields = '__all__'
     template_name = 'ideas/idea_update_form.html'
@@ -40,7 +49,7 @@ class IdeasUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
-class IdeasDeleteView(DeleteView):
+class IdeasDeleteView(LoginRequiredMixin, DeleteView):
     model = Idea
     success_url = reverse_lazy('ideas:list')
     template_name = 'ideas/idea_confirm_delete.html'

@@ -1,19 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Users</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
+{% block title %}
+    Users
+{%  endblock %}
+
+{% block body %}
     <h1>USERS:</h1>
 
     <ul>
         {% for user in users %}
-            <li>{{ user }}</li>
+            <li>
+                {% if user.is_staff %}
+                    {{ user }} (admin) - {{ user.email }}
+                {% else %}
+                    {{ user }} - {{ user.email }}
+                {% endif %}
+            </li>
         {% endfor %}
-    </li>
     </ul>
 
-</body>
-</html>
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

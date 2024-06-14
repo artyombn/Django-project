@@ -147,3 +147,9 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "tmp/app-messages"
 
 CELERY_RESULT_BACKEND = "rpc://"
+
+AUTH_USER_MODEL = 'user.User'
+
+LOGIN_URL = '/users/login'  # куда попадаем, когда у нас нет прав
+LOGOUT_REDIRECT_URL = '/users/login' # редирект при успешном разлоге
+LOGIN_REDIRECT_URL = '/' # редирект при успешном логине

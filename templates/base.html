@@ -16,9 +16,15 @@
 
 </head>
 <body>
+
+{% include "components/navbar.html" %}
+
+<div class="container mt-4 mx-3">
     {% block body %}
 
     {% endblock %}
+</div>
+
 
 <script src="{% static 'js/bootstrap.bundle.min.js' %}">
 

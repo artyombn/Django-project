@@ -5,18 +5,29 @@ from user.models import User
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
-        User.objects.all().delete()
+        # User.objects.all().delete()
 
         print("Filling db ...")
 
-        users_list = [
-            User(username="artyombn",
-                 first_name="Artem",
-                 last_name="Balabashin",
-                 email="balabashinan@gmail.com")
-        ]
+        User.objects.create_user(
+            username="admin22",
+            first_name="Andrei",
+            last_name="Pushkin",
+            age=21,
+            email="pushka@gmail.com",
+            password='admin',
+            is_staff=True,
+        ),
+        User.objects.create_superuser(
+            username="admin333",
+            first_name="Kolia",
+            last_name="Tokaev",
+            age=27,
+            email="tokaaa@gmail.com",
+            password='admin',
+            is_staff=True,
+        ),
 
-        User.objects.bulk_create(users_list)
 
         print("Done")
 
