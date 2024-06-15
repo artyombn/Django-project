@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    403 Ащкишввут
+{%  endblock %}
+
+{% block body %}
+
+    <h1>Access denied</h1>
+
+    {% include "components/403.html" %}
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

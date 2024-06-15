@@ -10,7 +10,7 @@ class Command(BaseCommand):
         print("Filling db ...")
 
         User.objects.create_user(
-            username="admin22",
+            username="artyombn",
             first_name="Andrei",
             last_name="Pushkin",
             age=21,
@@ -19,7 +19,7 @@ class Command(BaseCommand):
             is_staff=True,
         ),
         User.objects.create_superuser(
-            username="admin333",
+            username="admin",
             first_name="Kolia",
             last_name="Tokaev",
             age=27,

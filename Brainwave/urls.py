@@ -6,7 +6,8 @@ from contacts.views import contact_view, status_view
 
 
 urlpatterns = [
-    path('ideas/', include('idea.urls')),
+    path('ideas/', include('idea.urls', namespace='ideas')),
+    path('', include('idea.urls', namespace='ideas')),
     path('categories/', include('category.urls')),
     path('comments/', include('comment.urls')),
     path("__debug__/", include("debug_toolbar.urls")),

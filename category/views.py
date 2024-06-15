@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from idea.models import Idea
 from .models import Category
 from django.urls import reverse_lazy
@@ -20,7 +20,7 @@ class CategoryListView(ListView):
     template_name = 'category/list.html'
     paginate_by = 10
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = 'category/category_detail.html'
 
@@ -29,7 +29,7 @@ class CategoryDetailView(DetailView):
         context['ideas'] = Idea.objects.filter(category=self.object)
         return context
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = 'category/category_form.html'
@@ -37,7 +37,14 @@ class CategoryCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy('category:detail', kwargs={'pk': self.object.pk})
 
-class CategoryUpdateView(UpdateView):
+    def test_func(self):
+        return self.only_staff_permission()
+
+    def only_staff_permission(self):
+        user = self.request.user
+        return user.is_staff
+
+class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Category
     fields = '__all__'
     template_name = 'category/category_update_form.html'
@@ -45,7 +52,21 @@ class CategoryUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('category:detail', kwargs={'pk': self.object.pk})
 
-class CategoryDeleteView(DeleteView):
+    def test_func(self):
+        return self.only_staff_permission()
+
+    def only_staff_permission(self):
+        user = self.request.user
+        return user.is_staff
+
+class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Category
     success_url = reverse_lazy('category:list')
     template_name = 'category/category_confirm_delete.html'
+
+    def test_func(self):
+        return self.only_staff_permission()
+
+    def only_staff_permission(self):
+        user = self.request.user
+        return user.is_staff

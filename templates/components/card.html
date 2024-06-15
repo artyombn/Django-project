@@ -1,0 +1,19 @@
+<div class="row row-cols-1 row-cols-md-3 g-5 my-1">
+    {% for idea in ideas %}
+        <div class="col">
+            <a href="{% url 'ideas:detail' pk=idea.id %}" class="text-decoration-none">
+                <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ idea.title }}</h5>
+                        <p class="card-text">{{ idea.category }}</p>
+                        <p class="card-text">{{ idea.description }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated {{ idea.updated_at }}</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>

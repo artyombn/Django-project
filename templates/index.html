@@ -1,38 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Index
+    BrainWave
 {%  endblock %}
 
 {% block body %}
     <h1>BrainWave - share your ideas with other</h1>
 
-<br>
-<br>
-
-<ul>
-    <li>
-        <a href="{% url 'ideas:list' %}">Idea list</a>
-    </li>
-</ul>
-
-<ul>
-    <li>
-        <a href="{% url 'category:list' %}">Categories list</a>
-    </li>
-</ul>
-
-<ul>
-    <li>
-        <a href="{% url 'comment:comments_index' %}">Comments list</a>
-    </li>
-</ul>
-
-<ul>
-    <li>
-        <a href="{% url 'users:users_list' %}">Users list</a>
-    </li>
-</ul>
+    {% include "components/card.html" %}
 
 
 {% endblock %}

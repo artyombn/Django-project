@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
@@ -7,6 +8,10 @@ from .models import Idea
 from .forms import IdeasForm
 from django.shortcuts import render, redirect
 
+
+def index(request):
+    ideas = Idea.objects.all()
+    return render(request, 'index.html', {'ideas': ideas})
 
 def ideas_list_view(request):
 
@@ -41,7 +46,7 @@ class IdeasCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return user.is_staff
 
 
-class IdeasUpdateView(LoginRequiredMixin, UpdateView):
+class IdeasUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Idea
     fields = '__all__'
     template_name = 'ideas/idea_update_form.html'
@@ -49,7 +54,21 @@ class IdeasUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
-class IdeasDeleteView(LoginRequiredMixin, DeleteView):
+    def test_func(self):
+        return self.author_or_staff_permission()
+
+    def author_or_staff_permission(self):
+        idea = get_object_or_404(Idea, pk=self.kwargs['pk'])
+        return self.request.user.is_staff or idea.author == self.request.user
+
+class IdeasDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Idea
     success_url = reverse_lazy('ideas:list')
     template_name = 'ideas/idea_confirm_delete.html'
+
+    def test_func(self):
+        return self.author_or_staff_permission()
+
+    def author_or_staff_permission(self):
+        idea = get_object_or_404(Idea, pk=self.kwargs['pk'])
+        return self.request.user.is_staff or idea.author == self.request.user

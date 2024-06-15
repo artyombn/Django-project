@@ -6,7 +6,7 @@ from user.models import User
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
-        Idea.objects.all().delete()
+        # Idea.objects.all().delete()
 
         print("Filling db ...")
 
@@ -34,10 +34,10 @@ class Command(BaseCommand):
 
         print(Idea.objects.all())
 
-        print("Updating idea FinTechHub")
-        FinTechHub_update = Idea.objects.get(title="FinTechHub")
-        FinTechHub_update.description = "Manage your personal finances"
-        FinTechHub_update.save()
-        print("Updated")
+        # print("Updating idea FinTechHub")
+        # FinTechHub_update = Idea.objects.get(title="FinTechHub")
+        # FinTechHub_update.description = "Manage your personal finances"
+        # FinTechHub_update.save()
+        # print("Updated")
 
         print(Idea.objects.all())

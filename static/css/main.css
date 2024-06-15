@@ -1,13 +1,13 @@
 .button56 {
   display: inline-block;
-  border-radius: 4px;
-  background-color: #f4511e;
+  border-radius: 6px;
+  background-color: #e67953;
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 200px;
+  font-size: 20px;
+  padding: 11px;
+  width: 120px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
