@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
         # User.objects.all().delete()
 
-        print("Filling db ...")
+        print("Filling db Users...")
 
         User.objects.create_user(
             username="artyombn",

@@ -9,17 +9,30 @@
 
     <h1>Comments</h1>
 
-    <ul>
-    {% for comment in comments %}
-        <li>{{ comment }}</li>
-    {% endfor %}
-    </ul>
+    <a href="{% url 'comment:create' %}">Create Comment</a>
+    <br>
+        <ul>
+        {% for comment in object_list %}
+            <li>
+                <a href="{% url 'comment:detail' pk=comment.id %}">
+                    {{ comment }}
+                </a>
 
-<br>
+                <a href="{% url 'comment:update' pk=comment.id %}">
+                   || update
+                </a>
+
+                <a href="{% url 'comment:delete' pk=comment.id %}">
+                   || delete
+                </a>
+
+            </li>
+        {% endfor %}
+        </ul>
+
 
 <div class="container">
     {% include "components/back_home.html" %}
 </div>
 
 {% endblock %}
-html>

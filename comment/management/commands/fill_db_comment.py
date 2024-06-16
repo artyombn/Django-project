@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
         Comment.objects.all().delete()
 
-        print("Filling db with comments...")
+        print("Filling db Comments...")
 
         # нужно будет потом настроить сессию, чтобы получать user из формы комментария
         user = User.objects.get(username='artyombn')

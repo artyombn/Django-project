@@ -22,7 +22,6 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='user.user')),
-                ('idea', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='idea.idea')),
             ],
         ),
     ]

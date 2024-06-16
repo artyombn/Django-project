@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
         Category.objects.all().delete()
 
-        print("Filling db ...")
+        print("Filling db Category...")
 
         categories = [
             Category(title="Tech", description="Startups and technology projects including AI, software and blockchain"),

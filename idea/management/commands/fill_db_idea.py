@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
         # Idea.objects.all().delete()
 
-        print("Filling db ...")
+        print("Filling db Ideas...")
 
         ideas = [
             Idea(title="FinTechHub",

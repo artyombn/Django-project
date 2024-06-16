@@ -1,12 +1,13 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from comment.models import Comment
 from .models import Idea
 from .forms import IdeasForm
-from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -22,13 +23,18 @@ def ideas_list_view(request):
 class IdeasListView(ListView):
     model = Idea
     template_name = 'ideas/list.html'
-    paginate_by = 10
+    # paginate_by = 10
     # context_object_name = 'ideas'
 
 
 class IdeasDetailView(LoginRequiredMixin, DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter(idea=self.object)
+        return context
 
 class IdeasCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Idea

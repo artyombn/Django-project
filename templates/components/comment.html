@@ -1,0 +1,58 @@
+<section style="background-color: rgba(250,250,250,0);">
+  <div class="container my-2 py-3">
+    <div class="row d-flex justify-content-left">
+      <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-4">
+                {% for comment in comments %}
+                    <div class="col-12">
+                        <div class="d-flex align-items-start mb-4">
+                            <img class="rounded-circle shadow-1-strong me-3" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png" alt="avatar" width="60" height="60">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold text-primary mb-1" href="{% url 'comment:detail' pk=comment.id %}">{{ comment.author }}</h6>
+                                <p class="text-muted small mb-0">Shared publicly - {{ comment.created_at }}</p>
+                            </div>
+                        </div>
+                        <p class="me-3 mb-4">{{ comment.text }}</p>
+                    </div>
+
+                        <div class="small d-flex justify-content-start">
+                          <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                            <i class="far fa-thumbs-up me-2"></i>
+                            <p class="mb-0">Like</p>
+                          </a>
+                          <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                            <i class="far fa-comment-dots me-2"></i>
+                            <p class="mb-0">Comment</p>
+                          </a>
+                          <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                            <i class="fas fa-share me-2"></i>
+                            <p class="mb-0">Share</p>
+                          </a>
+                        </div>
+                {% endfor %}
+            </div>
+
+          </div>
+          <div class="card-footer py-3 border-0" style="background-color: #ffffff;">
+            <div class="d-flex flex-start w-100">
+              <img class="rounded-circle shadow-1-strong me-3"
+                src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png" alt="avatar" width="40"
+                height="40" />
+              <div data-mdb-input-init class="form-outline w-100">
+                <textarea class="form-control" id="textAreaExample" rows="4"
+                  style="background: #fff;"></textarea>
+                <label class="form-label" for="textAreaExample">Message</label>
+              </div>
+            </div>
+            <div class="float-end mt-2 pt-1">
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm">Post comment</button>
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-sm">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

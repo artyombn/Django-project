@@ -127,10 +127,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATIC_DIRS = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Default primary key field type
@@ -154,3 +154,6 @@ AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = '/users/login'  # куда попадаем, когда у нас нет прав
 LOGOUT_REDIRECT_URL = '/users/login' # редирект при успешном разлоге
 LOGIN_REDIRECT_URL = '/' # редирект при успешном логине
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = ''
