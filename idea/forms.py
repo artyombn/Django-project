@@ -35,6 +35,11 @@ class IdeasForm(forms.ModelForm):
         empty_label='Select author',
     )
 
+    image = forms.ImageField(
+        label='Image',
+        required=False,
+    )
+
     class Meta:
         model = Idea
         fields = '__all__'

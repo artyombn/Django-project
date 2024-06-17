@@ -3,7 +3,7 @@
         <div class="col">
             <a href="{% url 'ideas:detail' pk=idea.id %}" class="text-decoration-none">
                 <div class="card h-100">
-                    <img src="{{ idea.category.image.url }}" class="card-img-top" alt="{{ idea.category.name }}">
+                    <img src="{{ idea.image.url }}" class="card-img-top" alt="{{ idea.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ idea.title }}</h5>
                         <p class="card-text">{{ idea.category }}</p>

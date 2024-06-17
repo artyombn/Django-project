@@ -17,6 +17,7 @@ class Idea(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='idea_images/', default='idea_images/no_idea.jpg')
 
     # updated_at = models.DateTimeField(auto_now=True)
     # comment = models.ManyToManyField(Comment)

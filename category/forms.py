@@ -22,6 +22,11 @@ class CategoryForm(forms.ModelForm):
         )
     )
 
+    image = forms.ImageField(
+        label='Image',
+        required=False,
+    )
+
     class Meta:
         model = Category
         fields = '__all__'

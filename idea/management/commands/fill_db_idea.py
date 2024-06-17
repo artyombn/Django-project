@@ -6,7 +6,7 @@ from user.models import User
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
-        # Idea.objects.all().delete()
+        Idea.objects.all().delete()
 
         print("Filling db Ideas...")
 
@@ -19,12 +19,12 @@ class Command(BaseCommand):
             Idea(title="CodeForKids",
                  description="Teach your kids to be programmer",
                  category=Category.objects.get(title="Society"),
-                 author=User.objects.get(username="artyombn"),
+                 author=User.objects.get(username="user"),
                  ),
             Idea(title="DesignExchange",
                  description="Create and share your design",
                  category=Category.objects.get(title="Creative"),
-                 author=User.objects.get(username="artyombn"),
+                 author=User.objects.get(username="user"),
                  ),
         ]
 
