@@ -5,7 +5,11 @@
 {%  endblock %}
 
 {% block body %}
-    <h1>BrainWave - share your ideas with other</h1>
+    <h1 class="text-center">BrainWave - share your ideas with others</h1>
+
+    <div class="wrap my-4">
+        <a href="{% url 'ideas:create' %}" class="btn buttonidea">Create Idea</a>
+    </div>
 
     {% include "components/card.html" %}
 
