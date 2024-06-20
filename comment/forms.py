@@ -1,18 +1,7 @@
 from django import forms
-from .models import Comment, Idea, User
+from .models import Comment
 
 class CommentForm(forms.ModelForm):
-
-    idea = forms.ModelChoiceField(
-        queryset=Idea.objects.all(),
-        empty_label='Select Idea',
-        # required = False,  # запрещено на уровне модели
-    )
-
-    author = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        empty_label='Select author',
-    )
 
     text = forms.CharField(
         label='Comment text',
@@ -20,6 +9,8 @@ class CommentForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'Write your comment here',
+                'class': 'form-control',
+                'rows': 5
             }
         )
     )
@@ -27,4 +18,4 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('text',)

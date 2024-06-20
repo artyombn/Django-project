@@ -16,6 +16,7 @@
                 Delete
             </a>
         </div>
+
     {% endif %}
 
     <!-- Первый элемент сетки -->
@@ -40,14 +41,12 @@
         </div>
 
 
-
         <!-- Второй элемент сетки -->
         <div class="col-md-6">
             <div class="border p-3">
-                {% include 'components/comment.html' %}
+                {% include "components/comment.html" with idea=idea comments=idea.comments.all %}
             </div>
         </div>
     </div>
-
-
+</div>
 {% endblock %}

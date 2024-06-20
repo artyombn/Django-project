@@ -19,7 +19,7 @@ Do you confirm the deletion?
 
     <script>
         function handleNoClick() {
-            window.location.href = '{% url 'comment:list' %}';
+            window.location.href = '{% url 'ideas:detail' pk=comment.idea.pk %}';
         }
     </script>
 

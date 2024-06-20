@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from comment.forms import CommentForm
 from comment.models import Comment
 from .models import Idea
 from .forms import IdeasForm
@@ -33,7 +34,7 @@ class IdeasDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['comments'] = Comment.objects.filter(idea=self.object)
+        context['comment_form'] = CommentForm()
         return context
 
 class IdeasCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):

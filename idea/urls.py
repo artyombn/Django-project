@@ -1,5 +1,6 @@
 from django.urls import path
 from idea import views
+from comment import views as comment_views
 
 
 app_name = 'ideas'
@@ -11,4 +12,7 @@ urlpatterns = [
     path('create/', views.IdeasCreateView.as_view(), name='create'),
     path('update/<int:pk>', views.IdeasUpdateView.as_view(), name='update'),
     path('delete/<int:pk>', views.IdeasDeleteView.as_view(), name='delete'),
+    path('idea/<int:pk>/comment/add/', comment_views.CommentCreateView.as_view(), name='add_comment'),
+    path('idea/<int:pk>/comment/edit/<int:comment_pk>/', comment_views.CommentUpdateView.as_view(), name='edit_comment'),
+    path('idea/<int:pk>/comment/delete/<int:comment_pk>/', comment_views.CommentDeleteView.as_view(), name='delete_comment'),
 ]

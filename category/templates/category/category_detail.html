@@ -17,15 +17,36 @@
         </div>
     {% endif %}
 
-    <div class="card bg-white text-grey" style="width: 800px; height: 600px;">
-      <img class="card-img" src='{{ category.image.url }}' alt="Category image" style="position: absolute; bottom: 30px; left: 120px; width: 500px; height: 500px;">
-      <div class="card-img-overlay">
-          <h2 class="card-title">{{ object.title }}</h2>
-          <h5 class="card-text">{{ object.description }}</h5>
-          <div id="element" style="position: absolute; bottom: 0; right: 20px;">Last updated {{ object.updated_at }}</div>
 
-      </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-white text-grey" style="width: 500px; height: 600px;">
+              <img class="card-img" src='{{ category.image.url }}' alt="Category image" style="position: absolute; bottom: 30px; width: 450px; height: 450px;">
+              <div class="card-img-overlay">
+                  <h2 class="card-title">{{ object.title }}</h2>
+                  <h5 class="card-text">{{ object.description }}</h5>
+                  <div id="element" style="position: absolute; bottom: 0; right: 20px;">Last updated {{ object.updated_at }}</div>
+
+              </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="border p-">
+                <h4>Ideas in this Category:</h4>
+                <ul>
+                    {% for idea in ideas %}
+                        <li>
+                            <a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a> - {{ idea.description }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'ideas:list' %}">Go to the Idea list</a>
+            </div>
+        </div>
     </div>
+
+
 
 <div class="container" style="margin-top: 30px;">
     <a href="{% url 'category:list' %}">Back to the Category list</a>
