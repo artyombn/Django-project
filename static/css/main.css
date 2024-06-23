@@ -47,85 +47,62 @@
   justify-content: center;
 }
 
-.buttonidea {
-  min-width: 800px;
-  min-height: 60px;
-  display: inline-flex;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1.3px;
-  font-weight: 800;
-  color: #313133;
-  background: #4FD1C5;
-background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
-  border: none;
-  border-radius: 1000px;
-  box-shadow: 16px 16px 28px rgba(79,209,197,.64);
-  transition: all 0.3s ease-in-out 0s;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  padding: 10px;
-  }
 
-.buttonidea::before {
-content: '';
-  border-radius: 1000px;
-  min-width: calc(800px + 12px);
-  min-height: calc(60px + 12px);
-  border: 6px solid #00FFCB;
-  box-shadow: 0 0 60px rgba(0,255,203,.64);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all .3s ease-in-out 0s;
+body {background: #dddddd;}
+.loading {
+  font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+  text-transform:uppercase;
+
+  width: 1100px;
+  font-size: 50px;
+  text-align:center;
+  line-height:50px;
+
+  position:absolute;
+  margin:auto;
+  transform:translateY(-50%);
 }
 
-.buttonidea:hover,
-.buttonidea:focus {
-  color: #313133;
-  transform: translateY(-6px);
+.loading span {
+  position:relative;
+  z-index:999;
+  color:#fff;
+}
+.loading:before {
+  content:'';
+  background:#61bdb6;
+  width:1080px;
+  height:56px;
+  display:block;
+  position:absolute;
+  margin:auto;
+
+  animation:3s loadingBefore infinite ease-in-out;
 }
 
-.buttonidea:hover::before,
-.buttonidea:focus::before {
-  opacity: 1;
+@keyframes loadingBefore {
+  0%   {transform:translateX(-20px);}
+  50%  {transform:translateX(20px);}
+  100% {transform:translateX(-20px);}
 }
 
-.buttonidea::after {
-  content: '';
-  width: 30px; height: 30px;
-  border-radius: 100%;
-  border: 6px solid #00FFCB;
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring 2s infinite;
+
+.loading:after {
+  content:'';
+  background:#ff3600;
+  width:25px;
+  height:92px;
+  display:block;
+  position:absolute;
+  top:10px;left:0;right:0;bottom:0;
+  margin:auto;
+  opacity:.5;
+
+  animation:3s loadingAfter infinite ease-in-out;
 }
 
-.buttonidea:hover::after,
-.buttonidea:focus::after {
-  animation: none;
-  display: none;
-}
-
-@keyframes ring {
-  0% {
-    width: 30px;
-    height: 30px;
-    opacity: 1;
-  }
-  100% {
-    width: 800px;
-    height: 200px;
-    opacity: 0;
-  }
+@keyframes loadingAfter {
+  0%   {transform:translateX(-300px);}
+  50%  {transform:translateX(300px);}
+  100% {transform:translateX(-300px);}
 }

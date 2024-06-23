@@ -152,3 +152,7 @@ LOGIN_REDIRECT_URL = '/' # редирект при успешном логине
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+DEBUG_TOOLBAR_CONFIG = {
+    'IS_RUNNING_TESTS': False,
+}

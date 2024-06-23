@@ -5,13 +5,14 @@
 {%  endblock %}
 
 {% block body %}
-    <h1 class="text-center">BrainWave - share your ideas with others</h1>
 
-    <div class="wrap my-4">
-        <a href="{% url 'ideas:create' %}" class="btn buttonidea">Create Idea</a>
+    <div class="loading my-2 mx-5">
+        <span><a href="{% url 'ideas:create' %}" style="text-decoration: none; color: white;">CREATE YOUR OWN IDEA</a></span>
     </div>
 
-    {% include "components/card.html" %}
 
+    <div class="mt-5">
+        {% include "components/card.html" %}
+    </div>
 
 {% endblock %}

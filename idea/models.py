@@ -31,4 +31,7 @@ class Idea(models.Model):
 
 
     def __str__(self):
-        return (f"{self.title}")
+        return (f"{self.title}/{self.category}/{self.author}")
+
+    def comments_count(self):
+        return self.comments.count()

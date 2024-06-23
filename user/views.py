@@ -14,6 +14,7 @@ class RegisterView(CreateView):
     template_name = 'user/register.html'
     success_url = reverse_lazy('users:users_list')
 
+
 class AuthView(LoginView):
     template_name = 'user/login.html'
 

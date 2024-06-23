@@ -37,20 +37,21 @@ class IdeasDetailView(LoginRequiredMixin, DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-class IdeasCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class IdeasCreateView(LoginRequiredMixin, CreateView):
     model = Idea
     form_class = IdeasForm
     template_name = 'ideas/idea_form.html'
 
+    # def post(self, *args, **kwargs):
+    #     self.pk = kwargs['pk']
+    #     return super().post(request, *args, **kwargs)
+
     def get_success_url(self):
+        # url = reverse('ideas:detail', kwargs={'pk': self.pk})
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
     def test_func(self):
         return self.only_staff_permission()
-
-    def only_staff_permission(self):
-        user = self.request.user
-        return user.is_staff
 
 
 class IdeasUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

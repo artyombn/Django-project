@@ -18,3 +18,6 @@ createsuperuser:
 
 runworker of the Celery:
 	celery -A proj worker -l INFO
+
+test:
+	python manage.py test

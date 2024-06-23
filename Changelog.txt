@@ -42,11 +42,26 @@
 
 20 Июня:
 - Доделан полный функционал комментариев
--
 
+21 Июня:
+- Написать тесты для всех завершенных приложений (Category/Idea/Comment/User/Contacts)
+--------------------
+Category
+--------------------
++ модель Category (test_str, created_at, updated_at)
++ views CategoryListView (status_code)
++ views CategoryDetailView (status_code, context)
++ views CategoryCreateView (status_code_with_no_permission, status_code_with_permission, create_category)
++ views CategoryUpdateView (status_code_with_no_permission, status_code_with_permission, update_category)
++ views CategoryDeleteView (status_code_with_no_permission, status_code_with_permission, delete_category)
+
+--------------------
+User
+--------------------
 
 СДЕЛАТЬ:
 - Создание групп пользователей в БД (Admins, Mods, Users, Co-Authors, Investors, Verified Users)
+- Фильтрация по категориям
 - Персональная страничка User
 - Доработать Users (Вывод по группам)
 - Доработать Ideastatus

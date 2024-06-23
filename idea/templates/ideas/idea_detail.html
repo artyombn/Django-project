@@ -21,7 +21,7 @@
 
     <!-- Первый элемент сетки -->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
             <div class="card bg-white text-black" style="width: 100%; height: 400px;">
                 <img class="card-img" src="{{ idea.image.url }}" alt="Card image" style="width: 100%; height: 100%;">
                 <div class="card-img-overlay">
@@ -42,7 +42,7 @@
 
 
         <!-- Второй элемент сетки -->
-        <div class="col-md-6">
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
             <div class="border p-3">
                 {% include "components/comment.html" with idea=idea comments=idea.comments.all %}
             </div>
