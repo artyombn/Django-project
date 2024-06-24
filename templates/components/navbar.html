@@ -12,11 +12,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href='{% url 'category:list' %}'>Categories</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href='{% url 'users:users_list' %}'>Users</a>
+                    <a class="nav-link" href='{% url 'category:list' %}'>Investments</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href='{% url 'comment:list' %}'>Comments</a>
+                    <a class="nav-link" href='{% url 'category:list' %}'>Partnerships</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href='{% url 'category:list' %}'>Leaderboard</a>
                 </li>
 
                 {% if user.is_authenticated and user.is_staff %}
@@ -36,15 +42,16 @@
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item text-light me-lg-3 my-1">
-                    Hello, {{ user.username }}
+                    <a href="{% url 'users:profile' user.id %}" style="text-decoration: none; color: white;"><img src="{{ user.avatar.url }}" alt="Аватар" width="40" height="40">{{ user.username }}
                     {% if user.is_staff %}
                         (admin)
                     {% endif %}
+                    </a>
                 </li>
                 <li class="nav-item me-lg-2">
                     <form method="post" action='{% url 'users:logout' %}'>
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+                        <button type="submit" class="btn btn-secondary btn-sm" style="align-content: center;">Logout</button>
                     </form>
                 </li>
             {% else %}

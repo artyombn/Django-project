@@ -8,6 +8,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=15, blank=True)
     age = models.PositiveIntegerField(default=0)
     email = models.EmailField(unique=True)
+    avatar = models.ImageField(upload_to='user_avatars/', default='user_avatars/no_avatar.png')
 
     # date_joined =
     # is_active =

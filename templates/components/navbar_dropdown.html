@@ -1,13 +1,17 @@
 <li class="nav-item dropdown">
 
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                ADMIN
             </a>
                 <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/admin/">Admin Panel</a></li>
                     <li><a class="dropdown-item" href="{% url 'ideas:create' %}">Add New Idea</a></li>
                     <li><a class="dropdown-item" href="{% url 'category:create' %}">Add New Category</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item disabled" href="/">Something else here</a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:users_list' %}">All Users</a></li>
+                    <li><a class="dropdown-item" href="{% url 'comment:list' %}">All Comments</a></li>
+                    <li><a class="dropdown-item disabled" href="/">All Investments</a></li>
+                    <li><a class="dropdown-item disabled" href="/">All Partnerships</a></li>
                 </ul>
             </li>
 {#                <li class="nav-item">#}

@@ -32,9 +32,12 @@
                     {% for comment in idea.comments.all %}
                     <div class="col-12">
                         <div class="d-flex align-items-start mb-2">
-                            <img class="rounded-circle shadow-1-strong me-3" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png" alt="avatar" width="60" height="60">
+                            <img class="rounded-circle shadow-1-strong me-3" src="{{ user.avatar.url }}" alt="avatar" width="60" height="60">
                             <div class="flex-grow-1">
-                                <h6 class="fw-bold text-primary mb-1" href="{% url 'comment:detail' pk=comment.id %}">{{ comment.author }}</h6>
+                                <h6 class="fw-bold text-primary mb-1">
+                                    <a href="{% url 'users:profile' pk=comment.author.id %}" style="text-decoration: none;">{{ comment.author }}</a>
+                                </h6>
+
                                 <p class="text-muted small mb-0">Shared publicly - {{ comment.created_at }}</p>
                             </div>
                         </div>
