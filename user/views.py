@@ -26,5 +26,5 @@ class ExitView(LogoutView):
 
 def users_list_view(request):
 
-    users = User.objects.all()
+    users = User.objects.prefetch_related('groups').all()
     return render(request, "user/list.html", {"users": users})

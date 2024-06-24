@@ -5,8 +5,7 @@ from .models import Category
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import CategoryForm
-
-# Create your views here.
+from user.group_permission import GroupRequiredMixin
 
 
 def category_list_view(request):
@@ -18,55 +17,39 @@ def category_list_view(request):
 class CategoryListView(ListView):
     model = Category
     template_name = 'category/list.html'
-    # paginate_by = 10
 
-class CategoryDetailView(LoginRequiredMixin, DetailView):
+class CategoryDetailView(GroupRequiredMixin, DetailView):
     model = Category
     template_name = 'category/category_detail.html'
+    group_name = "User"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ideas'] = Idea.objects.filter(category=self.object)
         return context
 
-class CategoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CategoryCreateView(GroupRequiredMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = 'category/category_form.html'
+    group_name = ["Verified", "Mods", "Admin"]
 
     def get_success_url(self):
         return reverse_lazy('category:detail', kwargs={'pk': self.object.pk})
 
-    def test_func(self):
-        return self.only_staff_permission()
 
-    def only_staff_permission(self):
-        user = self.request.user
-        return user.is_staff
-
-class CategoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class CategoryUpdateView(GroupRequiredMixin, UpdateView):
     model = Category
     fields = '__all__'
     template_name = 'category/category_update_form.html'
+    group_name = ["Verified", "Mods", "Admin"]
 
     def get_success_url(self):
         return reverse_lazy('category:detail', kwargs={'pk': self.object.pk})
 
-    def test_func(self):
-        return self.only_staff_permission()
 
-    def only_staff_permission(self):
-        user = self.request.user
-        return user.is_staff
-
-class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class CategoryDeleteView(GroupRequiredMixin, DeleteView):
     model = Category
     success_url = reverse_lazy('category:list')
     template_name = 'category/category_confirm_delete.html'
-
-    def test_func(self):
-        return self.only_staff_permission()
-
-    def only_staff_permission(self):
-        user = self.request.user
-        return user.is_staff
+    group_name = ["Verified", "Mods", "Admin"]

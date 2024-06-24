@@ -6,10 +6,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from idea.models import Idea
 from .forms import CommentForm
 from .models import Comment
+from user.group_permission import GroupRequiredMixin
 
 
-class BaseCommentView(LoginRequiredMixin):
+class BaseCommentView(GroupRequiredMixin):
     model = Comment
+    group_name = "User"
 
     def get_success_url(self):
         idea = self.object.idea

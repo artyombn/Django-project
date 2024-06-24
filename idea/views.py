@@ -9,6 +9,7 @@ from comment.forms import CommentForm
 from comment.models import Comment
 from .models import Idea
 from .forms import IdeasForm
+from user.group_permission import GroupRequiredMixin
 
 
 def index(request):
@@ -37,27 +38,22 @@ class IdeasDetailView(LoginRequiredMixin, DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-class IdeasCreateView(LoginRequiredMixin, CreateView):
+class IdeasCreateView(GroupRequiredMixin, CreateView):
     model = Idea
     form_class = IdeasForm
     template_name = 'ideas/idea_form.html'
-
-    # def post(self, *args, **kwargs):
-    #     self.pk = kwargs['pk']
-    #     return super().post(request, *args, **kwargs)
+    group_name = "User"
 
     def get_success_url(self):
-        # url = reverse('ideas:detail', kwargs={'pk': self.pk})
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
-    def test_func(self):
-        return self.only_staff_permission()
 
 
-class IdeasUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class IdeasUpdateView(GroupRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Idea
     fields = '__all__'
     template_name = 'ideas/idea_update_form.html'
+    group_name = "User"
 
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})

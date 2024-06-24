@@ -1,34 +1,53 @@
 from django.core.management.base import BaseCommand
 from user.models import User
+from django.contrib.auth.models import Group
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
         User.objects.all().delete()
+        Group.objects.all().delete()
+
 
         print("Filling db Users...")
 
-        User.objects.create_superuser(
+        artyombn = User.objects.create_superuser(
             username="artyombn",
             first_name="Artyom",
             last_name="Balabashin",
             age=21,
             email="balabashin@gmail.com",
             password='admin',
-            is_staff=True,
-        ),
-        User.objects.create_user(
+        )
+
+        user2 = User.objects.create_user(
             username="user",
             first_name="Kolia",
             last_name="Tokaev",
             age=27,
             email="tokaaa@gmail.com",
             password='user',
-        ),
+        )
 
 
-        print("Done")
-
+        print("Users created")
         print(User.objects.all())
+
+        admin_group, created = Group.objects.get_or_create(name="Admin")
+        moderator_group, created = Group.objects.get_or_create(name="Moderator")
+        user_group, created = Group.objects.get_or_create(name="User")
+        co_author_group, created = Group.objects.get_or_create(name="Co-Author")
+        investor_group, created = Group.objects.get_or_create(name="Investor")
+        verified_group, created = Group.objects.get_or_create(name="Verified")
+
+        print("Groups created")
+
+        artyombn.groups.add(user_group, admin_group, verified_group)
+        user2.groups.add(user_group, investor_group, verified_group)
+
+
+        print(Group.objects.all())
+        print(f"group Artyombn: {artyombn.groups.all()}")
+
 

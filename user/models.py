@@ -9,10 +9,8 @@ class User(AbstractUser):
     age = models.PositiveIntegerField(default=0)
     email = models.EmailField(unique=True)
 
-    # password =
     # date_joined =
     # is_active =
-    # is_superuser =
 
     def __str__(self):
         return (f"{self.username}")
