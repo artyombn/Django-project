@@ -32,10 +32,20 @@
                     {% for comment in idea.comments.all %}
                     <div class="col-12">
                         <div class="d-flex align-items-start mb-2">
-                            <img class="rounded-circle shadow-1-strong me-3" src="{{ user.avatar.url }}" alt="avatar" width="60" height="60">
+
+                            <a href="{% url 'users:profile' pk=comment.author.id %}">
+                                <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="60" height="60">
+                            </a>
                             <div class="flex-grow-1">
                                 <h6 class="fw-bold text-primary mb-1">
-                                    <a href="{% url 'users:profile' pk=comment.author.id %}" style="text-decoration: none;">{{ comment.author }}</a>
+                                    <a href="{% url 'users:profile' pk=comment.author.id %}" style="text-decoration: none;">{{ comment.author }}
+
+                                    {% load user_tags %}
+
+                                    {% if comment.author|check_in_group:"Admin" %}
+                                        <img src="/media/user_groups/admin.png" alt="admin" width="20" height="20">
+                                    {% endif %}
+                                    </a>
                                 </h6>
 
                                 <p class="text-muted small mb-0">Shared publicly - {{ comment.created_at }}</p>

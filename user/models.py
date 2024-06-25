@@ -15,3 +15,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return (f"{self.username}")
+
+    def check_in_group(self, group_name):
+        return self.groups.filter(name=group_name).exists()

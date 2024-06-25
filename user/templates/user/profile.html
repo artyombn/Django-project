@@ -1,16 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Profile</title>
-</head>
-<img>
-    <h1>User Profile</h1>
-    <img src="{{ object.avatar.url }}" alt="Avatar" width="100" height="100">
+{% extends 'base.html' %}
+
+{% block title %}
+    User Profile
+{%  endblock %}
+
+{% block body %}
+
+{% load user_tags %}
+
+<h1 style="text-transform: uppercase">{{ object.username }} Profile
+    {% if object|check_in_group:"Admin" %}
+        <img src="/media/user_groups/admin.png" alt="admin" width="40" height="40">
+    {% endif %}
+</h1>
+<img src="{{ object.avatar.url }}" alt="Avatar" width="120" height="120" class="m-3">
+
+{% if request.user.id == user.id %}
+    <form method="post">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+
+        <div class="d-grid mx-auto">
+            <button type="submit" class="button56">Update</button>
+        </div>
+    </form>
+{% else %}
     <p>Username: {{ object.username }}</p>
     <p>First Name: {{ object.first_name }}</p>
     <p>Last Name: {{ object.last_name }}</p>
     <p>Email: {{ object.email }}</p>
     <p>Age: {{ object.age }}</p>
-</body>
-</html>
+{% endif %}
+
+<br>
+<a href="{% url 'index' %}">Back Home page</a>
+
+{% endblock %}

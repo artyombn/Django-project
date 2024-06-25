@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView
-from django.shortcuts import render
+from django.views.generic import CreateView, UpdateView
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from .models import User
-from .forms import RegisterForm
-
+from .forms import RegisterForm, UserProfileForm
 
 
 class RegisterView(CreateView):
@@ -22,18 +22,31 @@ class AuthView(LoginView):
 class ExitView(LogoutView):
     pass
 
-class UserProfile(LoginRequiredMixin, DetailView):
+class UserProfile(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'user/profile.html'
+    form_class = UserProfileForm
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['comment_form'] = CommentForm()
-    #     return context
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class(request.POST, request.FILES, instance=request.user)
+    #     print(request.FILES)
+    #     if form.is_valid():
+    #         form.save()
+    #         return HttpResponseRedirect(f'/users/profile/{request.user.id}')
+    #
+    #     return render(request, self.template_name, {'form': form})
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset=queryset)
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile_form'] = UserProfileForm(instance=self.object)
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', kwargs={'pk': self.object.pk})
 
 def users_list_view(request):
 
