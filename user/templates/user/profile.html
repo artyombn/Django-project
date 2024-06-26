@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    User Profile
+    {% if request.user.id == user.id %}
+        Your Profile
+    {% else %}
+        {{ object.username }}'s Profile
+    {% endif %}
+
 {%  endblock %}
 
 {% block body %}
@@ -32,6 +37,19 @@
     <p>Age: {{ object.age }}</p>
 {% endif %}
 
+<br>
+{% if request.user.id == user.id %}
+    <h3 style="text-transform: uppercase">Your Ideas</h3>
+{% else %}
+    <h3 style="text-transform: uppercase">{{ object.first_name }}'s Ideas</h3>
+{% endif %}
+
+<br>
+
+{% for idea in ideas %}
+    <li><a href="{% url 'ideas:detail' pk=idea.pk %}">{{ idea.title }} -- {{ idea.description }}</a></li>
+{% endfor %}
+<br>
 <br>
 <a href="{% url 'index' %}">Back Home page</a>
 

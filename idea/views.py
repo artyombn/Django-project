@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from category.models import Category
 from comment.forms import CommentForm
 from comment.models import Comment
 from .models import Idea
@@ -14,7 +15,8 @@ from user.group_permission import GroupRequiredMixin
 
 def index(request):
     ideas = Idea.objects.all()
-    return render(request, 'index.html', {'ideas': ideas})
+    categories = Category.objects.all()
+    return render(request, 'index.html', {'ideas': ideas, 'categories': categories})
 
 def ideas_list_view(request):
 
@@ -29,7 +31,7 @@ class IdeasListView(ListView):
     # context_object_name = 'ideas'
 
 
-class IdeasDetailView(LoginRequiredMixin, DetailView):
+class IdeasDetailView(DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
 

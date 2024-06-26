@@ -19,6 +19,7 @@
 
 
     <div class="row">
+
         <div class="col-md-6">
             <div class="card bg-white text-grey" style="width: 500px; height: 600px;">
               <img class="card-img" src='{{ category.image.url }}' alt="Category image" style="position: absolute; bottom: 30px; width: 450px; height: 450px;">
@@ -31,19 +32,49 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="border p-">
-                <h4>Ideas in this Category:</h4>
-                <ul>
-                    {% for idea in ideas %}
-                        <li>
-                            <a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a> - {{ idea.description }}
-                        </li>
-                    {% endfor %}
-                </ul>
+
+    {% if ideas %}
+
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
+            <div class="border p-3">
+                  <div class="border" style="text-align: center">
+                      <h3>IDEAS IN THIS CATEGORY:</h3>
+                  </div>
+                {% for idea in ideas %}
+                    <div class="card text-center my-3">
+                      <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a></h5>
+                        <p class="card-text">{{ idea.description }}</p>
+                      </div>
+                      <div class="card-footer text-body-secondary">
+                         Posted - {{ idea.created_at }}
+                      </div>
+                    </div>
+                {% endfor %}
+
                 <a href="{% url 'ideas:list' %}">Go to the Idea list</a>
             </div>
         </div>
+
+    {% else %}
+
+        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
+            <div class="border p-3">
+                  <div class="border" style="text-align: center">
+                      <h3>NO IDEAS IN THIS CATEGORY:</h3>
+                    <div class="card text-center my-3">
+                        <div class="card-body">
+                        </div>
+                      <div class="card-footer text-body-secondary">
+                      </div>
+                    </div>
+
+                <a href="{% url 'ideas:create' %}">Create Idea</a>
+            </div>
+        </div>
+
+    {% endif %}
+
     </div>
 
 

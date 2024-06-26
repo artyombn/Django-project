@@ -23,16 +23,16 @@
     {% endif %}
 </div>
 
-  <div class="row">
+  <div class="row my-4">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 fixed-top-right">
         <div class="card">
           <div class="card-body">
             <div class="row mb-4">
                 {% if comments %}
+                    <p style="font-size: 17px; margin-bottom: 20px; text-align: center;">Total comments: ({{ comments.count }})</p>
                     {% for comment in idea.comments.all %}
                     <div class="col-12">
                         <div class="d-flex align-items-start mb-2">
-
                             <a href="{% url 'users:profile' pk=comment.author.id %}">
                                 <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="60" height="60">
                             </a>
@@ -48,52 +48,40 @@
                                     </a>
                                 </h6>
 
-                                <p class="text-muted small mb-0">Shared publicly - {{ comment.created_at }}</p>
+                                <p class="text-muted small mb-0">{{ comment.created_at }}</p>
                             </div>
                         </div>
                         <p class="me-3 mb-2">{{ comment.text }}</p>
                     </div>
 
                             <div class="small d-flex justify-content-start">
-                              <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                <i class="far fa-thumbs-up me-2"></i>
-                                <p class="mb-0">Like</p>
-                              </a>
-                              <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                <i class="far fa-comment-dots me-2"></i>
-                                <p class="mb-0">Comment</p>
-                              </a>
-                              <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                <i class="fas fa-share me-2"></i>
-                                <p class="mb-0">Share</p>
-                              </a>
+                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                    <i class="far fa-thumbs-up me-2"></i>
+                                    <p>Like</p>
+                                </a>
+                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                    <i class="fas fa-share me-2"></i>
+                                    <p>Share</p>
+                                </a>
+                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                    <i class="fas fa-share me-2"></i>
+                                    <p>Reply</p>
+                                </a>
 
                                 {% if user.is_staff or user.id == comment.author.id %}
-                                    <a href="{% url 'comment:update' pk=comment.id %}">Edit</a>
+                                    <p><a href="{% url 'comment:update' pk=comment.id %}">Edit</a>
                                     |
-                                    <a href="{% url 'comment:delete' pk=comment.id %}">Delete</a>
+                                        <a href="{% url 'comment:delete' pk=comment.id %}">Delete</a></p>
                                 {% endif %}
                             </div>
 
                     {% endfor %}
                 {% else %}
-                    <p>No comments so far</p>
+                    <p style="text-align: center; font-size: 17px; margin-bottom: 0; margin-top: 15px;">No comments so far</p>
                 {% endif %}
             </div>
 
           </div>
-
-{#                <form id="commentForm" method="post" enctype="multipart/form-data" action="{% url "ideas:add_comment" pk=idea.pk %}">#}
-{#                    {% csrf_token %}#}
-{#                    <div class="d-flex flex-start w-100">#}
-{#                        {{ comment_form.comment }}#}
-{#                        <label class="form-label" for="commentTextArea">Message</label>#}
-{#                        <div class="float-end mt-2 pt-1">#}
-{#                            <button id="postCommentButton" type="submit" class="btn btn-primary btn-sm">Post comment</button>#}
-{#                            <button id="clearCommentButton" type="button" class="btn btn-outline-primary btn-sm">Clear</button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </form>#}
         </div>
       </div>
     </div>
@@ -136,8 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
-
-
 
 
 

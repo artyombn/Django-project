@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
+
+from idea.models import Idea
 from .models import User
 from .forms import RegisterForm, UserProfileForm
 
@@ -27,15 +29,6 @@ class UserProfile(LoginRequiredMixin, UpdateView):
     template_name = 'user/profile.html'
     form_class = UserProfileForm
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST, request.FILES, instance=request.user)
-    #     print(request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         return HttpResponseRedirect(f'/users/profile/{request.user.id}')
-    #
-    #     return render(request, self.template_name, {'form': form})
-
     def get_object(self, queryset=None):
         obj = super().get_object(queryset=queryset)
         return obj
@@ -43,6 +36,7 @@ class UserProfile(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile_form'] = UserProfileForm(instance=self.object)
+        context['ideas'] = Idea.objects.filter(author=self.object)
         return context
 
     def get_success_url(self):

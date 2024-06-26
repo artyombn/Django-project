@@ -6,7 +6,7 @@ class Comment(models.Model):
     idea = models.ForeignKey(Idea, related_name='comments', on_delete=models.CASCADE, default=1)
     author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     text = models.TextField()
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

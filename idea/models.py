@@ -19,16 +19,10 @@ class Idea(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='idea_images/', default='idea_images/no_idea.jpg')
 
-    # updated_at = models.DateTimeField(auto_now=True)
-    # comment = models.ManyToManyField(Comment)
-    # rating = models.IntegerField(default=0)
-    # partners = models.ManyToManyField(User)
-    # investors = models.ManyToManyField(Investment)
-    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
-    # image = models.ImageField(upload_to='idea_images/', null=True, blank=True)
 
-
-
+# class IdeaImages(models.Model):
+#     idea = models.ForeignKey(Idea, related_name='images', on_delete=models.CASCADE)
+#     image2 = models.ImageField(upload_to='idea_images/', default='idea_images/no_idea.jpg')
 
     def __str__(self):
         return (f"{self.title}/{self.category}/{self.author}")

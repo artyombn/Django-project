@@ -1,3 +1,10 @@
+/*
+=========================
+Button56
+=========================
+*/
+
+
 .button56 {
   display: inline-block;
   border-radius: 6px;
@@ -46,6 +53,13 @@
   align-items: center;
   justify-content: center;
 }
+
+
+/*
+=========================
+Loading - CREATE YOUR OWN IDEA
+=========================
+*/
 
 
 body {background: #dddddd;}
@@ -105,4 +119,259 @@ body {background: #dddddd;}
   0%   {transform:translateX(-300px);}
   50%  {transform:translateX(300px);}
   100% {transform:translateX(-300px);}
+}
+
+
+/*
+=========================
+Footer
+=========================
+*/
+
+.site-footer {
+    background-color: rgba(0, 0, 0, 0.55);
+    color: #d8d8d8;
+    padding: 45px 0;
+    width: 100%;
+}
+
+.site-footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.site-footer h6 {
+    color: #fdfdfd;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 2px;
+}
+
+.site-footer a {
+    color: #d8d8d8;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #3366cc;
+    text-decoration: underline;
+}
+
+.site-footer .footer-links {
+    padding: 0;
+    list-style: none;
+}
+
+.site-footer .footer-links li {
+    display: block;
+}
+
+.site-footer .footer-links a {
+    color: #d8d8d8;
+}
+
+.site-footer .footer-links a:hover {
+    color: #ec4369;
+}
+
+.site-footer .social-icons {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.site-footer .social-icons li {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.site-footer .social-icons li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #efefef;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.site-footer .social-icons li a img {
+    width: 35px;
+    height: 35px;
+}
+
+.site-footer .social-icons li a:hover {
+    background-color: #ec4369;
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    .site-footer .footer-content {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .site-footer .footer-content {
+        padding: 0 15px;
+    }
+}
+
+
+
+
+
+
+
+/*
+=========================
+Cards
+=========================
+*/
+
+
+:root {
+
+    font-size: 15px;
+
+    /* Primary */
+    --var-soft-blue: hsl(215, 51%, 70%);
+    --var-cyan: hsl(178, 100%, 50%);
+    /* Neutral */
+    --var-main-darkest: hsl(217, 54%, 11%);
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+
+    /* Fonts */
+
+    --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
+
+    --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
+
+    --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+}
+:root {
+  --surface-color: #fff;
+  --curve: 50;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #fef8f8;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+  gap: 2rem;
+  margin: 3rem 7vw;
+  padding: 0;
+  list-style-type: none;
+}
+
+.card {
+  position: relative;
+  display: block;
+  height: 100%;
+  border-radius: calc(var(--curve) * 1px);
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.card__image {
+  width: 100%;
+  height: auto;
+}
+
+.card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  border-radius: calc(var(--curve) * 1px);
+  background-color: var(--surface-color);
+  transform: translateY(100%);
+  transition: .2s ease-in-out;
+}
+
+.card:hover .card__overlay {
+  transform: translateY(0);
+}
+
+.card__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  padding: 2em;
+  border-radius: calc(var(--curve) * 1px) 0 0 0;
+  background-color: var(--surface-color);
+  transform: translateY(-100%);
+  transition: .2s ease-in-out;
+}
+
+.card__arc {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  z-index: 1;
+}
+
+.card__arc path {
+  fill: var(--surface-color);
+  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+}
+
+.card:hover .card__header {
+  transform: translateY(0);
+}
+
+.card__thumb {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.card__title {
+  font-size: 1em;
+  margin: 0 0 .3em;
+  color: #305c42;
+}
+
+.card__tagline {
+  display: block;
+  margin: 1em 0;
+  font-family: "MockFlowFont";
+  font-size: .8em;
+  color: #32654b;
+}
+
+.card__status {
+  font-size: .8em;
+  color: #184587;
+}
+
+.card__description {
+  padding: 0 2em 2em;
+  margin: 0;
+  color: #327553;
+  font-family: "MockFlowFont";
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }

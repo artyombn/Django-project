@@ -9,7 +9,6 @@ from user.group_permission import GroupRequiredMixin
 
 
 def category_list_view(request):
-
     categories = Category.objects.all()
     return render(request, "category/list.html", {"categories": categories})
 
@@ -18,10 +17,9 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'category/list.html'
 
-class CategoryDetailView(GroupRequiredMixin, DetailView):
+class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category/category_detail.html'
-    group_name = "User"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
