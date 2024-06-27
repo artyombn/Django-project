@@ -5,18 +5,65 @@
 {%  endblock %}
 
 {% block body %}
-    <h1>USERS:</h1>
+    <h1 class="my-4">USERS:</h1>
 
-    <ul>
-        {% for user in users %}
-            <li>
-                    {{ user }} - {{ user.email }} - {{ user.groups.all }}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for user in users %}
+                <div class="col">
+                    <div class="card">
+                        <a href="{% url 'users:profile' pk=user.pk %}">
+                            <img src="{{ user.avatar.url }}" class="card-img-top rounded-circle" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;">
+                        </a>
+                        <div class="card-body">
+                            <a href="{% url 'users:profile' pk=user.pk %}" style="text-decoration: none; color: #0c8e5e">
+                                <h5 class="card-title" style="font-size: 30px;">{{ user }}</h5>
+                            </a>
+                            <p class="card-text"><small>Email: {{ user.email }}</small></p>
+                            <p class="card-text"><small>First name: {{ user.first_name }}</small></p>
+                            <p class="card-text"><small>Last name: {{ user.last_name }}</small></p>
+                            <p class="card-text"><small>Age: {{ user.age }}</small></p>
+                            <p class="card-text"><small>Groups:
+                                {% if user.groups.all %}
+                                    {% for group in user.groups.all %}
+                                        {{ group }} /
+                                    {% endfor %}
+                                {% else %}
+                                    User doesn't have groups
+                                {% endif %}
+                                </small>
+                            </p>
 
-<div class="container">
-    {% include "components/back_home.html" %}
-</div>
+                                <div class="card" style="width: 20rem; margin-top: 2rem;">
+                                    <div class="card-body">
+                                        <p class="card-text" style="font-style: initial; text-align: center">
+                                            <small>
+                                                <span style="font-weight: bold; text-transform: uppercase;">{{ user }}</span>'s Ideas:
+                                                <ul style="list-style: none; padding: 0;">
+                                                    {% for idea in user.idea_set.all %}
+                                                        <li>
+                                                            <a href="{% url 'ideas:detail' pk=idea.pk %}" style="display: block; text-align: center;">
+                                                                {{ idea.title }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            <p style="margin-top: 2rem;"><small>Join date: {{ user.date_joined }} </small></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container my-4">
+        {% include "components/back_home.html" %}
+    </div>
 
 {% endblock %}

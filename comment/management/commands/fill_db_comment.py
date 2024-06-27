@@ -10,9 +10,9 @@ class Command(BaseCommand):
 
         print("Filling db Comments...")
 
-        # нужно будет потом настроить сессию, чтобы получать user из формы комментария
         user1 = User.objects.get(username='artyombn')
         user2 = User.objects.get(username='user')
+        user3=User.objects.get(username='test')
 
         ideas1 = Idea.objects.filter(author=user1)
         ideas2 = Idea.objects.filter(author=user2)
@@ -35,7 +35,12 @@ class Command(BaseCommand):
                 "idea": idea1,
             },
             {
-                "author": user1,
+                "author": user2,
+                "text": "Random comment #2",
+                "idea": idea1,
+            },
+            {
+                "author": user3,
                 "text": "Random comment #2",
                 "idea": idea1,
             },

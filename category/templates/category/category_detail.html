@@ -20,13 +20,15 @@
 
     <div class="row">
 
-        <div class="col-md-6">
-            <div class="card bg-white text-grey" style="width: 500px; height: 600px;">
-              <img class="card-img" src='{{ category.image.url }}' alt="Category image" style="position: absolute; bottom: 30px; width: 450px; height: 450px;">
+        <div class="col-sm-10 col-md-10 col-lg-6 col-xl-6">
+            <div class="card bg-white text-grey" style="width: 475px; height: 550px;">
+              <img class="card-img" src='{{ category.image.url }}' alt="Category image" style="position: absolute; bottom: 90px; width: 480px; height: 400px">
               <div class="card-img-overlay">
-                  <h2 class="card-title">{{ object.title }}</h2>
-                  <h5 class="card-text">{{ object.description }}</h5>
-                  <div id="element" style="position: absolute; bottom: 0; right: 20px;">Last updated {{ object.updated_at }}</div>
+                  <h2 class="card-title" style="text-align: center">{{ object.title }}</h2>
+                  <div id="element" style="position: absolute; bottom: 40px; text-align: center;">{{ object.description }}</div>
+                      <div class="card-footer">
+                          <small class="text-body-secondary" style="position: absolute; bottom: 2px; right: 120px;">Last updated {{ object.updated_at }}</small>
+                      </div>
 
               </div>
             </div>
@@ -35,7 +37,7 @@
 
     {% if ideas %}
 
-        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="border p-3">
                   <div class="border" style="text-align: center">
                       <h3>IDEAS IN THIS CATEGORY:</h3>

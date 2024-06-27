@@ -5,12 +5,9 @@
                 <a href="{% url 'category:detail' pk=category.id %}" class="text-decoration-none">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title text-center">{{ category.title }}</h5>
-                            <p class="card-text text-center">{{ category.description }}</p>
+                            <h5 class="card-title text-center" style="color: #428764">{{ category.title }}</h5>
+                            <p class="card-text text-center" style="font-style: italic;">{{ category.description }}</p>
                         </div>
-{#                        <div class="card-footer">#}
-{#                            <small class="text-body-secondary">Last updated {{ category.updated_at }}</small>#}
-{#                        </div>#}
                     </div>
                 </a>
             </div>

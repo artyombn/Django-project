@@ -21,7 +21,7 @@
 <img src="{{ object.avatar.url }}" alt="Avatar" width="120" height="120" class="m-3">
 
 {% if request.user.id == user.id %}
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_form.as_p }}
 

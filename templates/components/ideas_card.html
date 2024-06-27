@@ -1,3 +1,5 @@
+{% load user_tags %}
+
 <div class="container my-1">
     <div class="row row-cols-1 row-cols-xxl-2 row-cols-xl-2 row-cols-lg-2 row-cols-md-1 row-cols-sm-1 g-5 my-1">
         {% for idea in ideas %}
@@ -6,17 +8,15 @@
                   <img src="{{ idea.image.url }}" class="card__image" alt="{{ idea.name }}" />
                   <div class="card__overlay">
                     <div class="card__header">
-                      <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
                         <h4 class="card-title" style="color: #428764">{{ idea.title }}</h4>
                       <img class="card__thumb" src="{{ idea.author.avatar.url }}" alt="avatar" />
                       <div class="card__header-text">
-                        <h3 class="card__title" style="font-size: 17px;">{{ idea.author.username }}
-                          {% load user_tags %}
-
-                        {% if idea.author|check_in_group:"Admin" %}
-                            <img src="/media/user_groups/admin.png" alt="admin" width="25" height="25">
-                        {% endif %}</h3>
-                        <span class="card__status" style="font-size: 13px;">{{ idea.created_at }}</span>
+                          <h3 class="card__title" style="font-size: 17px;">
+                                  {{ idea.author.username }}
+                              {% if idea.author|check_in_group:"Admin" %}
+                                  <img src="/media/user_groups/admin.png" alt="admin" width="25" height="25">
+                              {% endif %}</h3>
+                          <span class="card__status" style="font-size: 13px;">{{ idea.created_at }}</span>
                       </div>
                     </div>
                       <p class="card__description" style="font-size: 25px; margin-top: -10px; margin-bottom: -40px;">{{ idea.category }}</p>

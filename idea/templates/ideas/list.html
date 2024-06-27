@@ -12,17 +12,19 @@
                 <div class="col">
                     <a href="{% url 'ideas:detail' pk=idea.id %}" class="text-decoration-none">
                         <div class="card h-100">
-                            <img src="{{ idea.image.url }}" class="card-img-top" alt="{{ idea.name }}">
+                         <img src="{{ idea.image.url }}" class="card-img-top mx-auto d-block" alt="{{ idea.name }}" style="width: 500px; height: 350px;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ idea.title }}</h5>
-                                <p class="card-text">{{ idea.category }}</p>
-                                <p class="card-text">{{ idea.description }}</p>
+                                <h5 class="card-title text-center" style="font-size: 24px;">{{ idea.title }}</h5>
+                                <p class="card-text text-center" style="font-size: 20px; color: #428764;">{{ idea.category }}</p>
+                                <p class="card-text text-center">{{ idea.description }}</p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-body-secondary">Author {{ idea.author }}</small>
+                                <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center; font-size: 17px;">Author
+                                    {{ idea.author }}
+                                </small>
                             </div>
                             <div class="card-footer">
-                                <small class="text-body-secondary">Last updated {{ idea.updated_at }}</small>
+                                <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center;">Last updated {{ idea.updated_at }}</small>
                             </div>
                         </div>
                     </a>

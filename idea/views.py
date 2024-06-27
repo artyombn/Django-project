@@ -44,7 +44,7 @@ class IdeasCreateView(GroupRequiredMixin, CreateView):
     model = Idea
     form_class = IdeasForm
     template_name = 'ideas/idea_form.html'
-    group_name = "User"
+    group_name = ["User"]
 
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
@@ -55,7 +55,7 @@ class IdeasUpdateView(GroupRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Idea
     fields = '__all__'
     template_name = 'ideas/idea_update_form.html'
-    group_name = "User"
+    group_name = ["User"]
 
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})

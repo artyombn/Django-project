@@ -16,18 +16,28 @@ class Command(BaseCommand):
             username="artyombn",
             first_name="Artyom",
             last_name="Balabashin",
-            age=21,
+            age=29,
             email="balabashin@gmail.com",
             password='admin',
+            avatar='/user_avatars/man-avatar.png',
         )
 
         user2 = User.objects.create_user(
             username="user",
+            first_name="Anna",
+            last_name="Dmitrieva",
+            age=27,
+            email="annadm@gmail.com",
+            password='user',
+            avatar='/user_avatars/woman-avatar.png',
+        )
+        user3 = User.objects.create_user(
+            username="test",
             first_name="Kolia",
             last_name="Tokaev",
             age=27,
             email="tokaaa@gmail.com",
-            password='user',
+            password='test',
         )
 
 
@@ -46,8 +56,5 @@ class Command(BaseCommand):
         artyombn.groups.add(user_group, admin_group, verified_group)
         user2.groups.add(user_group, investor_group, verified_group)
 
-
-        print(Group.objects.all())
-        print(f"group Artyombn: {artyombn.groups.all()}")
 
 

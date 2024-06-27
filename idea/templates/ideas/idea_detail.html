@@ -6,7 +6,6 @@
 
 {% block body %}
 
-<div class="container mt-5">
     {% if user.is_authenticated and user.id == idea.author.id or user.is_staff %}
         <div class="mb-3">
             <a href="{% url 'ideas:update' pk=idea.id %}" class="btn btn-primary">
@@ -16,43 +15,42 @@
                 Delete
             </a>
         </div>
-
     {% endif %}
 
-    <!-- Первый элемент сетки -->
+<div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
-            <div class="card bg-white text-black" style="width: 100%; height: 400px;">
-                <img class="card-img" src="{{ idea.image.url }}" alt="Card image" style="width: 100%; height: 100%;">
-                <div class="card-img-overlay">
-                    <h2 class="card-title">{{ object.title }}</h2>
-                    <h5 class="card-text">{{ object.description }}</h5>
-                    <div id="element" style="position: absolute; bottom: 20px; right: 20px;">
-                        Author {{ object.author }}
-                    </div>
-                    <div id="element" style="position: absolute; bottom: 0; right: 20px;">
-                        Last updated {{ object.updated_at }}
-                    </div>
-                </div>
+        <!-- Первый элемент сетки -->
+        <div class="col-10 col-sm-12 col-md-10 col-lg-8 col-xl-6 col-xxl-6">
+            <div class="wrapper" style="margin-bottom: -60px; margin-top: -90px; margin-right: -140px;">
+                <figure class="cardb">
+                    <img src="{{ idea.image.url }}" width="640" height="400" alt="idea_image"/>
+                    <figcaption>
+                        <h5 style="color: #5e5e5e; font-size: 30px;">{{ idea.title }}</h5>
+                        <blockquote style="color: #5e5e5e; font-size: 30px;"></blockquote>
+                        <cite></cite>
+                        <p class="credit">
+                            <strong><a style="font-size: 20px;" href="{% url 'users:profile' pk=idea.author.pk %}">{{ idea.author }}</a></strong>, {{ idea.created_at }}
+                        </p>
+                    </figcaption>
+                </figure>
             </div>
-
             <a href="#">Rating</a>
             <a href="#">Share</a>
             <a href="#">Become co-author</a>
             <a href="#">Invest</a>
-
             <div class="mt-4">
                 <a href="{% url 'ideas:list' %}">Back to the Idea list</a>
             </div>
         </div>
 
-
         <!-- Второй элемент сетки -->
-        <div class="col-sm-12 col-md-10 col-lg-10 col-xl-6">
+       <div class="col-10 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
             <div class="border p-3">
                 {% include "components/comment.html" with idea=idea comments=idea.comments.all %}
             </div>
         </div>
     </div>
 </div>
+
+
 {% endblock %}

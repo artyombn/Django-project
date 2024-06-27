@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 
 from idea.models import Idea
 from .models import User
 from .forms import RegisterForm, UserProfileForm
+from .group_permission import GroupRequiredMixin
 
 
 class RegisterView(CreateView):
@@ -42,7 +44,16 @@ class UserProfile(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('users:profile', kwargs={'pk': self.object.pk})
 
-def users_list_view(request):
 
-    users = User.objects.prefetch_related('groups').all()
-    return render(request, "user/list.html", {"users": users})
+class UserListView(GroupRequiredMixin, ListView):
+    model = User
+    template_name = 'user/list.html'
+    context_object_name = 'users'
+
+    group_name = ["User"]
+
+    def test_func(self):
+        return self.staff_permission()
+
+    def staff_permission(self):
+        return self.request.user.is_staff

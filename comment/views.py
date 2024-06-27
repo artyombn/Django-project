@@ -35,8 +35,9 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = 'comment/comment_detail.html'
 
-class CommentCreateView(BaseCommentView, CreateView):
+class CommentCreateView(GroupRequiredMixin, CreateView):
     form_class = CommentForm
+    group_name = ["User"]
     # template_name = 'comment/comment_form.html'
 
     def form_valid(self, form):

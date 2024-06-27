@@ -10,7 +10,6 @@ from contacts.views import contact_view, status_view
 
 urlpatterns = [
     path('ideas/', include('idea.urls', namespace='ideas')),
-    # path('', include('category.urls', namespace='categories')),
     path('', views.index, name='index'),
     path('categories/', include('category.urls', namespace='categories')),
     path('comments/', include('comment.urls')),
