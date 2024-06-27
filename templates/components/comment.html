@@ -1,91 +1,145 @@
 <section style="background-color: rgba(250,250,250,0);">
-  <div class="col-sm-12 col-md-10 col-lg-10 col-xl-12 col-xxl-12">
-    <div class="row">
-    <h2 class="mt-3">Add new comment:</h2>
-    {% if user.is_authenticated %}
-    {{ comment_form.comment }}
-        <form id="commentForm" method="post" enctype="multipart/form-data" action="{% url "ideas:add_comment" pk=idea.pk %}" style="width: 600px">
-            {% csrf_token %}
-            <textarea id="commentTextArea" class="form-control" name="text" rows="3" style="background: #fff;" ></textarea>
-            <div class="d-flex justify-content-end gap-2">
-                <button id="postCommentButton" type="button" class="button56">Post comment</button>
-                <button id="clearCommentButton" type="button" class="button56">Clear</button>
-            </div>
-        </form>
-    {% else %}
-        <p><a href="{% url 'users:login' %}">Login</a> to write comment.</p>
-    {% endif %}
-</div>
-
-  <div class="row my-3">
-      <div class="col-sm-12 col-md-12 col-lg-10 col-xl-12 col-xxl-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="row mb-4">
-                {% if comments %}
-                    <p style="font-size: 17px; margin-bottom: 20px; text-align: center;">Total comments: ({{ comments.count }})</p>
-                    {% for comment in idea.comments.all %}
-                    <div class="col-12">
-                        <div class="d-flex align-items-start mb-2">
-                            <a href="{% url 'users:profile' pk=comment.author.id %}">
-                                <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="60" height="60">
-                            </a>
-                            <div class="flex-grow-1">
-                                <h6 class="fw-bold text-primary mb-1">
-                                    <a href="{% url 'users:profile' pk=comment.author.id %}" style="text-decoration: none;">{{ comment.author }}
-
-                                    {% load user_tags %}
-
-                                    {% if comment.author|check_in_group:"Admin" %}
-                                        <img src="/media/user_groups/admin.png" alt="admin" width="20" height="20">
-                                    {% endif %}
-                                    </a>
-                                </h6>
-
-                                <p class="text-muted small mb-0">{{ comment.created_at }}</p>
-                            </div>
-                        </div>
-                        <p class="me-3 mb-2">{{ comment.text }}</p>
+    <div class="col-sm-12 col-md-10 col-lg-10 col-xl-12 col-xxl-12">
+        <div class="row">
+            <h2 class="mt-3">Add new comment:</h2>
+            {% if user.is_authenticated %}
+                {{ comment_form.comment }}
+                <form id="commentForm" method="post" enctype="multipart/form-data" action="{% url "ideas:add_comment" pk=idea.pk %}" style="width: 600px">
+                    {% csrf_token %}
+                    <textarea id="commentTextArea" class="form-control" name="text" rows="3" style="background: #fff;" ></textarea>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button id="postCommentButton" type="button" class="button56">Post comment</button>
+                        <button id="clearCommentButton" type="button" class="button56">Clear</button>
                     </div>
-
-                            <div class="small d-flex justify-content-start">
-                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                    <i class="far fa-thumbs-up me-2"></i>
-                                    <p>Like</p>
-                                </a>
-                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                    <i class="fas fa-share me-2"></i>
-                                    <p>Share</p>
-                                </a>
-                                <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                    <i class="fas fa-share me-2"></i>
-                                    <p>Reply</p>
-                                </a>
-
-                                {% if user.is_staff or user.id == comment.author.id %}
-                                    <p><a href="{% url 'comment:update' pk=comment.id %}">Edit</a>
-                                    |
-                                        <a href="{% url 'comment:delete' pk=comment.id %}">Delete</a></p>
-                                {% endif %}
-                            </div>
-
-                    {% endfor %}
-                {% else %}
-                    <p style="text-align: center; font-size: 17px; margin-bottom: 0; margin-top: 15px;">No comments so far</p>
-                {% endif %}
-            </div>
-
-          </div>
+                </form>
+            {% else %}
+                <p><a href="{% url 'users:login' %}">Login</a> to write comment.</p>
+            {% endif %}
         </div>
-      </div>
+
+        <div class="row my-3">
+            <div class="col-sm-12 col-md-12 col-lg-10 col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            {% if comments %}
+                                <p style="font-size: 17px; margin-bottom: 20px; text-align: center;">Total comments: ({{ comments.count }})</p>
+                                {% for comment in idea.comments.all %}
+                                    <div class="col-12">
+                                        <div class="d-flex align-items-start mb-2">
+                                            <a href="{% url 'users:profile' pk=comment.author.id %}">
+                                                <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="60" height="60">
+                                            </a>
+                                            <div class="flex-grow-1">
+                                                <h6 class="fw-bold text-primary mb-1">
+                                                    <a href="{% url 'users:profile' pk=comment.author.id %}" style="text-decoration: none;">{{ comment.author }}
+
+                                                    {% load user_tags %}
+
+                                                    {% if comment.author|check_in_group:"Admin" %}
+                                                        <img src="/media/user_groups/admin.png" alt="admin" width="20" height="20">
+                                                    {% endif %}
+                                                    </a>
+                                                </h6>
+
+                                                <p class="text-muted small mb-0">{{ comment.created_at }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="me-3 mb-2">{{ comment.text }}</p>
+
+                                        <div class="small d-flex justify-content-start">
+                                            <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                                <i class="far fa-thumbs-up me-2"></i>
+                                                <p>Like</p>
+                                            </a>
+                                            <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                                <i class="fas fa-share me-2"></i>
+                                                <p>Share</p>
+                                            </a>
+                                            <a href="#!" class="d-flex align-items-center me-3 mb-4">
+                                                <i class="fas fa-share me-2"></i>
+                                                <p>Reply</p>
+                                            </a>
+
+                                            {% if user.is_staff or user.id == comment.author.id %}
+                                                <p>
+                                                    <a href="#" class="update-comment" data-toggle="modal" data-target="#confirmUpdateModal{{ comment.id }}">
+                                                        Edit |
+                                                    </a>
+
+                                                    <a href="#" class="delete-comment" data-toggle="modal" data-target="#confirmDeleteModal{{ comment.id }}">
+                                                        Delete
+                                                    </a>
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Модальное окно подтверждения удаления -->
+                                    <div class="modal fade" id="confirmDeleteModal{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to delete this comment?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <form method="post" action="{% url 'comment:delete' pk=comment.id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Модальное окно для обновления комментария -->
+                                    <div class="modal fade" id="confirmUpdateModal{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmUpdateModalLabel">Update comment</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="updateCommentForm{{ comment.id }}">
+                                                        {% csrf_token %}
+                                                        <div class="form-group">
+                                                            <label for="message-text-{{ comment.id }}" class="col-form-label">Comment text:</label>
+                                                            <textarea class="form-control" id="message-text-{{ comment.id }}"></textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-primary" data-update-url="{% url 'comment:update' pk=comment.id %}" onclick="updateComment({{ comment.id }})">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                {% endfor %}
+                            {% else %}
+                                <p style="text-align: center; font-size: 17px; margin-bottom: 0; margin-top: 15px;">No comments so far</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-
-
 </section>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
 <script>
+// Comment create
+
 document.addEventListener('DOMContentLoaded', function() {
     var postCommentButton = document.getElementById('postCommentButton');
     var commentTextArea = document.getElementById('commentTextArea');
@@ -117,11 +171,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+// Comment delete
+
+$(document).ready(function() {
+    $(document).on('click', '.delete-comment', function(e) {
+        e.preventDefault();
+        var deleteUrl = $(this).attr('href');
+
+        $('#confirmDeleteModal{{ comment.id }}').modal('show');
+        $('#confirmDeleteModal{{ comment.id }}').on('click', '.btn-danger', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    console.log('Comment deleted successfully');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error deleting comment:', error);
+                    $('#confirmDeleteModal{{ comment.id }}').modal('hide');
+                }
+            });
+        });
+    });
+
+});
+
+
+window.updateComment = function(commentId) {
+    const commentText = document.getElementById(`message-text-${commentId}`).value;
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    // Получение URL-адреса обновления комментария из data-атрибута кнопки "Обновить"
+    const updateUrl = document.querySelector(`#confirmUpdateModal${commentId} button[data-update-url]`).getAttribute('data-update-url');
+
+    fetch(updateUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({ text: commentText }),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Error comment update');
+        }
+    })
+    .then(data => {
+        document.getElementById(`comment-text-${commentId}`).innerText = data.text;
+        $(`#confirmUpdateModal${commentId}`).modal('hide');
+        history.go(0)
+    })
+    .catch(error => {
+        console.error('error fetch:', error);
+    });
+};
+
 </script>
-
-
-
-
-
-
-

@@ -3,6 +3,10 @@ from .models import Idea, Category, User
 
 class IdeasForm(forms.ModelForm):
 
+    class Meta:
+        model = Idea
+        fields = ('title', 'description', 'category', 'image')
+
     title = forms.CharField(
         label='Idea Title',
         # initial='New Idea',
@@ -27,12 +31,6 @@ class IdeasForm(forms.ModelForm):
     category = forms.ModelChoiceField(
         queryset=Category.objects.all(),
         empty_label='Select category',
-        # required = False,  # запрещено на уровне модели
-    )
-
-    author = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        empty_label='Select author',
     )
 
     image = forms.ImageField(
@@ -40,6 +38,10 @@ class IdeasForm(forms.ModelForm):
         required=False,
     )
 
-    class Meta:
-        model = Idea
-        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request', None)
+        super(IdeasForm, self).__init__(*args, **kwargs)
+        if request:
+            self.fields['author'].initial = request.user
+            self.fields['author'].widget = forms.HiddenInput()

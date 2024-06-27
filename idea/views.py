@@ -49,6 +49,11 @@ class IdeasCreateView(GroupRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.object.pk})
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
 
 
 class IdeasUpdateView(GroupRequiredMixin, UserPassesTestMixin, UpdateView):

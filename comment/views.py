@@ -2,6 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
 
 from idea.models import Idea
 from .forms import CommentForm
@@ -41,19 +45,29 @@ class CommentCreateView(GroupRequiredMixin, CreateView):
     # template_name = 'comment/comment_form.html'
 
     def form_valid(self, form):
-        print('Form valid')
         form.instance.author = self.request.user
         form.instance.idea = get_object_or_404(Idea, pk=self.kwargs.get("pk"))
         return super().form_valid(form)
 
     def get_success_url(self):
-        print('get_success done')
         return reverse_lazy('comment:detail', kwargs={'pk': self.object.pk})
 
 
-class CommentUpdateView(BaseCommentView, UserPassesTestMixin, UpdateView):
+class CommentUpdateView(UserPassesTestMixin, UpdateView):
+    model = Comment
     form_class = CommentForm
     template_name = 'comment/comment_update_form.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        comment = self.get_object()
+        data = json.loads(request.body)
+        comment.text = data.get('text', comment.text)
+        comment.save()
+        return JsonResponse({'text': comment.text})
 
     def get_object(self, queryset=None):
         comment = super().get_object(queryset)
@@ -62,13 +76,9 @@ class CommentUpdateView(BaseCommentView, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('ideas:detail', kwargs={'pk': self.comment.idea.pk})
-        # return reverse_lazy('comment:detail', kwargs={'pk': self.object.pk})
 
     def test_func(self):
-        return self.author_or_staff_permission()
-
-    def author_or_staff_permission(self):
-        comment = get_object_or_404(Comment, pk=self.kwargs['pk'])
+        comment = self.get_object()
         return self.request.user.is_staff or comment.author == self.request.user
 
 class CommentDeleteView(BaseCommentView, UserPassesTestMixin, DeleteView):
