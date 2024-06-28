@@ -1,6 +1,6 @@
 from django.db import models
-from category.models import Category
-from user.models import User
+from common_imports.validation import category_import
+from common_imports.validation import user_import
 
 
 # STATUS_CHOICES = [
@@ -13,8 +13,8 @@ from user.models import User
 class Idea(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey('category.Category', on_delete=models.CASCADE)
+    author = models.ForeignKey('user.User', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='idea_images/', default='idea_images/no_idea.jpg')
@@ -29,3 +29,18 @@ class Idea(models.Model):
 
     def comments_count(self):
         return self.comments.count()
+
+
+
+class Likes(models.Model):
+    User = user_import()
+
+    idea = models.ForeignKey(Idea, verbose_name='Idea', on_delete=models.CASCADE)
+    author = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE)
+
+
+class DisLikes(models.Model):
+    User = user_import()
+
+    idea = models.ForeignKey(Idea, verbose_name='Idea', on_delete=models.CASCADE)
+    author = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE)

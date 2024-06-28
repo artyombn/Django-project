@@ -1,7 +1,11 @@
 from django import forms
-from .models import Idea, Category, User
+from .models import Idea
+from common_imports.validation import category_import, user_import
 
 class IdeasForm(forms.ModelForm):
+
+    Category = category_import()
+    User = user_import()
 
     class Meta:
         model = Idea

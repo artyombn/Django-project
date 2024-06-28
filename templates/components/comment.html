@@ -48,10 +48,16 @@
                                         <p class="me-3 mb-2">{{ comment.text }}</p>
 
                                         <div class="small d-flex justify-content-start">
-                                            <a href="#!" class="d-flex align-items-center me-3 mb-4">
-                                                <i class="far fa-thumbs-up me-2"></i>
-                                                <p>Like</p>
-                                            </a>
+
+                                            <div class="like-dislike-container">
+                                                <a href="{% url 'comment:comment_like' comment.id %}" class="like-button">
+                                                    <span class="like-icon">
+                                                        &#9829;
+                                                        <span class="like-count">{{ comment.commentlikes_set.all.count }}</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+
                                             <a href="#!" class="d-flex align-items-center me-3 mb-4">
                                                 <i class="fas fa-share me-2"></i>
                                                 <p>Share</p>

@@ -1,15 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+from django.views.generic.base import View
 
 from idea.models import Idea
 from .forms import CommentForm
-from .models import Comment
+from .models import Comment, CommentLikes
 from user.group_permission import GroupRequiredMixin
 
 
@@ -99,3 +100,27 @@ class CommentDeleteView(BaseCommentView, UserPassesTestMixin, DeleteView):
     def author_or_staff_permission(self):
         comment = get_object_or_404(Comment, pk=self.kwargs['pk'])
         return self.request.user.is_staff or comment.author == self.request.user
+
+
+
+class CommentLike(View):
+
+    def get(self, request, pk):
+        user = request.user
+        if user.is_authenticated:
+            if CommentLikes.objects.filter(comment_id=pk, author=user).exists():
+                comment = Comment.objects.get(pk=pk)
+                idea_id = comment.idea.id
+                like = CommentLikes.objects.get(comment_id=pk, author=user)
+                like.delete()
+                return redirect(reverse('ideas:detail', kwargs={'pk': idea_id}))
+            else:
+                comment = Comment.objects.get(pk=pk)
+                new_like = CommentLikes()
+                new_like.author = request.user
+                new_like.comment = comment
+                new_like.save()
+                idea_id = comment.idea.id
+                return redirect(reverse('ideas:detail', kwargs={'pk': idea_id}))
+        else:
+            return redirect(reverse('users:login'))

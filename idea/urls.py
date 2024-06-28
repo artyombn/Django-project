@@ -15,4 +15,6 @@ urlpatterns = [
     path('idea/<int:pk>/comment/add/', comment_views.CommentCreateView.as_view(), name='add_comment'),
     path('idea/<int:pk>/comment/edit/<int:comment_pk>/', comment_views.CommentUpdateView.as_view(), name='edit_comment'),
     path('idea/<int:pk>/comment/delete/<int:comment_pk>/', comment_views.CommentDeleteView.as_view(), name='delete_comment'),
+    path('idea/<int:pk>/add_likes/', views.AddLike.as_view(), name='add_likes'),
+    path('idea/<int:pk>/add_dislikes/', views.DisLike.as_view(), name='add_dislikes'),
 ]

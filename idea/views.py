@@ -1,14 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView
-from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic.base import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from category.models import Category
 from comment.forms import CommentForm
-from comment.models import Comment
-from .models import Idea
+from .models import Idea, Likes, DisLikes
 from .forms import IdeasForm
 from user.group_permission import GroupRequiredMixin
 
@@ -20,7 +18,7 @@ def index(request):
 
 def ideas_list_view(request):
 
-    ideas = Idea.objects.select_related("category").select_related("author").all()
+    ideas = Idea.objects.select_related("category").select_related("author").select_related("likes").all()
     return render(request, 'ideas/list.html', {'ideas': ideas})
 
 
@@ -83,3 +81,61 @@ class IdeasDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def author_or_staff_permission(self):
         idea = get_object_or_404(Idea, pk=self.kwargs['pk'])
         return self.request.user.is_staff or idea.author == self.request.user
+
+
+class AddLike(View):
+    def get(self, request, pk):
+        user = request.user
+        if user.is_authenticated:
+            if Likes.objects.filter(idea_id=pk, author=user).exists():
+                like = Likes.objects.get(idea_id=pk, author=user)
+                like.delete()
+                return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+            else:
+                try:
+                    dislike = DisLikes.objects.filter(idea_id=pk, author=user)
+                    dislike.delete()
+
+                    new_like = Likes()
+                    new_like.author = request.user
+                    new_like.idea_id = int(pk)
+                    new_like.save()
+                    return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+
+                except:
+                    new_like = Likes()
+                    new_like.author = request.user
+                    new_like.idea_id = int(pk)
+                    new_like.save()
+                    return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+        else:
+            return redirect(reverse('users:login'))
+
+
+class DisLike(View):
+    def get(self, request, pk):
+        user = request.user
+        if user.is_authenticated:
+            if DisLikes.objects.filter(idea_id=pk, author=user).exists():
+                dislike = DisLikes.objects.get(idea_id=pk, author=user)
+                dislike.delete()
+                return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+            else:
+                try:
+                    like = Likes.objects.get(idea_id=pk, author=user)
+                    like.delete()
+
+                    new_dislike = DisLikes()
+                    new_dislike.author = request.user
+                    new_dislike.idea_id = int(pk)
+                    new_dislike.save()
+                    return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+
+                except:
+                    new_dislike = DisLikes()
+                    new_dislike.author = request.user
+                    new_dislike.idea_id = int(pk)
+                    new_dislike.save()
+                return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+        else:
+            return redirect(reverse('users:login'))

@@ -34,6 +34,42 @@
                     </figcaption>
                 </figure>
             </div>
+
+                    <div class="like-dislike-container">
+                        <a href="{% url 'ideas:add_likes' idea.id %}" class="like-button">
+                            <span class="like-icon">
+                                &#9829;
+                                <span class="like-count">{{ idea.likes_set.all.count }}</span>
+                            </span>
+                        </a>
+                        <a href="{% url 'ideas:add_dislikes' idea.id %}" class="dislike-button">
+                            <span class="dislike-icon">
+                                &#128078;
+                                <span class="dislike-count">{{ idea.dislikes_set.all.count }}</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <br>
+                        {% if idea.likes_set.all.count != 0 %}
+                            <p>Who liked this Idea:
+                            {% for like in idea.likes_set.all %}
+                                {{ like.author.username }}
+                            {% endfor %}
+                            </p>
+                        {% endif %}
+                        <br>
+                        {% if idea.dislikes_set.all.count != 0 %}
+                            <p>Who Disliked this Idea:
+                            {% for dislike in idea.dislikes_set.all %}
+                                {{ dislike.author.username }}
+                            {% endfor %}
+                            </p>
+                        {% endif %}
+                    </div>
+
+
             <a href="#">Rating</a>
             <a href="#">Share</a>
             <a href="#">Become co-author</a>
