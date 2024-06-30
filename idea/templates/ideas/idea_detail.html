@@ -35,45 +35,59 @@
                 </figure>
             </div>
 
-                    <div class="like-dislike-container">
-                        <a href="{% url 'ideas:add_likes' idea.id %}" class="like-button">
-                            <span class="like-icon">
-                                &#9829;
-                                <span class="like-count">{{ idea.likes_set.all.count }}</span>
-                            </span>
-                        </a>
-                        <a href="{% url 'ideas:add_dislikes' idea.id %}" class="dislike-button">
-                            <span class="dislike-icon">
-                                &#128078;
-                                <span class="dislike-count">{{ idea.dislikes_set.all.count }}</span>
-                            </span>
-                        </a>
-                    </div>
+                <div class="like-dislike-container">
+                    <a href="{% url 'ideas:add_likes' idea.id %}" class="like-button">
+                        <span class="like-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="
+                            {% if idea.likes_set.all.count == 0 %}
+                                No likes yet
+                            {% else %}
+                                Liked:
+                                {% for like in idea.likes_set.all %}
+                                    {{ like.author.username }} ,
+                                {% endfor %}
+                            {% endif %}
+                        ">
+                            &#9829;
+                            <span class="like-count">{{ idea.likes_set.all.count }}</span>
+                        </span>
+                    </a>
+                    <a href="{% url 'ideas:add_dislikes' idea.id %}" class="dislike-button" data-bs-toggle="tooltip" data-bs-placement="top" title="
+                            {% if idea.dislikes_set.all.count == 0 %}
+                                No dislikes. Great!
+                            {% else %}
+                                Disliked:
+                                {% for dislike in idea.dislikes_set.all %}
+                                    {{ dislike.author.username }} ,
+                                {% endfor %}
+                            {% endif %}
+                        ">
+                        <span class="dislike-icon">
+                            &#128078;
+                            <span class="dislike-count">{{ idea.dislikes_set.all.count }}</span>
+                        </span>
+                    </a>
+                </div>
 
-                    <div>
-                        <br>
-                        {% if idea.likes_set.all.count != 0 %}
-                            <p>Who liked this Idea:
-                            {% for like in idea.likes_set.all %}
-                                {{ like.author.username }}
-                            {% endfor %}
-                            </p>
+                <div class="container">
+                    <a href="#">Rating</a>
+                    <a href="#">Share</a>
+                    <a href="#">Become co-author</a>
+                    <a href="#">Invest</a>
+                    <br>
+                    <br>
+                    <p>Idea Status:
+                        {% if idea.status.status == 'active' %}
+                            <span class="badge rounded-pill text-bg-primary">{{ idea.status.status }}</span>
+                        {% elif idea.status.status == 'pending' %}
+                            <span class="badge rounded-pill text-bg-warning">{{ idea.status.status }}</span>
+                        {% elif idea.status.status == 'completed' %}
+                            <span class="badge rounded-pill text-bg-success">{{ idea.status.status }}</span>
+                        {% else %}
+                            <span class="badge rounded-pill text-bg-secondary">No status</span>
                         {% endif %}
-                        <br>
-                        {% if idea.dislikes_set.all.count != 0 %}
-                            <p>Who Disliked this Idea:
-                            {% for dislike in idea.dislikes_set.all %}
-                                {{ dislike.author.username }}
-                            {% endfor %}
-                            </p>
-                        {% endif %}
-                    </div>
+                    </p>
+                </div>
 
-
-            <a href="#">Rating</a>
-            <a href="#">Share</a>
-            <a href="#">Become co-author</a>
-            <a href="#">Invest</a>
             <div class="mt-4">
                 <a href="{% url 'ideas:list' %}">Back to the Idea list</a>
             </div>
@@ -88,5 +102,18 @@
     </div>
 </div>
 
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+});
+
+</script>
+
 
 {% endblock %}
+
+

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'category',
     'comment',
     'idea',
-    'ideastatus',
     'investment',
     'partnership',
     'rating',

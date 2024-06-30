@@ -82,21 +82,24 @@ User
 28 Июня:
 - Система лайков для Idea (Like + Dislike)
 - Система лайков для Comment (Like only)
+- Обновление фронтэнда (icons + tooltips)
 
+30 Июня:
+- Добавление статусов Idea (active, pending, completed)
+-
 
 
 Пофиксить:
 - Модальное окно Update comment - не перезагружает страницу после успешного обновления
-
-
+- Изменить главную:
+Help others to implement their Ideas
+Start from exploration of all the Ideas and become Co-Authors or Investor
+Create your own Idea if you have any
 
 
 СДЕЛАТЬ:
-- Доработать Ideastatus
-- Доработать Investment
 - Доработать Partnership
 - Доработать Rating
-- Система лайков
 - Значки для групп
 - Система уведомлений
 - Обновить ссылки Footer
