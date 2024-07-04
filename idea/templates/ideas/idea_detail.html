@@ -69,12 +69,7 @@
                 </div>
 
                 <div class="container">
-                    <a href="#">Rating</a>
-                    <a href="#">Share</a>
-                    <a href="#">Become co-author</a>
-                    <a href="#">Invest</a>
-                    <br>
-                    <br>
+                    <hr>
                     <p>Idea Status:
                         {% if idea.status.status == 'active' %}
                             <span class="badge rounded-pill text-bg-primary">{{ idea.status.status }}</span>
@@ -86,6 +81,47 @@
                             <span class="badge rounded-pill text-bg-secondary">No status</span>
                         {% endif %}
                     </p>
+                    <hr>
+
+                    <a href="#">Rating</a>
+                    <hr>
+
+                    <a href="#">Share</a>
+                    <hr>
+
+                    <a href="#">Become co-author</a>
+                    <div>
+                        <small>Co-Authors:
+                            <ul>
+                            {% for co_author in idea.coauthor_set.all %}
+                                <li>User: {{ co_author.user.username }}</li>
+                                <li>Role: {{ co_author.role }}</li>
+                                <li>Joined: {{ co_author.joined_at }}</li>
+                                <br>
+                                <br>
+                            {% endfor %}
+                            </ul>
+                        </small>
+                    </div>
+
+                    <hr>
+
+                    <a href="#">Invest to this Idea</a>
+                    <div>
+                        <small>Investors:
+                            <ul>
+                            {% for investor in idea.investor_set.all %}
+                                <li>User: {{ investor.user.username }}</li>
+                                <li>Status: {{ investor.status }}</li>
+                                <li>Investment amount: {{ investor.amount_invested }}$</li>
+                                <li>Investment Type: {{ investor.investment_type }}</li>
+                                <li>Joined: {{ investor.joined_at }}</li>
+                                <li>Note: {{ investor.note }}</li>
+                            {% endfor %}
+                            </ul>
+                        </small>
+                    </div>
+                    <hr>
                 </div>
 
             <div class="mt-4">

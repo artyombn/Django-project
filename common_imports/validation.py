@@ -15,3 +15,7 @@ def comment_import():
 def user_import():
     from user.models import User
     return User
+
+def partnership_import():
+    from partnership.models import CoAuthor
+    return CoAuthor

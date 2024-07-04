@@ -6,7 +6,6 @@ from comment import views as comment_views
 app_name = 'ideas'
 
 urlpatterns = [
-    path('', views.index, name='index'),
     path('list/', views.IdeasListView.as_view(), name='list'),
     path('idea/<int:pk>', views.IdeasDetailView.as_view(), name='detail'),
     path('create/', views.IdeasCreateView.as_view(), name='create'),

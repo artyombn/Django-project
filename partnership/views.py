@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from partnership.models import CoAuthor
 
-# Create your views here.
+
+class CoAuthorsView(ListView):
+    model = CoAuthor
+    template_name = 'partnership/coauthors.html'
+

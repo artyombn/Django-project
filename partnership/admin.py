@@ -1,3 +1,4 @@
 from django.contrib import admin
+from partnership.models import CoAuthor
 
-# Register your models here.
+admin.site.register(CoAuthor)

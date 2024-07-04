@@ -18,6 +18,8 @@ urlpatterns = [
     path('users/', include('user.urls', namespace='users')),
     path("contacts/", contact_view),
     path("status/<str:task_id>/", status_view),
+    path('partnership/', include('partnership.urls', namespace='partnership')),
+    path('investments/', include('investment.urls', namespace='investments'))
 ]
 
 

@@ -86,7 +86,19 @@ User
 
 30 Июня:
 - Добавление статусов Idea (active, pending, completed)
--
+
+3 Июля:
+- Создана модель partnership и отображение соавторов идеи
+- Создана модель investment и отображение инвесторов идеи
+
+
+
+СДЕЛАТЬ ПОСЛЕ:
+- Уведомления
+- Меню пользователя
+- Сделать View для IdeaStatus (чтобы одним нажатием менялся статус)
+- Сделать View для Co-Authors
+- Сделать View для Investors
 
 
 Пофиксить:
@@ -98,8 +110,8 @@ Create your own Idea if you have any
 
 
 СДЕЛАТЬ:
-- Доработать Partnership
-- Доработать Rating
+- Доработать Partnership, Investment
+- Сделать Rating
 - Значки для групп
 - Система уведомлений
 - Обновить ссылки Footer
