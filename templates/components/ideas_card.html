@@ -8,7 +8,19 @@
                   <img src="{{ idea.image.url }}" class="card__image" alt="{{ idea.name }}" />
                   <div class="card__overlay">
                     <div class="card__header">
-                        <h4 class="card-title" style="color: #428764">{{ idea.title }}</h4>
+                        <h4 class="card-title" style="color: #428764">{{ idea.title }}
+                            <p>
+                            {% if idea.status.status == 'active' %}
+                                <span class="badge rounded-pill text-bg-primary" style="font-size: 15px;">{{ idea.status.status }}</span>
+                            {% elif idea.status.status == 'pending' %}
+                                <span class="badge rounded-pill text-bg-warning" style="font-size: 15px;">{{ idea.status.status }}</span>
+                            {% elif idea.status.status == 'completed' %}
+                                <span class="badge rounded-pill text-bg-success" style="font-size: 15px;">{{ idea.status.status }}</span>
+                            {% else %}
+                                <span class="badge rounded-pill text-bg-secondary" style="font-size: 15px;">No status</span>
+                            {% endif %}
+                            </p>
+                        </h4>
                       <img class="card__thumb" src="{{ idea.author.avatar.url }}" alt="avatar" />
                       <div class="card__header-text">
                           <h3 class="card__title" style="font-size: 17px;">

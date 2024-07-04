@@ -1,6 +1,4 @@
 from django.db import models
-from common_imports.validation import idea_import
-from common_imports.validation import user_import
 
 class Comment(models.Model):
     idea = models.ForeignKey('idea.Idea', related_name='comments', on_delete=models.CASCADE, default=1)
@@ -18,7 +16,6 @@ class Comment(models.Model):
         )
 
 class CommentLikes(models.Model):
-    User = user_import()
 
     author = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, verbose_name='Comment', on_delete=models.CASCADE)

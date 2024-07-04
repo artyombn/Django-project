@@ -45,7 +45,19 @@
                 {% for idea in ideas %}
                     <div class="card text-center my-3">
                       <div class="card-body">
-                        <h5 class="card-title"><a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a></h5>
+                        <h5 class="card-title"><a href="{% url 'ideas:detail' pk=idea.id %}">{{ idea.title }}</a>
+
+                            {% if idea.status.status == 'active' %}
+                                <span class="badge rounded-pill text-bg-primary my-2" style="font-size: 13px;">{{ idea.status.status }}</span>
+                            {% elif idea.status.status == 'pending' %}
+                                <span class="badge rounded-pill text-bg-warning my-2" style="font-size: 13px;">{{ idea.status.status }}</span>
+                            {% elif idea.status.status == 'completed' %}
+                                <span class="badge rounded-pill text-bg-success my-2" style="font-size: 13px;">{{ idea.status.status }}</span>
+                            {% else %}
+                                <span class="badge rounded-pill text-bg-secondary my-2" style="font-size: 13px;">No status</span>
+                            {% endif %}
+
+                        </h5>
                         <p class="card-text">{{ idea.description }}</p>
                       </div>
                       <div class="card-footer text-body-secondary">
