@@ -19,7 +19,8 @@ urlpatterns = [
     path("contacts/", contact_view),
     path("status/<str:task_id>/", status_view),
     path('partnership/', include('partnership.urls', namespace='partnership')),
-    path('investments/', include('investment.urls', namespace='investments'))
+    path('investments/', include('investment.urls', namespace='investments')),
+    path('notifications/', include('notifications.urls', namespace='notifications'))
 ]
 
 

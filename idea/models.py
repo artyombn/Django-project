@@ -1,4 +1,7 @@
 from django.db import models
+from notifications.models import Notification
+from django.db.models.signals import post_save, post_delete
+
 
 
 class Idea(models.Model):
@@ -31,11 +34,42 @@ class Likes(models.Model):
     idea = models.ForeignKey(Idea, verbose_name='Idea', on_delete=models.CASCADE)
     author = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE)
 
+    def user_liked_idea(sender, instance, *args, **kwargs):
+        like = instance
+        idea = like.idea
+        sender = like.author
+        notify = Notification(idea=idea, sender=sender, user=idea.author, notification_type=1)
+        notify.save()
+
+    def user_unlike_idea(sender, instance, *args, **kwargs):
+        like = instance
+        idea = like.idea
+        sender = like.author
+
+        notify = Notification.objects.filter(idea=idea, sender=sender, notification_type=1)
+        notify.delete()
+
+
 
 class DisLikes(models.Model):
 
     idea = models.ForeignKey(Idea, verbose_name='Idea', on_delete=models.CASCADE)
     author = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE)
+
+    def user_disliked_idea(sender, instance, *args, **kwargs):
+        dislike = instance
+        idea = dislike.idea
+        sender = dislike.author
+        notify = Notification(idea=idea, sender=sender, user=idea.author, notification_type=2)
+        notify.save()
+
+    def user_undislike_idea(sender, instance, *args, **kwargs):
+        dislike = instance
+        idea = dislike.idea
+        sender = dislike.author
+
+        notify = Notification.objects.filter(idea=idea, sender=sender, notification_type=2)
+        notify.delete()
 
 
 class IdeaStatus(models.Model):
@@ -51,3 +85,15 @@ class IdeaStatus(models.Model):
 
     def __str__(self):
         return self.status
+
+class Favourite(models.Model):
+    idea = models.ForeignKey(Idea, verbose_name='Idea', on_delete=models.CASCADE, related_name='favourite')
+    user = models.ForeignKey('user.User', verbose_name='User', on_delete=models.CASCADE, related_name='user')
+
+
+# Likes
+post_save.connect(Likes.user_liked_idea, sender=Likes)
+post_delete.connect(Likes.user_unlike_idea, sender=Likes)
+# DisLikes
+post_save.connect(DisLikes.user_disliked_idea, sender=DisLikes)
+post_delete.connect(DisLikes.user_undislike_idea, sender=DisLikes)
