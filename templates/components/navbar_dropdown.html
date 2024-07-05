@@ -10,8 +10,8 @@
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{% url 'users:users' %}">All Users</a></li>
                     <li><a class="dropdown-item" href="{% url 'comment:list' %}">All Comments</a></li>
-                    <li><a class="dropdown-item disabled" href="/">All Investments</a></li>
-                    <li><a class="dropdown-item disabled" href="/">All Partnerships</a></li>
+                    <li><a class="dropdown-item " href="{% url 'investment:list' %}">All Investments</a></li>
+                    <li><a class="dropdown-item" href="{% url 'partnership:list' %}">All Partnerships</a></li>
                 </ul>
             </li>
 {#                <li class="nav-item">#}

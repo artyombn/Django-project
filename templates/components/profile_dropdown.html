@@ -1,0 +1,22 @@
+<li class="nav-item dropdown">
+    <a class="nav-link" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="display: flex; align-items: center;">
+        <img src="{{ request.user.avatar.url }}" alt="Аватар" width="40" height="40" style="border-radius: 50%;">
+        <span style="margin-left: 10px; color: white;">{{ request.user.username }}</span>
+
+        {% load user_tags %}
+
+        {% if request.user|check_in_group:"Admin" %}
+            <img src="/media/user_groups/admin.png" alt="admin" width="20" height="20" style="margin-left: 5px;">
+        {% endif %}
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'users:profile' pk=request.user.id %}">My Profile</a></li>
+        <li><a class="dropdown-item" href="#">My Ideas</a></li>
+        <li><a class="dropdown-item" href="#">My Partnerships</a></li>
+        <li><a class="dropdown-item" href="#">My Investments</a></li>
+        <li><a class="dropdown-item" href="#">Favourite Ideas</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'notifications:show-notifications' %}">Notifications</a></li>
+    </ul>
+</li>
