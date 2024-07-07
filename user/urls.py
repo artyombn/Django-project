@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', views.ExitView.as_view(), name='logout'),
     path('users/', views.UserListView.as_view(), name='users'),
     path('profile/<int:pk>/', views.UserProfile.as_view(), name='profile'),
+    path('profile/<int:pk>/following/', views.FollowUser.as_view(), name='following'),
 ]

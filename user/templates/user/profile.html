@@ -14,8 +14,21 @@
 {% load user_tags %}
 
 <h1 style="text-transform: uppercase">{{ object.username }} Profile
+
     {% if object|check_in_group:"Admin" %}
         <img src="/media/user_groups/admin.png" alt="admin" width="40" height="40">
+    {% endif %}
+
+    {% if request.user != user %}
+        {% if check %}
+            <a href="{% url 'users:following' user.id %}" style="text-decoration: none; margin-left: 15px;">
+                <img src="/media/social_media/unfollowuser.png" alt="follow" width="45" height="45">
+            </a>
+        {% else %}
+            <a href="{% url 'users:following' user.id %}" style="text-decoration: none; margin-left: 15px;">
+                <img src="/media/social_media/followuser.png" alt="follow" width="70" height="70">
+            </a>
+        {% endif %}
     {% endif %}
 </h1>
 <img src="{{ object.avatar.url }}" alt="Avatar" width="120" height="120" class="m-3">
@@ -37,18 +50,20 @@
     <p>Age: {{ object.age }}</p>
 
     <br>
-    <a href="#">Follow</a>
+
     <br>
-    <p>Following:
-        {% for follower in object.follower.all %}
-            <li>{{ follower.following }}</li>
+    <p>{{ user.first_name }}'s Followers:
+        {% for following in object.follower.all %}
+            <li><strong>{{ following.following.first_name }} {{ following.following.last_name }}</strong>
+            <small>@{{ following.following.username }}</small></li>
         {% endfor %}
     </p>
     <br>
 
-    <p>Followers:
-        {% for following in object.following.all %}
-            <li>{{ following.follower }}</li>
+    <p>Followed:
+        {% for followers in object.following.all %}
+            <li><strong>{{ followers.follower.first_name }} {{ followers.follower.last_name }}</strong>
+            <small>@{{ followers.follower.username }}</small></li>
         {% endfor %}
     </p>
     <br>

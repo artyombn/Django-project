@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save, post_delete
-from common_imports.validation import notifications_import
 
 
 class User(AbstractUser):
@@ -26,20 +25,20 @@ class Follow(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
 
     def user_follow(sender, instance, *args, **kwargs):
-        notif = notifications_import()
+        from notifications.models import Notification
         follow = instance
-        sender = follow.follower
-        following = follow.following
-        notify = notif(sender=sender, user=following, notification_type=4)
+        sender = follow.following
+        following = follow.follower
+        notify = Notification.objects.create(sender=sender, user=following, notification_type=4)
         notify.save()
 
     def user_unfollow(sender, instance, *args, **kwargs):
-        notif = notifications_import()
+        from notifications.models import Notification
         follow = instance
-        sender = follow.follower
-        following = follow.following
+        sender = follow.following
+        following = follow.follower
 
-        notify = notif.objects.filter(sender=sender, user=following, notification_type=4)
+        notify = Notification.objects.filter(sender=sender, user=following, notification_type=4)
         notify.delete()
 
 

@@ -15,4 +15,10 @@ def DeleteNotification(request, id):
     notification.delete()
     return redirect(reverse('notifications:show-notifications'))
 
+def DeleteAllNotifications(request):
+    user = request.user
+    noty = Notification.objects.filter(user=user)
+    noty.delete()
+    return redirect(reverse('notifications:show-notifications'))
+
 
