@@ -19,3 +19,7 @@ def user_import():
 def partnership_import():
     from partnership.models import CoAuthor
     return CoAuthor
+
+def notifications_import():
+    from notifications.models import Notification
+    return Notification

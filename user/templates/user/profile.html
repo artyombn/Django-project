@@ -35,6 +35,24 @@
     <p>Last Name: {{ object.last_name }}</p>
     <p>Email: {{ object.email }}</p>
     <p>Age: {{ object.age }}</p>
+
+    <br>
+    <a href="#">Follow</a>
+    <br>
+    <p>Following:
+        {% for follower in object.follower.all %}
+            <li>{{ follower.following }}</li>
+        {% endfor %}
+    </p>
+    <br>
+
+    <p>Followers:
+        {% for following in object.following.all %}
+            <li>{{ following.follower }}</li>
+        {% endfor %}
+    </p>
+    <br>
+
 {% endif %}
 
 <br>

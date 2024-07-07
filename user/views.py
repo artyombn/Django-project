@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 
 from idea.models import Idea
-from .models import User
+from .models import User, Follow
 from .forms import RegisterForm, UserProfileForm
 from .group_permission import GroupRequiredMixin
 
@@ -57,3 +57,8 @@ class UserListView(GroupRequiredMixin, ListView):
 
     def staff_permission(self):
         return self.request.user.is_staff
+
+
+class Followers(ListView):
+    model = Follow
+    context_object_name = 'followers'
