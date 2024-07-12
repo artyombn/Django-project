@@ -1,0 +1,95 @@
+<style>
+    .filter-container {
+      flex-wrap: nowrap;
+    }
+    .filter-container > * {
+      margin-right: 10px;
+    }
+
+    .btn-full-width {
+      width: 100%;
+      display: block;
+    }
+
+    .btn.btn-success {
+        padding: 2px 10px;
+        width: 100px;
+        height: 40px;
+        font-size: 12px;
+        margin-top: 50px;
+}
+
+</style>
+
+<div class="container my-4">
+    <!-- Filter button -->
+    <button class="btn btn-secondary btn-full-width" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="false" aria-controls="filters">
+      Filters
+    </button>
+
+    <!-- Filters -->
+    <div class="collapse mt-3" id="filters">
+      <div class="card card-body">
+        <div class="d-flex filter-container">
+          <!-- Category filter -->
+          <div class="mb-3 flex-grow-1">
+            <label for="categoryFilter" class="form-label">Category</label>
+            <select class="form-select" id="categoryFilter">
+              <option selected>Choose Category</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
+          <!-- Status filter -->
+          <div class="mb-3 flex-grow-1">
+            <label for="statusFilter" class="form-label">Status</label>
+            <select class="form-select" id="statusFilter">
+              <option selected>Choose Status</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+
+          <!-- Creation date filter (for ex: last week, month, year) -->
+          <div class="mb-3 flex-grow-1">
+            <label for="dateFilter" class="form-label">Creation Date</label>
+            <input type="date" class="form-control" id="dateFilter">
+          </div>
+
+            <div class="row">
+              <div class="col">
+                <!-- Most popular filter -->
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Most Popular
+                  </label>
+                </div>
+                  <!-- Co-Authors filter -->
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Co-Authors
+                  </label>
+                </div>
+
+                  <!-- Investors filter -->
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Investors
+                  </label>
+                </div>
+              </div>
+            </div>
+
+
+        <!-- Apply Filter button -->
+        <button class="btn btn-success">Apply Filters</button>
+      </div>
+    </div>
+  </div>
+</div>
