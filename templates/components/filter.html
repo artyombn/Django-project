@@ -30,66 +30,72 @@
     <!-- Filters -->
     <div class="collapse mt-3" id="filters">
       <div class="card card-body">
-        <div class="d-flex filter-container">
-          <!-- Category filter -->
-          <div class="mb-3 flex-grow-1">
-            <label for="categoryFilter" class="form-label">Category</label>
-            <select class="form-select" id="categoryFilter">
-              <option selected>Choose Category</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
+        <form method="GET" action="{% url 'index' %}">
+          <div class="d-flex filter-container">
 
-          <!-- Status filter -->
-          <div class="mb-3 flex-grow-1">
-            <label for="statusFilter" class="form-label">Status</label>
-            <select class="form-select" id="statusFilter">
-              <option selected>Choose Status</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
+            <!-- Category filter -->
+            <div class="mb-3 flex-grow-1">
+              <label for="categoryFilter" class="form-label">Category</label>
+              <select class="form-select" id="categoryFilter" name="category">
+                <option value="" {% if not request.GET.category %}selected{% endif %}>All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.title }}</option>
+                {% endfor %}
+              </select>
+            </div>
 
-          <!-- Creation date filter (for ex: last week, month, year) -->
-          <div class="mb-3 flex-grow-1">
-            <label for="dateFilter" class="form-label">Creation Date</label>
-            <input type="date" class="form-control" id="dateFilter">
-          </div>
+            <!-- Status filter -->
+            <div class="mb-3 flex-grow-1">
+              <label for="statusFilter" class="form-label">Status</label>
+              <select class="form-select" id="statusFilter" name="status">
+                <option value="" {% if not request.GET.status %}selected{% endif %}>All Statuses</option>
+                {% for status in statuses %}
+                    <option value="{{ status.status }}" {% if request.GET.status == status.status %}selected{% endif %}>{{ status.status }}</option>
+                {% endfor %}
+              </select>
+            </div>
 
-            <div class="row">
-              <div class="col">
+{#          <!-- Creation date filter -->#}
+{#            <div class="mb-3 flex-grow-1">#}
+{#              <label for="dateFilter" class="form-label">Creation Date</label>#}
+{#              <select class="form-select" id="dateFilter" name="created_at">#}
+{#                <option value="" {% if not request.GET.date %}selected{% endif %}>All period</option>#}
+{#                {% for date in formatted_dates %}#}
+{#                    <option value="{{ date }}" {% if request.GET.date == date %}selected{% endif %}>{{ date }}</option>#}
+{#                {% endfor %}#}
+{#              </select>#}
+{#            </div>#}
+
                 <!-- Most popular filter -->
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <input class="form-check-input" type="checkbox" value="most_popular" id="mostPopularFilter" name="most_popular" {% if request.GET.most_popular %}checked{% endif %}>
+                  <label class="form-check-label" for="mostPopularFilter">
                     Most Popular
                   </label>
                 </div>
-                  <!-- Co-Authors filter -->
+
+                <!-- Co-Authors filter -->
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
+                  <input class="form-check-input" type="checkbox" value="co_authors" id="coAuthorsFilter" name="co_authors" {% if request.GET.co_authors %}checked{% endif %}>
+                  <label class="form-check-label" for="coAuthorsFilter">
                     Co-Authors
                   </label>
                 </div>
 
-                  <!-- Investors filter -->
+                <!-- Investors filter -->
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                  <label class="form-check-label" for="flexCheckChecked">
+                  <input class="form-check-input" type="checkbox" value="investors" id="investorsFilter" name="investors" {% if request.GET.investors %}checked{% endif %}>
+                  <label class="form-check-label" for="investorsFilter">
                     Investors
                   </label>
                 </div>
               </div>
             </div>
 
-
-        <!-- Apply Filter button -->
-        <button class="btn btn-success">Apply Filters</button>
+            <!-- Apply Filter button -->
+            <button type="submit" class="btn btn-success">Apply Filters</button>
+          </div>
+        </form>
       </div>
     </div>
-  </div>
 </div>

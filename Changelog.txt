@@ -103,10 +103,23 @@ User
 
 8 Июля:
 - Система уведомлений для Comment
+- Карусель категорий
 
+9 Июля:
+- Фронтэнд фильтров для Idea на главной (Category, Status, Creation Date, Most Popular, Co-Authors, Investors)
+
+12 Июля:
+- Фильтры для Idea через представление IdeasFilter(FilterView) в разделе ideas/list
+
+13 Июля:
+- Фильтры для Idea через запросы (без FilterView) на главной странице / Category + Status
+
+
+ДОДЕЛАТЬ:
+- Фильтры Creation Date, Most Popular, Co-Authors, Investors
 
 СДЕЛАТЬ ПОСЛЕ:
-- Фильтры для Ideas
+- Partnership + Investment через уведомления и одобрения
 - Избранные Idea
 - Доработать меню пользователя
 - Система DM
@@ -128,7 +141,6 @@ Create your own Idea if you have any
 - Доработать Partnership, Investment
 - Сделать Rating
 - Значки для групп
-- Обновить ссылки Footer
 - Попробовать подключить API платежи для Investments
 - Ветвление комментариев
 - Фильтрация по категориям

@@ -3,10 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django_filters.views import FilterView
+from .filters import IdeaFilter
 
 from category.models import Category
 from comment.forms import CommentForm
-from .models import Idea, Likes, DisLikes
+from .models import Idea, Likes, DisLikes, IdeaStatus
 from .forms import IdeasForm
 from user.group_permission import GroupRequiredMixin
 
@@ -14,28 +16,84 @@ from user.group_permission import GroupRequiredMixin
 def index(request):
     ideas = Idea.objects.all()
     categories = Category.objects.all()
-    return render(request, 'index.html', {'ideas': ideas, 'categories': categories})
+    statuses = IdeaStatus.objects.all()
+    creation_dates = Idea.objects.values_list('created_at', flat=True)
+    formatted_dates = [date.strftime("%Y-%m-%d %H:%M:%S %Z") for date in creation_dates]
 
-def ideas_list_view(request):
+    category = request.GET.get('category')
+    status = request.GET.get('status')
+    date = request.GET.get('date')
 
-    ideas = Idea.objects.select_related("category").select_related("author").select_related("likes").all()
-    return render(request, 'ideas/list.html', {'ideas': ideas})
+    if category and status and date:
+        ideas = ideas.filter(category=category, status__status=status, created_at=date)
+    elif category and status:
+        ideas = ideas.filter(category=category, status__status=status)
+    elif category and date:
+        ideas = ideas.filter(category=category, created_at=date)
+    elif status and date:
+        ideas = ideas.filter(status__status=status, created_at=date)
+    elif date:
+        ideas = ideas.filter(created_at=date)
+    elif status:
+        ideas = ideas.filter(status__status=status)
+    elif category:
+        ideas = ideas.filter(category=category)
+    else:
+        ideas = ideas.order_by('-created_at')
+
+    context = {
+        'ideas': ideas,
+        'categories': categories,
+        'statuses': statuses,
+        'formatted_dates': formatted_dates,
+    }
+    return render(request, 'index.html', context)
 
 
 class IdeasListView(ListView):
     model = Idea
     template_name = 'ideas/list.html'
     # paginate_by = 10
-    # context_object_name = 'ideas'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ideas'] = Idea.objects.all()
+        context['category'] = Category.objects.all()
+        return context
+
 
 
 class IdeasDetailView(DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
 
+    def check_like(self):
+        idea = self.get_object()
+        if idea.likes_set.all().count() == 0:
+            return f'No likes yet'
+        else:
+            likers = []
+            for like in idea.likes_set.all():
+                likers.append(like.author.username)
+            result = ', '.join(likers)
+        return f'Liked: {result}'
+
+    def check_dislike(self):
+        idea = self.get_object()
+        if idea.dislikes_set.all().count() == 0:
+            return f'No dislikes. Great!'
+        else:
+            dislikers = []
+            for dislike in idea.dislikes_set.all():
+                dislikers.append(dislike.author.username)
+            result = ', '.join(dislikers)
+        return f'Disliked: {result}'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['check_like'] = self.check_like()
+        context['check_dislike'] = self.check_dislike()
         return context
 
 class IdeasCreateView(GroupRequiredMixin, CreateView):
@@ -139,3 +197,15 @@ class DisLike(View):
                 return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
         else:
             return redirect(reverse('users:login'))
+
+
+class IdeasFilter(FilterView):
+    model = Idea
+    template_name = 'ideas/list.html'
+    filterset_class = IdeaFilter
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['categories'] = Category.objects.all()
+    #     context['statuses'] = IdeaStatus.objects.all()
+    #     return context
