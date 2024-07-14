@@ -114,9 +114,10 @@ User
 13 Июля:
 - Фильтры для Idea через запросы (без FilterView) на главной странице / Category + Status
 
+14 Июля:
+- Фильтры для Idea <Sort By ( Most Liked / Most Commented / Date ↑ / Date ↓ )> + Co-Authors + Investors
 
-ДОДЕЛАТЬ:
-- Фильтры Creation Date, Most Popular, Co-Authors, Investors
+
 
 СДЕЛАТЬ ПОСЛЕ:
 - Partnership + Investment через уведомления и одобрения
@@ -143,9 +144,7 @@ Create your own Idea if you have any
 - Значки для групп
 - Попробовать подключить API платежи для Investments
 - Ветвление комментариев
-- Фильтрация по категориям
 - Доработать Users (Вывод по группам)
-- Категории на главной странице в виде движущейся ленты
 - Подключить postgress
 - Комментарии (добавить update вместо publicly если произошел update)
 - Сделать Docker compose для запуска всех приложений

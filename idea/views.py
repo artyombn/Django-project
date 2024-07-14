@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.db.models import Count
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
@@ -17,35 +18,106 @@ def index(request):
     ideas = Idea.objects.all()
     categories = Category.objects.all()
     statuses = IdeaStatus.objects.all()
-    creation_dates = Idea.objects.values_list('created_at', flat=True)
-    formatted_dates = [date.strftime("%Y-%m-%d %H:%M:%S %Z") for date in creation_dates]
 
     category = request.GET.get('category')
     status = request.GET.get('status')
-    date = request.GET.get('date')
+    sort = request.GET.get('sort')
+    sort_choice = [
+        ('1', 'MostLiked'),
+        ('2', 'MostCommented'),
+        ('3', 'DateAscending'),
+        ('4', 'DateDescending'),
+    ]
+    co_authors = request.GET.get('co_authors')
+    investors = request.GET.get('investors')
 
-    if category and status and date:
-        ideas = ideas.filter(category=category, status__status=status, created_at=date)
+    def check_co_authors_and_investors(ideas, co_authors, investors):
+        if co_authors and investors:
+            ideas = ideas.filter(coauthor__isnull=False, investors__isnull=False).distinct()
+        elif co_authors:
+            ideas = ideas.filter(coauthor__isnull=False).distinct()
+        elif investors:
+            ideas = ideas.filter(investors__isnull=False).distinct()
+        else:
+            ideas = ideas
+
+        return ideas
+
+    if sort:
+        last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+        if sort == sort_choice[0][0]:
+            if category and status:
+                ideas = last_idea.filter(category=category, status__status=status).annotate(num_likes=Count('likes__id')).order_by('-num_likes')
+            elif category:
+                ideas = last_idea.filter(category=category).annotate(num_likes=Count('likes__id')).order_by('-num_likes')
+            elif status:
+                ideas = last_idea.filter(status__status=status).annotate(num_likes=Count('likes__id')).order_by('-num_likes')
+            else:
+                ideas = last_idea.annotate(num_likes=Count('likes__id')).order_by('-num_likes')
+
+
+        elif sort == sort_choice[1][0]:
+            last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+            if category and status:
+                ideas = last_idea.filter(category=category, status__status=status).annotate(num_comments=Count('comments')).order_by('-num_comments')
+            elif category:
+                ideas = last_idea.filter(category=category).annotate(num_comments=Count('comments')).order_by('-num_comments')
+            elif status:
+                ideas = last_idea.filter(status__status=status).annotate(num_comments=Count('comments')).order_by('-num_comments')
+            else:
+                ideas = last_idea.annotate(num_comments=Count('comments')).order_by('-num_comments')
+
+
+        elif sort == sort_choice[2][0]:
+            last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+            if category and status:
+                ideas = last_idea.filter(category=category, status__status=status).order_by('created_at')
+            elif category:
+                ideas = last_idea.filter(category=category).order_by('created_at')
+            elif status:
+                ideas = last_idea.filter(status__status=status).order_by('created_at')
+            else:
+                ideas = last_idea.order_by('created_at')
+
+        else:
+            last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+            if category and status:
+                ideas = last_idea.filter(category=category, status__status=status).order_by('-created_at')
+            elif category:
+                ideas = last_idea.filter(category=category).order_by('-created_at')
+            elif status:
+                ideas = last_idea.filter(status__status=status).order_by('-created_at')
+            else:
+                ideas = last_idea.order_by('-created_at')
+
+
     elif category and status:
-        ideas = ideas.filter(category=category, status__status=status)
-    elif category and date:
-        ideas = ideas.filter(category=category, created_at=date)
-    elif status and date:
-        ideas = ideas.filter(status__status=status, created_at=date)
-    elif date:
-        ideas = ideas.filter(created_at=date)
-    elif status:
-        ideas = ideas.filter(status__status=status)
+        last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+        ideas = last_idea.filter(category=category, status__status=status)
     elif category:
-        ideas = ideas.filter(category=category)
+        last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+        ideas = last_idea.filter(category=category)
+    elif status:
+        last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+        ideas = last_idea.filter(status__status=status)
     else:
-        ideas = ideas.order_by('-created_at')
+        last_idea = check_co_authors_and_investors(ideas, co_authors, investors)
+
+        ideas = last_idea
+
 
     context = {
         'ideas': ideas,
         'categories': categories,
         'statuses': statuses,
-        'formatted_dates': formatted_dates,
+        'sort': sort_choice
     }
     return render(request, 'index.html', context)
 
@@ -203,9 +275,3 @@ class IdeasFilter(FilterView):
     model = Idea
     template_name = 'ideas/list.html'
     filterset_class = IdeaFilter
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['categories'] = Category.objects.all()
-    #     context['statuses'] = IdeaStatus.objects.all()
-    #     return context

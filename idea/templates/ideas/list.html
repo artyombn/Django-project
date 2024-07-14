@@ -44,8 +44,20 @@
             {% endfor %}
         </div>
 
-<div class="container">
-    {% include "components/back_home.html" %}
-</div>
+<!-- Filter List Idea -->
+<form method="get" action="{% url 'ideas:ideas-filter' %}">
+    {{ filter.form.as_p }}
+    <button type="submit">Filter</button>
+</form>
+
+<ul>
+    {% for idea in filter.qs %}
+        <li>{{ idea.title }} - {{ idea.category }} - {{ idea.status }} - {{ idea.created_at }}</li>
+    {% empty %}
+        <li>No ideas found.</li>
+    {% endfor %}
+</ul>
+
+
 
 {% endblock %}

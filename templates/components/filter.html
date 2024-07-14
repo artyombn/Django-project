@@ -17,6 +17,12 @@
         height: 40px;
         font-size: 12px;
         margin-top: 50px;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+}
 }
 
 </style>
@@ -55,42 +61,35 @@
               </select>
             </div>
 
-{#          <!-- Creation date filter -->#}
-{#            <div class="mb-3 flex-grow-1">#}
-{#              <label for="dateFilter" class="form-label">Creation Date</label>#}
-{#              <select class="form-select" id="dateFilter" name="created_at">#}
-{#                <option value="" {% if not request.GET.date %}selected{% endif %}>All period</option>#}
-{#                {% for date in formatted_dates %}#}
-{#                    <option value="{{ date }}" {% if request.GET.date == date %}selected{% endif %}>{{ date }}</option>#}
-{#                {% endfor %}#}
-{#              </select>#}
-{#            </div>#}
-
-                <!-- Most popular filter -->
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="most_popular" id="mostPopularFilter" name="most_popular" {% if request.GET.most_popular %}checked{% endif %}>
-                  <label class="form-check-label" for="mostPopularFilter">
-                    Most Popular
-                  </label>
-                </div>
+             <!-- Sort By -->
+            <div class="mb-3 flex-grow-1">
+              <label for="sortFilter" class="form-label">Sort By</label>
+              <select class="form-select" id="sortFilter" name="sort">
+                <option value="" {% if not request.GET.sort %}selected{% endif %}>Sort by</option>
+                <option value="1" {% if request.GET.sort == '1' %}selected{% endif %}>Most Liked</option>
+                <option value="2" {% if request.GET.sort == '2' %}selected{% endif %}>Most Commented</option>
+                <option value="3" {% if request.GET.sort == '3' %}selected{% endif %}>Date ↑</option>
+                <option value="4" {% if request.GET.sort == '4' %}selected{% endif %}>Date ↓</option>
+              </select>
+            </div>
 
                 <!-- Co-Authors filter -->
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="co_authors" id="coAuthorsFilter" name="co_authors" {% if request.GET.co_authors %}checked{% endif %}>
-                  <label class="form-check-label" for="coAuthorsFilter">
-                    Co-Authors
-                  </label>
-                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="coAuthorsFilter" name="co_authors" {% if request.GET.co_authors %}checked{% endif %}>
+                        <label class="form-check-label" for="coAuthorsFilter">
+                            Co-Authors
+                        </label>
+                    </div>
 
                 <!-- Investors filter -->
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="investors" id="investorsFilter" name="investors" {% if request.GET.investors %}checked{% endif %}>
-                  <label class="form-check-label" for="investorsFilter">
-                    Investors
-                  </label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="investorsFilter" name="investors" {% if request.GET.investors %}checked{% endif %}>
+                        <label class="form-check-label" for="investorsFilter">
+                            Investors
+                        </label>
+                    </div>
                 </div>
-              </div>
-            </div>
 
             <!-- Apply Filter button -->
             <button type="submit" class="btn btn-success">Apply Filters</button>

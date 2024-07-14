@@ -8,5 +8,4 @@ class IdeaFilter(django_filters.FilterSet):
         fields = {
             'category': ['exact'],
             'status': ['exact'],
-            'created_at': ['date', 'year__gte', 'year__lte'],
         }
