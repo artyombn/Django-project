@@ -3,15 +3,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.db.models import Count
 from django.views.generic.base import View
+from user.group_permission import GroupRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
-from .filters import IdeaFilter
 
+from .filters import IdeaFilter
 from category.models import Category
 from comment.forms import CommentForm
 from .models import Idea, Likes, DisLikes, IdeaStatus
 from .forms import IdeasForm
-from user.group_permission import GroupRequiredMixin
+from partnership.models import CoAuthor, PreCoAuthor
+
 
 
 def index(request):
@@ -166,6 +168,22 @@ class IdeasDetailView(DetailView):
         context['comment_form'] = CommentForm()
         context['check_like'] = self.check_like()
         context['check_dislike'] = self.check_dislike()
+        precoauthor = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).first()
+        if precoauthor:
+            context['precoauthor_id'] = precoauthor.id
+        else:
+            context['precoauthor_id'] = None
+
+        if self.request.user.is_authenticated:
+            context['is_coauthor'] = CoAuthor.objects.filter(idea=self.object, user=self.request.user).exists()
+        else:
+            context['is_coauthor'] = False
+
+        if self.request.user.is_authenticated:
+            context['is_pre_coauthor'] = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).exists()
+        else:
+            context['is_pre_coauthor'] = False
+
         return context
 
 class IdeasCreateView(GroupRequiredMixin, CreateView):

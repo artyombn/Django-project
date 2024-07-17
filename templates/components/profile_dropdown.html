@@ -11,13 +11,16 @@
     </a>
 
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="{% url 'users:profile' pk=request.user.id %}">My Profile</a></li>
-        <li><a class="dropdown-item" href="#">My Ideas</a></li>
-        <li><a class="dropdown-item" href="#">My Followers</a></li>
-        <li><a class="dropdown-item" href="#">My Partnerships</a></li>
-        <li><a class="dropdown-item" href="#">My Investments</a></li>
+        <li><a class="dropdown-item" href="{% url 'users:profile' pk=request.user.id %}">Profile</a></li>
+        <li><a class="dropdown-item" href="#">Ideas</a></li>
+        <li><a class="dropdown-item" href="#">Followers</a></li>
+        <li><a class="dropdown-item" href="#">Partnerships</a></li>
+        <li><a class="dropdown-item" href="#">Investments</a></li>
         <li><a class="dropdown-item" href="#">Favourite Ideas</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="{% url 'notifications:show-notifications' %}">Notifications</a></li>
+        <li><a class="dropdown-item" href="{% url 'notifications:show-notifications' %}">Notifications&Requests</a></li>
+
     </ul>
+
+
 </li>

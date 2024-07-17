@@ -116,15 +116,21 @@ User
 
 14 Июля:
 - Фильтры для Idea <Sort By ( Most Liked / Most Commented / Date ↑ / Date ↓ )> + Co-Authors + Investors
+- Модель PreCoAuthor для настройки системы одобрений/отказов быть CoAuthor
+- Уведомления при запросе Co-Author + реализация системы Accept / Reject
+
+17 Июля:
+- Stop being Co-Author
+- Уведомления в обе стороны при Accept / Reject Co-Author
+- Уведомление Stop being Co-Author
 
 
 
 СДЕЛАТЬ ПОСЛЕ:
-- Partnership + Investment через уведомления и одобрения
 - Избранные Idea
 - Доработать меню пользователя
 - Система DM
-- Уведомления, Favourite, Investment, Rating, Partnership, DM
+- Уведомления, Favourite, Investment, Rating, DM
 - Сделать View для IdeaStatus (чтобы одним нажатием менялся статус)
 - Сделать View для Co-Authors
 - Сделать View для Investors
@@ -138,7 +144,7 @@ Start from exploration of all the Ideas and become Co-Authors or Investor
 Create your own Idea if you have any
 
 
-СДЕЛАТЬ:
+ДАЛЬНЕЙШИЕ ПЛАНЫ:
 - Доработать Partnership, Investment
 - Сделать Rating
 - Значки для групп

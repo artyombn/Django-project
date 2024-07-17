@@ -1,125 +1,301 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Notifications
+    Notifications&Requests
 {%  endblock %}
 
 {% block body %}
+<div class="container text-center mt-4">
+  <div class="row">
+    <div class="col-md-6">
+
 
     <h3>Your Notifications:</h3>
-
-    <small><a href="{% url 'notifications:delete-all-notifications' %}">Clear all</a></small>
+    <div class="my-2">
+        <small><a href="{% url 'notifications:delete-all-notifications' %}">Clear all notifications</a></small>
+    </div>
 
         {% for notification in notifications %}
 
             <!-- FOR LIKE --->
             {% if notification.notification_type == 1 and notification.sender.id != request.user.id %}
+            <div class="notification-item border rounded p-3 mb-3">
 
-                    <hr>
-                      <div>
-                        <div>
-                            <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
-                                <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px; float: right;">
-                            </a>
-                            <br>
-                            <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="40px" height="40px">
-                            <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
-                            <small>@{{ notification.sender.username }}</small>
-                            <br>
-                            <br>
-                            <p>👍Liked your Idea</p>
-                            <strong><small>{{ notification.date }}</small></strong>
-                        </div>
-                      </div>
+                <div class="d-flex justify-content-between">
+                    <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                    <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                        <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                    </a>
+                </div>
 
-                      <div>
-                          <strong><small>
-                              <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">
-                                  {{ notification.idea.title }}
-                              </a>
-                          </small></strong>
-                          <img src="{{ notification.idea.image.url }}" width="150px" height="80px">
-                      </div>
+                <div style="margin-top: -35px;">
+                    <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
+                    <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a>
+                    👍 Liked your Idea
+                    <div class="my-2">
+                        <strong><small>
+                            <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                        </small></strong>
+                        <img src="{{ notification.idea.image.url }}" width="150px" height="80px" class="mt-2">
+                    </div>
+
+                    <strong><small>{{ notification.date }}</small></strong>
+                </div>
+            </div>
 
             {% endif %}
 
             <!-- FOR DISLIKES --->
             {% if notification.notification_type == 2 and notification.sender.id != request.user.id %}
+                <div class="notification-item border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                        <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                            <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                        </a>
+                    </div>
+
+                    <div style="margin-top: -35px;">
+                        <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
+                        <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a>
+                        👎 Disliked your Idea
 
 
-                    <hr>
-                      <div>
-                        <div>
-                            <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
-                                <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px; float: right;">
-                            </a>
-                            <br>
-                            <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="40px" height="40px">
-                            <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
-                            <small>@{{ notification.sender.username }}</small>
-                            <br>
-                            <br>
-                            <p>👎Disliked your Idea</p>
-                            <strong><small>{{ notification.date }}</small></strong>
+                        <div class="my-2">
+                            <strong><small>
+                                <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                            </small></strong>
+                            <img src="{{ notification.idea.image.url }}" width="150px" height="80px" class="mt-2">
                         </div>
-                      </div>
+                        <strong><small>{{ notification.date }}</small></strong>
+                    </div>
+                </div>
 
-                      <div>
-                          <strong><small>
-                              <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">
-                                  {{ notification.idea.title }}
-                              </a>
-                          </small></strong>
-                          <img src="{{ notification.idea.image.url }}" width="150px" height="80px">
-                      </div>
             {% endif %}
 
             <!-- FOR FOLLOW --->
             {% if notification.notification_type == 4 and notification.sender.id != request.user.id %}
+                <div class="notification-item border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                        <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                            <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                        </a>
+                    </div>
 
-                    <hr>
-                      <div>
-                        <div>
-                            <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
-                                <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px; float: right;">
-                            </a>
-                            <br>
-                            <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="40px" height="40px">
-                            <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
-                            <small>@{{ notification.sender.username }}</small> Followed to You
-                            <br>
+                    <div style="margin-top: -35px;">
+                        <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
+                        <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a>
+                        Followed you
+                        <p>
                             <strong><small>{{ notification.date }}</small></strong>
-                        </div>
-                      </div>
+                        </p>
+                    </div>
+                </div>
+
             {% endif %}
 
 
             <!-- FOR COMMENTS --->
             {% if notification.notification_type == 3 and notification.sender.id != request.user.id %}
+                <div class="notification-item border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                        <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                            <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                        </a>
+                    </div>
 
-                    <hr>
-                      <div>
-                        <div>
-                            <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
-                                <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px; float: right;">
-                            </a>
-                            <br>
-                            <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="40px" height="40px">
-                            <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
-                            <small>@{{ notification.sender.username }}</small> Wrote the comment
-                            <br>
-                            <blockquote>{{ notification.text_preview }}</blockquote>
-                            <strong><small>under Idea:
-                                <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">
-                                    {{ notification.idea.title }}
-                                </a></small></strong>
-                            <br>
-                            <strong><small>{{ notification.date }}</small></strong>
+                    <div style="margin-top: -35px;">
+                        <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}</strong>
+                        <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a>
+
+                        Wrote a comment
+                        <div class="card my-3">
+                            <div class="card-body">{{ notification.text_preview }}</div>
                         </div>
-                      </div>
+
+                        <small>under Idea:
+                            <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">
+                                <strong>{{ notification.idea.title }}</strong>
+                            </a></small>
+                        <br>
+
+                        <strong><small>{{ notification.date }}</small></strong>
+                    </div>
+                </div>
+
             {% endif %}
 
+
+          <!-- STOPPED BEING CO-AUTHOR (for Idea Author)--->
+          {% if notification.notification_type == 8 and notification.sender != user %}
+              <div class="notification-item border rounded p-3 mb-3">
+                  <div class="d-flex justify-content-between">
+                      <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                      <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                          <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                      </a>
+                  </div>
+
+                  <div style="margin-top: -35px;">
+                        {{ notification.sender.first_name }} {{ notification.sender.last_name }}
+                        <strong>
+                            <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a>
+                        </strong>
+                  </div>
+                  <div>
+                      <p>😥 <strong>Stopped being Co-Author</strong> of your Idea</p>
+                      <div>
+                              <p>
+                                  Idea: <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                              </p>
+                      </div>
+                      <strong><small>{{ notification.date }}</small></strong>
+                  </div>
+              </div>
+          {% endif %}
+
         {% endfor %}
+    </div>
+
+  <div class="col-md-6">
+      <h3>All Requests:</h3>
+
+      <div style="margin-top: 36px;">
+
+      {% for notification in notifications %}
+
+      <!-- NEW CO-AUTHOR REQUEST (for Recipient)--->
+            {% if notification.notification_type == 5 and notification.sender.id != request.user.id %}
+                <div class="notification-item border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <img class="rounded-circle shadow-1-strong me-2" src="{{ notification.sender.avatar.url }}" alt="avatar" width="50px" height="50px">
+                        <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                            <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                        </a>
+                    </div>
+
+                    <div style="margin-top: -35px;">
+                        <strong>{{ notification.sender.first_name }} {{ notification.sender.last_name }}
+                        <a href="{% url 'users:profile' pk=notification.sender.id %}" style="text-decoration: none;"><small>@{{ notification.sender.username }}</small></a></strong>
+
+                        <p>Would like to be Co-Author of your Idea:</p>
+                        <div>
+                            <strong><small>
+                                <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                            </small></strong>
+                            <img src="{{ notification.idea.image.url }}" width="150px" height="80px" class="mt-2">
+                        </div>
+
+                        <div class="d-flex justify-content-center my-4">
+                            <form method="post" action="{% url 'partnership:approve_coauthor' notification.id %}" class="me-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" style="width: 120px; height: 40px;">Accept</button>
+                            </form>
+
+                            <form method="post" action="{% url 'partnership:reject_coauthor' notification.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" style="width: 120px; height: 40px;">Reject</button>
+                            </form>
+                        </div>
+
+                        <strong><small>{{ notification.date }}</small></strong>
+                    </div>
+                </div>
+
+            {% endif %}
+
+          <!-- NEW CO-AUTHOR REQUEST (for Sender)--->
+          {% if notification.notification_type == 5 and notification.sender == user %}
+              <div class="notification-item border rounded p-3 mb-3">
+                  <div class="d-flex justify-content-between">
+                      <img class="shadow-1-strong me-2" src="/media/social_media/request.png" alt="avatar" width="50px" height="50px">
+                      <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                          <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                      </a>
+                  </div>
+
+                  <div style="margin-top: -35px;">
+                      <p>✔️ <strong>You sent a request</strong> for Co-Authoring</p>
+                      <div>
+                          <p><strong>
+                              <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                          </strong><br>
+                          <small>{{ notification.idea.description }}</small>
+                          </p>
+                          <img src="{{ notification.idea.image.url }}" width="150px" height="80px" class="mt-2">
+                      </div>
+
+                      <small>
+                          Owner:
+                          {{ notification.idea.author.first_name }} {{ notification.idea.author.last_name }}
+                          <a href="{% url 'users:profile' pk=notification.idea.author.id %}" style="text-decoration: none">
+                              <strong><small>@{{ notification.idea.author.username }}</small></strong>
+                          </a>
+                      </small>
+
+                      <div class="d-flex justify-content-center mt-3 my-3">
+                          <form method="post" action="{% url 'partnership:pre_coauthor_delete' notification.sender.precoauthor_set.first.id %}?next={{ request.path }}">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">Cancel my request</button>
+                          </form>
+                      </div>
+
+                      <strong><small>{{ notification.date }}</small></strong>
+                  </div>
+              </div>
+          {% endif %}
 
 
+          <!-- ACCEPTED CO-AUTHOR REQUEST (for Sender)--->
+          {% if notification.notification_type == 6 and notification.sender == user %}
+              <div class="notification-item border rounded p-3 mb-3">
+                  <div class="d-flex justify-content-between">
+                      <img class="shadow-1-strong me-2" src="/media/social_media/request.png" alt="avatar" width="50px" height="50px">
+                      <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                          <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                      </a>
+                  </div>
+
+                  <div style="margin-top: -35px;">
+                      <p>✅ <a href="{% url 'users:profile' pk=notification.idea.author.id %}" style="text-decoration: none">
+                          {{ notification.idea.author.first_name }} {{ notification.idea.author.last_name }}</a>
+                          <strong>accepted</strong> your Co-Author request</p>
+                                <p>
+                                  Idea: <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                              </p>
+                      <strong><small>{{ notification.date }}</small></strong>
+                  </div>
+              </div>
+          {% endif %}
+
+
+          <!-- REJECTED CO-AUTHOR REQUEST (for Sender)--->
+          {% if notification.notification_type == 7 and notification.sender == user %}
+              <div class="notification-item border rounded p-3 mb-3">
+                  <div class="d-flex justify-content-between">
+                      <img class="shadow-1-strong me-2" src="/media/social_media/request.png" alt="avatar" width="50px" height="50px">
+                      <a href="{% url 'notifications:delete-notification' id=notification.id %}" class="delete">
+                          <img src="/media/social_media/notification-delete.png" alt="delete" style="height: 30px; width: 30px;">
+                      </a>
+                  </div>
+
+                  <div style="margin-top: -35px;">
+                      <p>❌ Your Co-Author request <strong>has been rejected</strong></p>
+                      <div>
+                              <p>
+                                  Idea: <a href="{% url 'ideas:detail' notification.idea.id %}" style="text-decoration: none">{{ notification.idea.title }}</a>
+                              </p>
+                      </div>
+                      <strong><small>{{ notification.date }}</small></strong>
+                  </div>
+              </div>
+          {% endif %}
+
+      {% endfor %}
+      </div>
+  </div>
+  </div>
+</div>
 {% endblock %}
