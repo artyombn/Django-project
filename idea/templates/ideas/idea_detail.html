@@ -6,6 +6,51 @@
 
 {% block body %}
 
+<style>
+.fav-button {
+    text-decoration: none;
+    color: #555;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0 5px;
+    transition: color 0.3s;
+}
+
+.fav-button:hover {
+    color: #1e9a03;
+}
+
+.fav-icon {
+    position: relative;
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.fav-button:hover .fav-icon {
+    transform: scale(1.2);
+}
+
+.fav-count {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    background-color: #1e9a03;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.fav-button:hover .fav-count {
+    background-color: #1e9a03;
+}
+
+</style>
+
     {% if user.is_authenticated and user.id == idea.author.id or user.is_staff %}
         <div class="mb-3">
             <a href="{% url 'ideas:update' pk=idea.id %}" class="btn btn-primary">
@@ -38,38 +83,40 @@
                 <div class="like-dislike-container">
                     <a href="{% url 'ideas:add_likes' idea.id %}" class="like-button">
                         <span class="like-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="
-                            {% if idea.likes_set.all.count == 0 %}
-                                No likes yet
-                            {% else %}
-                                Liked:
-                                {% for like in idea.likes_set.all %}
-                                    {{ like.author.username }} ,
-                                {% endfor %}
-                            {% endif %}
+                                {{ check_like }}
                         ">
-                            &#9829;
+                            <img src="/media/social_media/like.png" width="35px" height="35px">
                             <span class="like-count">{{ idea.likes_set.all.count }}</span>
                         </span>
                     </a>
                     <a href="{% url 'ideas:add_dislikes' idea.id %}" class="dislike-button" data-bs-toggle="tooltip" data-bs-placement="top" title="
-                            {% if idea.dislikes_set.all.count == 0 %}
-                                No dislikes. Great!
-                            {% else %}
-                                Disliked:
-                                {% for dislike in idea.dislikes_set.all %}
-                                    {{ dislike.author.username }} ,
-                                {% endfor %}
-                            {% endif %}
+                                {{ check_dislike }}
                         ">
                         <span class="dislike-icon">
-                            &#128078;
+                            <img src="/media/social_media/dislike.png" width="35px" height="35px">
                             <span class="dislike-count">{{ idea.dislikes_set.all.count }}</span>
+                        </span>
+                    </a>
+                    <a href="{% url 'ideas:favourite' idea.id %}" class="fav-button">
+                        <span class="fav-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="
+                                {{ check_favourite }}
+                        ">
+                            <img src="/media/social_media/favourite.png" width="35px" height="35px">
+                            <span class="fav-count">{{ idea.favourite.all.count }}</span>
                         </span>
                     </a>
                 </div>
 
                 <div class="container">
-                    <hr>
+                    <br>
+                    <h3>Favourites:</h3>
+                            <p>Number of favourites: {{ idea.favourite.count }}</p>
+                            {% for fav in idea.favourite.all %}
+                                <p>User: {{ fav.user.username }}</p>
+                            {% empty %}
+                                <p>No favourites yet.</p>
+                            {% endfor %}
+                    <br>
                     <p>Idea Status:
                         {% if idea.status.status == 'active' %}
                             <span class="badge rounded-pill text-bg-primary">{{ idea.status.status }}</span>
@@ -88,22 +135,74 @@
 
                     <a href="#">Share</a>
                     <hr>
-
-                    <a href="#">Become co-author</a>
                     <div>
-                        <small>Co-Authors:
-                            <ul>
-                            {% for co_author in idea.coauthor_set.all %}
-                                <li>User: {{ co_author.user.username }}</li>
-                                <li>Role: {{ co_author.role }}</li>
-                                <li>Joined: {{ co_author.joined_at }}</li>
+                        {% if user.is_authenticated and request.user.id != idea.author.id %}
+                            {% if is_pre_coauthor %}
+                                <p>☑️ Your Co-Author request was sent successfully. Please, waiting for approval</p>
+                                  <form method="post" action="{% url 'partnership:pre_coauthor_delete' precoauthor_id %}">
+                                      {% csrf_token %}
+                                      <button type="submit" class="btn btn-danger">Cancel my request</button>
+                                  </form>
+
+
                                 <br>
-                                <br>
-                            {% endfor %}
-                            </ul>
-                        </small>
+                            {% elif is_coauthor %}
+                                <p>✅ You are Co-Author of this Idea</p>
+                                <form method="post" action="{% url 'partnership:stop_being_coauthor' pk=idea.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning mb-5">Stop being Co-Author</button>
+                                </form>
+                            {% else %}
+                                <a href="#" data-toggle="modal" data-target="#confirmModal">Become co-author</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+{#                    <div>#}
+{#                        <small>Pre Co-Authors:#}
+{#                            <ul>#}
+{#                            {% for pre_co_author in idea.precoauthor_set.all %}#}
+{#                                <li>User: {{ pre_co_author.user.username }}</li>#}
+{#                                <br>#}
+{#                            {% endfor %}#}
+{#                            </ul>#}
+{#                        </small>#}
+{#                    </div>#}
+
+
+                    <!-- Модальное окно подтверждения стать со-автором -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to be a co-author of this Idea?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <form method="post" action="{% url 'partnership:pre_coauthor_create' pk=idea.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Send request</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+
+
+                    <small>Co-Authors:
+                        <ul>
+                        {% for co_author in idea.coauthor_set.all %}
+                            <li>User: {{ co_author.user.username }}</li>
+                            <li>Role: {{ co_author.role }}</li>
+                            <li>Joined: {{ co_author.joined_at }}</li>
+                            <br>
+                            <br>
+                        {% endfor %}
+                        </ul>
+                    </small>
                     <hr>
 
                     <a href="#">Invest to this Idea</a>
@@ -138,18 +237,5 @@
     </div>
 </div>
 
-<script>
-
-document.addEventListener('DOMContentLoaded', function () {
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-});
-
-</script>
-
 
 {% endblock %}
-
-

@@ -1,7 +1,6 @@
 from django.urls import path
 from idea import views
 from comment import views as comment_views
-from .views import IdeasFilter
 
 app_name = 'ideas'
 
@@ -16,5 +15,6 @@ urlpatterns = [
     path('idea/<int:pk>/comment/delete/<int:comment_pk>/', comment_views.CommentDeleteView.as_view(), name='delete_comment'),
     path('idea/<int:pk>/add_likes/', views.AddLike.as_view(), name='add_likes'),
     path('idea/<int:pk>/add_dislikes/', views.DisLike.as_view(), name='add_dislikes'),
-    path('list/filter/', IdeasFilter.as_view(), name='ideas-filter'),
+    path('list/filter/', views.IdeasFilter.as_view(), name='ideas-filter'),
+    path('idea/<int:pk>/favourites/', views.FavouriteIdeaView.as_view(), name='favourite'),
 ]

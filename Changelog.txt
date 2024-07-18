@@ -77,12 +77,12 @@ User
 27 Июня:
 - Модальные окна к Delete / Update комментариев
 - Нормальный вид отображения всех пользователей
-- Обновление фронтэнда Idea/Category/Comment
+- Обновление фронтенда Idea/Category/Comment
 
 28 Июня:
 - Система лайков для Idea (Like + Dislike)
 - Система лайков для Comment (Like only)
-- Обновление фронтэнда (icons + tooltips)
+- Обновление фронтенда (icons + tooltips)
 
 30 Июня:
 - Добавление статусов Idea (active, pending, completed)
@@ -106,7 +106,7 @@ User
 - Карусель категорий
 
 9 Июля:
-- Фронтэнд фильтров для Idea на главной (Category, Status, Creation Date, Most Popular, Co-Authors, Investors)
+- Фронтенд фильтров для Idea на главной (Category, Status, Creation Date, Most Popular, Co-Authors, Investors)
 
 12 Июля:
 - Фильтры для Idea через представление IdeasFilter(FilterView) в разделе ideas/list
@@ -124,10 +124,13 @@ User
 - Уведомления в обе стороны при Accept / Reject Co-Author
 - Уведомление Stop being Co-Author
 
+18 Июля:
+- Уведомление New Idea для подписчиков пользователя
+- Избранные Idea
+
 
 
 СДЕЛАТЬ ПОСЛЕ:
-- Избранные Idea
 - Доработать меню пользователя
 - Система DM
 - Уведомления, Favourite, Investment, Rating, DM
@@ -137,6 +140,9 @@ User
 
 
 Пофиксить:
+- Field 'id' expected a number but got <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x1080e4830>>.
+*Если выставить для IdeaDetailView -> LoginRequiredMixin, то ошибка уберется так как миксин в приоритете
+
 - Модальное окно Update comment - не перезагружает страницу после успешного обновления
 - Изменить главную:
 Help others to implement their Ideas
@@ -145,6 +151,7 @@ Create your own Idea if you have any
 
 
 ДАЛЬНЕЙШИЕ ПЛАНЫ:
+- Лента новостей
 - Доработать Partnership, Investment
 - Сделать Rating
 - Значки для групп

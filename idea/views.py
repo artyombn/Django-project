@@ -10,10 +10,9 @@ from django_filters.views import FilterView
 from .filters import IdeaFilter
 from category.models import Category
 from comment.forms import CommentForm
-from .models import Idea, Likes, DisLikes, IdeaStatus
+from .models import Idea, Likes, DisLikes, IdeaStatus, Favourite
 from .forms import IdeasForm
 from partnership.models import CoAuthor, PreCoAuthor
-
 
 
 def index(request):
@@ -137,7 +136,7 @@ class IdeasListView(ListView):
 
 
 
-class IdeasDetailView(DetailView):
+class IdeasDetailView(LoginRequiredMixin, DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
 
@@ -163,11 +162,23 @@ class IdeasDetailView(DetailView):
             result = ', '.join(dislikers)
         return f'Disliked: {result}'
 
+    def check_favourite(self):
+        idea = self.get_object()
+        if idea.favourite.all().count() == 0:
+            return f'No subscribers yet'
+        else:
+            favourites = []
+            for fv in idea.favourite.all():
+                favourites.append(fv.user.username)
+            result = ', '.join(favourites)
+        return f'{result}'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         context['check_like'] = self.check_like()
         context['check_dislike'] = self.check_dislike()
+        context['check_favourite'] = self.check_favourite()
         precoauthor = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).first()
         if precoauthor:
             context['precoauthor_id'] = precoauthor.id
@@ -293,3 +304,20 @@ class IdeasFilter(FilterView):
     model = Idea
     template_name = 'ideas/list.html'
     filterset_class = IdeaFilter
+
+
+class FavouriteIdeaView(View):
+    def get(self, request, pk):
+        user = request.user
+        if user.is_authenticated:
+            if Favourite.objects.filter(idea_id=pk, user=user).exists():
+                favourite = Favourite.objects.get(idea_id=pk, user=user)
+                favourite.delete()
+                return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+            else:
+                favourite = Favourite.objects.create(idea_id=pk, user=user)
+                favourite.save()
+                return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
+        else:
+            return redirect(reverse('users:login'))
+

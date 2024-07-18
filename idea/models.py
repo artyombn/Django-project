@@ -1,6 +1,8 @@
 from django.db import models
-from notifications.models import Notification
 from django.db.models.signals import post_save, post_delete
+
+from notifications.models import Notification
+from user.models import Follow
 
 
 
@@ -26,6 +28,21 @@ class Idea(models.Model):
 
     def comments_count(self):
         return self.comments.count()
+
+    def idea_follow(sender, instance, created, **kwargs):
+        if created:
+            idea = instance
+            followers = idea.author.follower.all()
+            for follow in followers:
+                # print(f"Follower: {follow.following.username}")
+                notify = Notification(idea=idea, sender=idea.author, user=follow.following, notification_type=9)
+                notify.save()
+    def idea_follow_delete(sender, instance, **kwargs):
+            idea = instance
+            followers = idea.author.follower.all()
+            for follow in followers:
+                notifications = Notification.objects.filter(idea=idea, sender=idea.author, user=follow.following, notification_type=9)
+                notifications.delete()
 
 
 
@@ -97,3 +114,6 @@ post_delete.connect(Likes.user_unlike_idea, sender=Likes)
 # DisLikes
 post_save.connect(DisLikes.user_disliked_idea, sender=DisLikes)
 post_delete.connect(DisLikes.user_undislike_idea, sender=DisLikes)
+# Idea Follow
+post_save.connect(Idea.idea_follow, sender=Idea)
+post_delete.connect(Idea.idea_follow_delete, sender=Idea)

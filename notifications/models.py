@@ -11,7 +11,8 @@ class Notification(models.Model):
         (6, 'CoAuthorApproved'),
         (7, 'CoAuthorRejected'),
         (8, 'CoAuthorStopped'),
-        (9, 'Investor'),
+        (9, 'IdeaFollowed'),
+        (10, 'Investor'),
     )
 
     idea = models.ForeignKey('idea.Idea', on_delete=models.CASCADE, related_name='noti_idea', blank=True, null=True)
