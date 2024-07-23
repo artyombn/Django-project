@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    My Favourites Idea
+{%  endblock %}
+
+{% block body %}
+
+<h3 style="text-transform: uppercase">My Favourites Idea:</h3>
+
+
+{% for favourite in favourites_ideas %}
+    <ul>
+        <li>Idea: <a href="{% url 'ideas:detail' pk=favourite.idea.id %}" style="text-decoration: none">{{ favourite.idea.title }}</a>
+        <a href="{% url 'ideas:favourite_delete' favourite.idea.id %}" class="fav-button">
+            <span class="fav-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="">
+                <img src="/media/social_media/remove.png" width="30px" height="30px">
+            </span>
+        </a>
+        </li>
+        <li>Description: {{ favourite.idea.description }}</li>
+    </ul>
+{% endfor %}
+
+<br>
+<br>
+<a href="{% url 'index' %}">Back Home page</a>
+
+{% endblock %}

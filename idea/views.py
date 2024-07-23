@@ -136,7 +136,7 @@ class IdeasListView(ListView):
 
 
 
-class IdeasDetailView(LoginRequiredMixin, DetailView):
+class IdeasDetailView(DetailView):
     model = Idea
     template_name = 'ideas/idea_detail.html'
 
@@ -179,20 +179,18 @@ class IdeasDetailView(LoginRequiredMixin, DetailView):
         context['check_like'] = self.check_like()
         context['check_dislike'] = self.check_dislike()
         context['check_favourite'] = self.check_favourite()
-        precoauthor = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).first()
-        if precoauthor:
-            context['precoauthor_id'] = precoauthor.id
-        else:
-            context['precoauthor_id'] = None
 
         if self.request.user.is_authenticated:
+            if PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).exists():
+                precoauthor = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).first()
+                context['precoauthor_id'] = precoauthor.id
+            else:
+                context['precoauthor_id'] = None
             context['is_coauthor'] = CoAuthor.objects.filter(idea=self.object, user=self.request.user).exists()
-        else:
-            context['is_coauthor'] = False
-
-        if self.request.user.is_authenticated:
             context['is_pre_coauthor'] = PreCoAuthor.objects.filter(idea=self.object, user=self.request.user).exists()
         else:
+            context['precoauthor_id'] = None
+            context['is_coauthor'] = False
             context['is_pre_coauthor'] = False
 
         return context
@@ -320,4 +318,11 @@ class FavouriteIdeaView(View):
                 return redirect(reverse('ideas:detail', kwargs={'pk': pk}))
         else:
             return redirect(reverse('users:login'))
+
+class FavouriteDeleteView(View):
+    def get(self, request, pk):
+        user = request.user
+        favourite = Favourite.objects.get(idea_id=pk, user=user)
+        favourite.delete()
+        return redirect(reverse('users:favourites', kwargs={'pk': user.id}))
 

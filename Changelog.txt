@@ -128,10 +128,17 @@ User
 - Уведомление New Idea для подписчиков пользователя
 - Избранные Idea
 
+19 Июля:
+- Обновление меню пользователя (User Idea page / User Followers page / User Partnerships page)
+- Обновление фронтенда (общий стиль, background)
+
+22 Июля:
+- Favourite Ideas в меню пользователя
+- Investments в меню пользователя
+
 
 
 СДЕЛАТЬ ПОСЛЕ:
-- Доработать меню пользователя
 - Система DM
 - Уведомления, Favourite, Investment, Rating, DM
 - Сделать View для IdeaStatus (чтобы одним нажатием менялся статус)
@@ -140,19 +147,13 @@ User
 
 
 Пофиксить:
-- Field 'id' expected a number but got <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x1080e4830>>.
-*Если выставить для IdeaDetailView -> LoginRequiredMixin, то ошибка уберется так как миксин в приоритете
-
 - Модальное окно Update comment - не перезагружает страницу после успешного обновления
-- Изменить главную:
-Help others to implement their Ideas
-Start from exploration of all the Ideas and become Co-Authors or Investor
-Create your own Idea if you have any
+
 
 
 ДАЛЬНЕЙШИЕ ПЛАНЫ:
 - Лента новостей
-- Доработать Partnership, Investment
+- Investment
 - Сделать Rating
 - Значки для групп
 - Попробовать подключить API платежи для Investments

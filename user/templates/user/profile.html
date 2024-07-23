@@ -21,12 +21,12 @@
 
     {% if request.user != user %}
         {% if check %}
-            <a href="{% url 'users:following' user.id %}" style="text-decoration: none; margin-left: 15px;">
-                <img src="/media/social_media/unfollowuser.png" alt="follow" width="45" height="45">
+            <a href="{% url 'users:following' user.id %}?next=users:profile" style="text-decoration: none; margin-left: 15px;">
+                <img src="/media/social_media/unfollowuser.png" alt="follow" width="50" height="50">
             </a>
         {% else %}
-            <a href="{% url 'users:following' user.id %}" style="text-decoration: none; margin-left: 15px;">
-                <img src="/media/social_media/followuser.png" alt="follow" width="70" height="70">
+            <a href="{% url 'users:following' user.id %}?next=users:profile" style="text-decoration: none; margin-left: 15px;">
+                <img src="/media/social_media/followuser.png" alt="follow" width="50" height="50">
             </a>
         {% endif %}
     {% endif %}
@@ -71,19 +71,16 @@
 {% endif %}
 
 <br>
-{% if request.user.id == user.id %}
-    <h3 style="text-transform: uppercase">Your Ideas</h3>
-{% else %}
+{% if request.user.id != user.id %}
     <h3 style="text-transform: uppercase">{{ object.first_name }}'s Ideas</h3>
+    <br>
+    {% for idea in ideas %}
+        <li><a href="{% url 'ideas:detail' pk=idea.pk %}">{{ idea.title }} -- {{ idea.description }}</a></li>
+    {% endfor %}
 {% endif %}
 
 <br>
 
-{% for idea in ideas %}
-    <li><a href="{% url 'ideas:detail' pk=idea.pk %}">{{ idea.title }} -- {{ idea.description }}</a></li>
-{% endfor %}
-<br>
-<br>
 <a href="{% url 'index' %}">Back Home page</a>
 
 {% endblock %}

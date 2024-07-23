@@ -109,14 +109,6 @@
 
                 <div class="container">
                     <br>
-                    <h3>Favourites:</h3>
-                            <p>Number of favourites: {{ idea.favourite.count }}</p>
-                            {% for fav in idea.favourite.all %}
-                                <p>User: {{ fav.user.username }}</p>
-                            {% empty %}
-                                <p>No favourites yet.</p>
-                            {% endfor %}
-                    <br>
                     <p>Idea Status:
                         {% if idea.status.status == 'active' %}
                             <span class="badge rounded-pill text-bg-primary">{{ idea.status.status }}</span>
@@ -148,7 +140,7 @@
                                 <br>
                             {% elif is_coauthor %}
                                 <p>✅ You are Co-Author of this Idea</p>
-                                <form method="post" action="{% url 'partnership:stop_being_coauthor' pk=idea.pk %}">
+                                <form method="post" action="{% url 'partnership:stop_being_coauthor' pk=idea.pk %}?next=ideas:detail">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-warning mb-5">Stop being Co-Author</button>
                                 </form>
@@ -157,16 +149,6 @@
                             {% endif %}
                         {% endif %}
                     </div>
-{#                    <div>#}
-{#                        <small>Pre Co-Authors:#}
-{#                            <ul>#}
-{#                            {% for pre_co_author in idea.precoauthor_set.all %}#}
-{#                                <li>User: {{ pre_co_author.user.username }}</li>#}
-{#                                <br>#}
-{#                            {% endfor %}#}
-{#                            </ul>#}
-{#                        </small>#}
-{#                    </div>#}
 
 
                     <!-- Модальное окно подтверждения стать со-автором -->

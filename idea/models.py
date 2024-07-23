@@ -15,8 +15,8 @@ class Idea(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='idea_images/', default='idea_images/no_idea.jpg')
     status = models.ForeignKey("IdeaStatus", on_delete=models.CASCADE, default=1)
-    co_author = models.ManyToManyField('user.User', through='partnership.CoAuthor', related_name='coauthored_ideas')
-    investors = models.ManyToManyField('user.User', through='investment.Investor', related_name='investors_ideas')
+    co_author = models.ManyToManyField('user.User', through='partnership.CoAuthor', related_name='coauthored_ideas', blank=True)
+    investors = models.ManyToManyField('user.User', through='investment.Investor', related_name='investors_ideas', blank=True)
 
 
 # class IdeaImages(models.Model):

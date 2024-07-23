@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    My Investments
+{%  endblock %}
+
+{% block body %}
+
+<h3 style="text-transform: uppercase">My Investments:</h3>
+
+
+{% for invest in investments_ideas %}
+    <ul>
+        <li>Idea: <a href="{% url 'ideas:detail' pk=invest.idea.id %}" style="text-decoration: none">{{ invest.idea.title }}</a></li>
+        <li>Description: {{ invest.idea.description }}</li>
+        <li>Amount: {{ invest.amount_invested }} USD</li>
+        <li>Type: {{ invest.investment_type }}</li>
+        <li>Status: {{ invest.status }}</li>
+        <li>Note: {{ invest.note }}</li>
+        <li>Date: {{ invest.joined_at }}</li>
+
+{#        <form method="post" action="{% url 'partnership:stop_being_coauthor' pk=co_author_idea.idea.id %}?next=users:partnerships">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit" class="btn btn-warning mb-5">Stop being Co-Author</button>#}
+{#        </form>#}
+    </ul>
+{% endfor %}
+
+<br>
+<br>
+<a href="{% url 'index' %}">Back Home page</a>
+
+{% endblock %}

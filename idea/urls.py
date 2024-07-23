@@ -17,4 +17,5 @@ urlpatterns = [
     path('idea/<int:pk>/add_dislikes/', views.DisLike.as_view(), name='add_dislikes'),
     path('list/filter/', views.IdeasFilter.as_view(), name='ideas-filter'),
     path('idea/<int:pk>/favourites/', views.FavouriteIdeaView.as_view(), name='favourite'),
+    path('idea/<int:pk>/favourites/delete/', views.FavouriteDeleteView.as_view(), name='favourite_delete'),
 ]

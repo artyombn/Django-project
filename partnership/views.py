@@ -74,6 +74,20 @@ class StopBeingCoAuthor(View):
         coauthor = CoAuthor.objects.filter(idea=idea, user=user)
         coauthor.delete()
 
+        next_page = request.GET.get('next', 'ideas:detail')
+        if next_page == 'ideas:detail':
+            return redirect('ideas:detail', pk=idea.pk)
+        elif next_page == 'users:partnerships':
+            return redirect('users:partnerships', pk=user.id)
+        else:
+            return redirect('ideas:detail', pk=idea.pk)
+
+class CoAuthorDeleteView(View):
+    def post(self, request, pk):
+        idea = get_object_or_404(Idea, pk=pk)
+        user = request.user
+
+        coauthor = CoAuthor.objects.filter(idea=idea, user=user)
+        coauthor.delete()
+
         return redirect('ideas:detail', pk=idea.pk)
-
-

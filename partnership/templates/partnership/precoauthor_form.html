@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    PreCoAuthor
+{%  endblock %}
+
+{% block body %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="button56">Submit</button>
+    </div>
+</form>
+
+<br>
+<a href="{% url 'ideas:detail' pk=view.kwargs.pk %}">Back to Idea</a>
+
+{% endblock %}
