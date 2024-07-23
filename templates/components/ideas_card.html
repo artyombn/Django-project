@@ -1,39 +1,115 @@
 {% load user_tags %}
 
+<style>
+.fixed-size-card {
+    width: 100%;
+    height: 500px;
+}
+
+.fixed-size-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.card {
+    position: relative;
+    display: block;
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: #e8fbf3;
+}
+
+.card__image {
+    width: 100%;
+    height: auto;
+}
+
+.card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-radius: 15px;
+    background-color: var(--surface-color);
+    transform: translateY(100%);
+    transition: .2s ease-in-out;
+}
+
+.card:hover .card__overlay {
+    transform: translateY(0);
+}
+
+.card__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    padding: 2em;
+    border-radius: 15px 15px 0 0;
+    background-color: var(--surface-color);
+    transform: translateY(-100%);
+    transition: .2s ease-in-out;
+}
+
+.card__thumb {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+
+.card__description {
+    padding: 0 2em 2em;
+    margin: 0;
+    color: #327553;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+
+</style>
+
 <div class="container my-1">
     <div class="row row-cols-1 row-cols-xxl-2 row-cols-xl-2 row-cols-lg-2 row-cols-md-1 row-cols-sm-1 g-5 my-1">
         {% for idea in ideas %}
             <div class="col">
-                <a href="{% url 'ideas:detail' pk=idea.id %}" class="card">
-                  <img src="{{ idea.image.url }}" class="card__image" alt="{{ idea.name }}" />
-                  <div class="card__overlay">
-                    <div class="card__header">
-                        <h4 class="card-title" style="color: #428764">{{ idea.title }}
-                            <p>
-                            {% if idea.status.status == 'active' %}
-                                <span class="badge rounded-pill text-bg-primary" style="font-size: 15px;">{{ idea.status.status }}</span>
-                            {% elif idea.status.status == 'pending' %}
-                                <span class="badge rounded-pill text-bg-warning" style="font-size: 15px;">{{ idea.status.status }}</span>
-                            {% elif idea.status.status == 'completed' %}
-                                <span class="badge rounded-pill text-bg-success" style="font-size: 15px;">{{ idea.status.status }}</span>
-                            {% else %}
-                                <span class="badge rounded-pill text-bg-secondary" style="font-size: 15px;">No status</span>
-                            {% endif %}
-                            </p>
-                        </h4>
-                      <img class="card__thumb" src="{{ idea.author.avatar.url }}" alt="avatar" />
-                      <div class="card__header-text">
-                          <h3 class="card__title" style="font-size: 17px;">
-                                  {{ idea.author.username }}
-                              {% if idea.author|check_in_group:"Admin" %}
-                                  <img src="/media/user_groups/admin.png" alt="admin" width="25" height="25">
-                              {% endif %}</h3>
-                          <span class="card__status" style="font-size: 13px;">{{ idea.created_at }}</span>
-                      </div>
+                <a href="{% url 'ideas:detail' pk=idea.id %}" class="card fixed-size-card">
+                    <img src="{{ idea.image.url }}" class="card__image fixed-size-img" alt="{{ idea.name }}" />
+                    <div class="card__overlay">
+                        <div class="card__header">
+                            <h4 class="card-title" style="color: #397758">{{ idea.title }}
+                                <p>
+                                {% if idea.status.status == 'active' %}
+                                    <span class="badge rounded-pill text-bg-primary" style="font-size: 15px;">{{ idea.status.status }}</span>
+                                {% elif idea.status.status == 'pending' %}
+                                    <span class="badge rounded-pill text-bg-warning" style="font-size: 15px;">{{ idea.status.status }}</span>
+                                {% elif idea.status.status == 'completed' %}
+                                    <span class="badge rounded-pill text-bg-success" style="font-size: 15px;">{{ idea.status.status }}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill text-bg-secondary" style="font-size: 15px;">No status</span>
+                                {% endif %}
+                                </p>
+                            </h4>
+                            <img class="card__thumb" src="{{ idea.author.avatar.url }}" alt="avatar" />
+                            <div class="card__header-text">
+                                <h3 class="card__title" style="font-size: 17px;">
+                                    {{ idea.author.username }}
+                                    {% if idea.author|check_in_group:"Admin" %}
+                                        <img src="/media/user_groups/admin.png" alt="admin" width="25" height="25">
+                                    {% endif %}
+                                </h3>
+                                <span class="card__status" style="font-size: 13px;">{{ idea.created_at }}</span>
+                            </div>
+                        </div>
+                        <p class="card__description" style="font-size: 25px; margin-top: -10px; margin-bottom: -40px;">{{ idea.category }}</p>
+                        <p class="card__description" style="font-size: 18px">{{ idea.description }}</p>
                     </div>
-                      <p class="card__description" style="font-size: 25px; margin-top: -10px; margin-bottom: -40px;">{{ idea.category }}</p>
-                      <p class="card__description" style="font-size: 15px">{{ idea.description }}</p>
-                  </div>
                 </a>
             </div>
         {% endfor %}

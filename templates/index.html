@@ -6,28 +6,32 @@
 
 {% block body %}
 
-    <div class="loading my-2 mx-5">
-        <span><a href="{% url 'ideas:create' %}" style="text-decoration: none; color: white;">CREATE YOUR OWN IDEA</a></span>
-    </div>
-<br>
+<div>
 
-    <div class="my-5 mx-5">
-        <h4>Welcome to BrainWave - your hub for idea exploration and exchange! Here, you can register your creative concepts, find co-authors and investors to bring them to life, rate ideas from the community, and receive feedback from experienced users. Join our community and turn your thoughts into reality!</h4>
+    <div class="text-center">
+        <h2><a href="{% url 'ideas:create' %}" style="text-decoration: none; color: white;">CREATE YOUR OWN IDEA</a></h2>
+    </div>
+    <br>
+
+    <div class="my-5 mx-5 text-center">
+        <h4>Help others to implement their Ideas
+        <br>Start from exploration of all the Ideas and become Co-Authors or Investor
+        <br>Create your own Idea if you have any</h4>
     </div>
 
-<br>
+    <br>
     <div class="container text-center">
         <h3>Categories</h3>
         {% include "components/categories_card.html" %}
     </div>
 
-<br>
+    <br>
     {% include "components/filter.html" %}
 
     <div class="container text-center">
-        <h3>Ideas</h3>
+        <h3>Users Ideas</h3>
         {% include "components/ideas_card.html" %}
     </div>
-
+</div>
 
 {% endblock %}

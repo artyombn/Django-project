@@ -40,6 +40,22 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = 'comment/comment_detail.html'
 
+    def check_comment_like(self):
+        comment = self.get_object()
+        if comment.commentlikes_set.all().count() == 0:
+            return f'No likes yet'
+        else:
+            comment_likers = []
+            for comment in comment.commentlikes_set.all():
+                comment_likers.append(comment)
+            result = ', '.join(comment_likers)
+        return f'Liked: {result}'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['check_comment_like'] = self.check_comment_like()
+        return context
+
 class CommentCreateView(GroupRequiredMixin, CreateView):
     form_class = CommentForm
     group_name = ["User"]

@@ -64,73 +64,6 @@ Button56
 
 /*
 =========================
-Loading - CREATE YOUR OWN IDEA
-=========================
-*/
-
-
-body {background: #dddddd;}
-.loading {
-  font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
-  text-transform:uppercase;
-
-  width: 1100px;
-  font-size: 50px;
-  text-align:center;
-  line-height:50px;
-
-  position:absolute;
-  margin:auto;
-  transform:translateY(-50%);
-}
-
-.loading span {
-  position:relative;
-  z-index:999;
-  color:#fff;
-}
-.loading:before {
-  content:'';
-  background:#61bdb6;
-  width:1080px;
-  height:56px;
-  display:block;
-  position:absolute;
-  margin:auto;
-
-  animation:3s loadingBefore infinite ease-in-out;
-}
-
-@keyframes loadingBefore {
-  0%   {transform:translateX(-20px);}
-  50%  {transform:translateX(20px);}
-  100% {transform:translateX(-20px);}
-}
-
-
-.loading:after {
-  content:'';
-  background:#ff3600;
-  width:25px;
-  height:92px;
-  display:block;
-  position:absolute;
-  top:10px;left:0;right:0;bottom:0;
-  margin:auto;
-  opacity:.5;
-
-  animation:3s loadingAfter infinite ease-in-out;
-}
-
-@keyframes loadingAfter {
-  0%   {transform:translateX(-300px);}
-  50%  {transform:translateX(300px);}
-  100% {transform:translateX(-300px);}
-}
-
-
-/*
-=========================
 Footer
 =========================
 */
@@ -231,10 +164,6 @@ Footer
 
 
 
-
-
-
-
 /*
 =========================
 Cards
@@ -264,7 +193,7 @@ Cards
     --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
 }
 :root {
-  --surface-color: #fff;
+  --surface-color: #e8fbf3;
   --curve: 50;
 }
 
@@ -272,10 +201,6 @@ Cards
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background-color: #fef8f8;
-}
 
 .cards {
   display: grid;
@@ -424,7 +349,7 @@ Idea Cards
 .cardb::before {
   content: "";
   display: block;
-  background: white;
+  background: #e8fbf3;
   background-size: cover;
   grid-column: 2/-1;
   grid-row: 2/-1;
@@ -434,7 +359,7 @@ Idea Cards
 .cardb::after {
   content: "";
   display: block;
-  background: #e0dde4;
+  background: #e8fbf3;
   grid-column: 1/-2;
   grid-row: 1/-2;
   z-index: -1;
@@ -443,7 +368,7 @@ Idea Cards
 .cardb img {
   grid-column: 4/5;
   grid-row: 3/4;
-  box-shadow: 0 0 1rem hsla(221, 96%, 59%, 0.91);
+  box-shadow: 0 0 1rem hsla(221, 96%, 55%, 0.91);
   object-fit: cover;
   aspect-ratio: 1 / 1;
 }
@@ -478,12 +403,12 @@ Idea Cards
   margin: 0;
   padding: 1rem;
   text-align: end;
-  color: #808080;
+  color: #ea1616;
   font-weight: 400;
 }
 
 .cardb a {
-  color: #808080;
+  color: #e82929;
 }
 
 .btn {
@@ -562,5 +487,8 @@ Like & Dislike button
 .dislike-button:hover .dislike-count {
     background-color: #2d4373;
 }
+
+
+
 
 

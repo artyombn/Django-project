@@ -5,58 +5,87 @@
 {%  endblock %}
 
 {% block body %}
-    <h1 class="text-center">Join someone's Idea or Create your own</h1>
 
-        <div class="row row-cols-1 row-cols-md-3 g-5 my-1">
-            {% for idea in object_list %}
-                <div class="col">
-                    <a href="{% url 'ideas:detail' pk=idea.id %}" class="text-decoration-none">
-                        <div class="card h-100">
-                         <img src="{{ idea.image.url }}" class="card-img-top mx-auto d-block" alt="{{ idea.name }}" style="width: 500px; height: 350px;">
-                            <div class="card-body">
-                                <h5 class="card-title text-center" style="font-size: 24px;">{{ idea.title }}
+<style>
 
-                                    {% if idea.status.status == 'active' %}
-                                        <span class="badge rounded-pill text-bg-primary" style="font-size: 12px;">{{ idea.status.status }}</span>
-                                    {% elif idea.status.status == 'pending' %}
-                                        <span class="badge rounded-pill text-bg-warning" style="font-size: 12px;">{{ idea.status.status }}</span>
-                                    {% elif idea.status.status == 'completed' %}
-                                        <span class="badge rounded-pill text-bg-success" style="font-size: 12px;">{{ idea.status.status }}</span>
-                                    {% else %}
-                                        <span class="badge rounded-pill text-bg-secondary" style="font-size: 12px;">No status</span>
-                                    {% endif %}
-                                </h5>
+.fixed-size-card {
+    width: 100%;
+    height: 600px;
+}
 
-                                <p class="card-text text-center" style="font-size: 20px; color: #428764;">{{ idea.category }}</p>
-                                <p class="card-text text-center">{{ idea.description }}</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center; font-size: 17px;">Author
-                                    {{ idea.author }}
-                                </small>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center;">Last updated {{ idea.updated_at }}</small>
-                            </div>
+.fixed-size-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.bg-blue {
+    background-color: #e8fbf3;
+}
+
+.card {
+    border: none;
+}
+
+.card-title, .card-text {
+    color: #000000;
+}
+
+</style>
+
+    <div class="text-center">
+        <h1>Join someone's Idea or
+            <a href="{% url 'ideas:create' %}" style="text-decoration: none; color: #e8fbf3;">Create your own</a>
+        </h1>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-5 my-1">
+        {% for idea in object_list %}
+            <div class="col">
+                <a href="{% url 'ideas:detail' pk=idea.id %}" class="text-decoration-none">
+                    <div class="card h-100 bg-blue fixed-size-card">
+                        <img src="{{ idea.image.url }}" class="card-img-top fixed-size-img" alt="{{ idea.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" style="font-size: 24px;">{{ idea.title }}
+                                {% if idea.status.status == 'active' %}
+                                    <span class="badge rounded-pill text-bg-primary" style="font-size: 12px;">{{ idea.status.status }}</span>
+                                {% elif idea.status.status == 'pending' %}
+                                    <span class="badge rounded-pill text-bg-warning" style="font-size: 12px;">{{ idea.status.status }}</span>
+                                {% elif idea.status.status == 'completed' %}
+                                    <span class="badge rounded-pill text-bg-success" style="font-size: 12px;">{{ idea.status.status }}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill text-bg-secondary" style="font-size: 12px;">No status</span>
+                                {% endif %}
+                            </h5>
+                            <p class="card-text text-center" style="font-size: 20px; color: #406e59;">{{ idea.category }}</p>
+                            <p class="card-text text-center">{{ idea.description }}</p>
                         </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+                        <div class="card-footer">
+                            <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center; font-size: 15px;">Author {{ idea.author }}</small>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-body-secondary" style="display: flex; align-items: center; justify-content: center;">Last updated {{ idea.updated_at }}</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 
-<!-- Filter List Idea -->
-<form method="get" action="{% url 'ideas:ideas-filter' %}">
-    {{ filter.form.as_p }}
-    <button type="submit">Filter</button>
-</form>
 
-<ul>
-    {% for idea in filter.qs %}
-        <li>{{ idea.title }} - {{ idea.category }} - {{ idea.status }} - {{ idea.created_at }}</li>
-    {% empty %}
-        <li>No ideas found.</li>
-    {% endfor %}
-</ul>
+{#<!-- Filter List Idea -->#}
+{#<form method="get" action="{% url 'ideas:ideas-filter' %}">#}
+{#    {{ filter.form.as_p }}#}
+{#    <button type="submit">Filter</button>#}
+{#</form>#}
+
+{#<ul>#}
+{#    {% for idea in filter.qs %}#}
+{#        <li>{{ idea.title }} - {{ idea.category }} - {{ idea.status }} - {{ idea.created_at }}</li>#}
+{#    {% empty %}#}
+{#        <li>No ideas found.</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
 
 
 

@@ -6,7 +6,7 @@
                 {{ comment_form.comment }}
                 <form id="commentForm" method="post" enctype="multipart/form-data" action="{% url "ideas:add_comment" pk=idea.pk %}" style="width: 600px">
                     {% csrf_token %}
-                    <textarea id="commentTextArea" class="form-control" name="text" rows="3" style="background: #fff;" ></textarea>
+                    <textarea id="commentTextArea" class="form-control" name="text" rows="3" style="background: #e8fbf3;" ></textarea>
                     <div class="d-flex justify-content-end gap-2">
                         <button id="postCommentButton" type="button" class="button56">Post comment</button>
                         <button id="clearCommentButton" type="button" class="button56">Clear</button>
@@ -19,7 +19,7 @@
 
         <div class="row my-3">
             <div class="col-sm-12 col-md-12 col-lg-10 col-xl-12 col-xxl-12">
-                <div class="card">
+                <div class="card" style="background: #eafaf6">
                     <div class="card-body">
                         <div class="row mb-4">
                             {% if comments %}
@@ -28,7 +28,7 @@
                                     <div class="col-12">
                                         <div class="d-flex align-items-start mb-2">
                                             <a href="{% url 'users:profile' pk=comment.author.id %}">
-                                                <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="60" height="60">
+                                                <img class="rounded-circle shadow-1-strong me-3" src="{{ comment.author.avatar.url }}" alt="avatar" width="50" height="50">
                                             </a>
                                             <div class="flex-grow-1">
                                                 <h6 class="fw-bold text-primary mb-1">
