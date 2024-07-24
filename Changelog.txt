@@ -136,6 +136,9 @@ User
 - Favourite Ideas в меню пользователя
 - Investments в меню пользователя
 
+24 Июля:
+- Partnerships основная таблица
+
 
 
 СДЕЛАТЬ ПОСЛЕ:

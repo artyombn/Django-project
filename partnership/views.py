@@ -1,4 +1,5 @@
 from django.views.generic import ListView, CreateView, DeleteView
+from django.db.models import Min
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models.signals import post_save, post_delete
@@ -13,6 +14,63 @@ from notifications.models import Notification
 class CoAuthorsView(ListView):
     model = CoAuthor
     template_name = 'partnership/coauthors.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ideas = Idea.objects.annotate(
+            earliest_joined_at=Min('coauthor__joined_at')
+        ).order_by('-earliest_joined_at')
+        ideas_dict = {idea: list(idea.co_author.all()) for idea in ideas}
+        new_list = []
+        for idea_id, coauthor in ideas_dict.items():
+            if coauthor:
+                new_list.append([idea_id, coauthor])
+                print(f'new list = {new_list}')
+                print(f'coauthor = {coauthor}')
+
+        idea_enumerate = enumerate(new_list, start=1)
+
+        users = []
+        us_list = []
+        ideas_list = [] # [<Idea: CodeForKids/Society/user>, <Idea: Creative4343/Creative/artyombn>]
+        final_users = set()
+        model_ideas = {}
+        for query in new_list: # [[<Idea: CodeForKids/Society/user>, [<User: test>, <User: artyombn>]], [<Idea: Creative4343/Creative/artyombn>, [<User: user>, <User: test>]]]
+            ideas_list.append(query[0])
+            for elements in query[1]:
+                user = CoAuthor.objects.filter(user=elements, idea=query[0])
+                users.append(user)
+            us_list.append(list(users))
+            users.clear()
+
+
+        coauthor_list = [] # [<CoAuthor: test - CodeForKids - >, <CoAuthor: artyombn - CodeForKids - >, <CoAuthor: user - Creative4343 - Developer>, <CoAuthor: test - Creative4343 - >]
+        for us22 in us_list:
+            for q in us22:
+                for t in q:
+                    print(f'us = {t} type - {type(t)}')
+                    print(f'idea title = {t.idea}')
+                    coauthor_list.append(t)
+
+            idea_coauthors_dict = {}
+            for coauthor in coauthor_list:
+                idea = coauthor.idea
+                if idea in ideas:
+                    if idea not in idea_coauthors_dict:
+                        idea_coauthors_dict[idea] = []
+                        idea_coauthors_dict[idea].append(coauthor)
+                    else:
+                        idea_coauthors_dict[idea].append(coauthor)
+
+
+        context['idea_enumerate'] = idea_enumerate
+        context['model_coauthor'] = model_ideas
+        context['idea_coauthors_dict'] = idea_coauthors_dict
+        context['coauthor_list'] = coauthor_list
+
+        return context
+
 
 
 class PreCoAuthorView(CreateView):
