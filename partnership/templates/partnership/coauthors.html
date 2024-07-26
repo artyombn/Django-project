@@ -16,60 +16,62 @@
 {#    </table>#}
 {#{% endfor %}#}
 
+{% if idea_coauthors_dict %}
+    <table class="table table-bordered table-success table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Idea</th>
+              <th scope="col">Author</th>
+              <th scope="col">Co-Authors</th>
+            </tr>
+          </thead>
+        {% for n, idea in idea_enumerate %}
+          <tbody>
+            <tr>
+              <th scope="row">{{ n }}</th>
+              <td>
+                  <a href="{% url 'ideas:detail' pk=idea.0.id %}" style="text-decoration: none">
+                      {{ idea.0.title }} <br>
+                      <img src="{{ idea.0.image.url }}" width="200px" height="100px">
+                  </a>
+                  <br>
+                  <span style="font-style: italic; font-size: 14px;">{{ idea.0.created_at }}</span>
+              </td>
+              <td>
+                  {{ idea.0.author.first_name }}
+                  <a href="{% url 'users:profile' pk=idea.0.author.id %}" style="text-decoration: none">
+                      <small>@{{ idea.0.author.username }}</small>
+                  </a>
+              </td>
+              <td>
+                  {% for coauthor in idea.1 %}
+                      <div class="container" style="margin-bottom: 20px">
+                              {{ coauthor.first_name }}
+                              <a href="{% url 'users:profile' pk=coauthor.id %}" style="text-decoration: none">
+                                  <small>@{{ coauthor.username }}</small></a>
 
-<table class="table table-bordered table-success table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Idea</th>
-          <th scope="col">Author</th>
-          <th scope="col">Co-Authors</th>
-        </tr>
-      </thead>
-    {% for n, idea in idea_enumerate %}
-      <tbody>
-        <tr>
-          <th scope="row">{{ n }}</th>
-          <td>
-              <a href="{% url 'ideas:detail' pk=idea.0.id %}" style="text-decoration: none">
-                  {{ idea.0.title }} <br>
-                  <img src="{{ idea.0.image.url }}" width="200px" height="100px">
-              </a>
-              <br>
-              <span style="font-style: italic; font-size: 14px;">{{ idea.0.created_at }}</span>
-          </td>
-          <td>
-              {{ idea.0.author.first_name }}
-              <a href="{% url 'users:profile' pk=idea.0.author.id %}" style="text-decoration: none">
-                  <small>@{{ idea.0.author.username }}</small>
-              </a>
-          </td>
-          <td>
-              {% for coauthor in idea.1 %}
-                  <div class="container" style="margin-bottom: 20px">
-                          {{ coauthor.first_name }}
-                          <a href="{% url 'users:profile' pk=coauthor.id %}" style="text-decoration: none">
-                              <small>@{{ coauthor.username }}</small></a>
+                                  {% for ca in coauthor_list %}
+                                      {% if ca.user == coauthor and ca.idea == idea.0 %}
+                                          <br>
+                                          <span style="font-size: 14px; font-weight: bold;">Role:
+                                              <span style="color: #b11616;">{{ ca.role }}</span>
+                                          </span>
+                                          <br>
+                                          <p style="font-style: italic; font-size: 13px;">Joined: {{ ca.joined_at }}</p>
+                                      {% endif %}
+                                  {% endfor %}
+                      </div>
 
-                              {% for ca in coauthor_list %}
-                                  {% if ca.user == coauthor and ca.idea == idea.0 %}
-                                      <br>
-                                      <span style="font-size: 14px; font-weight: bold;">Role:
-                                          <span style="color: #b11616;">{{ ca.role }}</span>
-                                      </span>
-                                      <br>
-                                      <p style="font-style: italic; font-size: 13px;">Joined: {{ ca.joined_at }}</p>
-                                  {% endif %}
-                              {% endfor %}
-                  </div>
-
-              {% endfor %}
-          </td>
-        </tr>
-      </tbody>
-    {% endfor %}
-</table>
-
+                  {% endfor %}
+              </td>
+            </tr>
+          </tbody>
+        {% endfor %}
+    </table>
+{% else %}
+    <h3 class="text-center my-4">No partnerships yet</h3>
+{% endif %}
 
 <div class="container">
     {% include "components/back_home.html" %}

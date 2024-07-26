@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from user.models import User
+from user.models import User, Follow
 from django.contrib.auth.models import Group
 
 
@@ -8,6 +8,7 @@ class Command(BaseCommand):
 
         User.objects.all().delete()
         Group.objects.all().delete()
+        Follow.objects.all().delete()
 
 
         print("Filling db Users...")
@@ -17,7 +18,7 @@ class Command(BaseCommand):
             first_name="Artyom",
             last_name="Balabashin",
             age=29,
-            email="balabashin@gmail.com",
+            email="balabashinan@gmail.com",
             password='admin',
             avatar='/user_avatars/man-avatar.png',
         )
@@ -33,16 +34,31 @@ class Command(BaseCommand):
         )
         user3 = User.objects.create_user(
             username="test",
-            first_name="Kolia",
-            last_name="Tokaev",
-            age=27,
-            email="tokaaa@gmail.com",
+            first_name="Anton",
+            last_name="Makarov",
+            age=31,
+            email="anmakarov@gmail.com",
             password='test',
         )
 
-
         print("Users created")
         print(User.objects.all())
+
+
+        follows = [
+            Follow(follower=artyombn,
+                   following=user2,
+                   ),
+            Follow(follower=user2,
+                   following=artyombn,
+                   ),
+            Follow(follower=artyombn,
+                   following=user3,
+                   ),
+        ]
+
+        Follow.objects.bulk_create(follows)
+
 
         admin_group, created = Group.objects.get_or_create(name="Admin")
         moderator_group, created = Group.objects.get_or_create(name="Moderator")
