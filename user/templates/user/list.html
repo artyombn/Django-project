@@ -5,7 +5,10 @@
 {%  endblock %}
 
 {% block body %}
-    <h1 class="my-4">USERS:</h1>
+
+{% load user_tags %}
+
+    <h1 class="my-4 text-center">USERS:</h1>
 
     <div class="container">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -17,7 +20,12 @@
                         </a>
                         <div class="card-body">
                             <a href="{% url 'users:profile' pk=user.pk %}" style="text-decoration: none; color: #0c8e5e">
-                                <h5 class="card-title" style="font-size: 30px;">{{ user }}</h5>
+                                <h5 class="card-title" style="font-size: 30px;">{{ user }}
+                                {% if user|check_in_group:"Admin" %}
+                                    <img src="/media/user_groups/admin.png" alt="admin" width="40" height="40">
+                                {% endif %}
+
+                                </h5>
                             </a>
                             <p class="card-text"><small>Email: {{ user.email }}</small></p>
                             <p class="card-text"><small>First name: {{ user.first_name }}</small></p>

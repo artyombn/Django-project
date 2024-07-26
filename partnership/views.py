@@ -1,4 +1,5 @@
 from django.views.generic import ListView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Min
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -11,12 +12,13 @@ from partnership.models import CoAuthor, PreCoAuthor
 from notifications.models import Notification
 
 
-class CoAuthorsView(ListView):
+class CoAuthorsView(LoginRequiredMixin, ListView):
     model = CoAuthor
     template_name = 'partnership/coauthors.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        idea_coauthors_dict = {}
 
         ideas = Idea.objects.annotate(
             earliest_joined_at=Min('coauthor__joined_at')
@@ -26,8 +28,8 @@ class CoAuthorsView(ListView):
         for idea_id, coauthor in ideas_dict.items():
             if coauthor:
                 new_list.append([idea_id, coauthor])
-                print(f'new list = {new_list}')
-                print(f'coauthor = {coauthor}')
+                # print(f'new list = {new_list}')
+                # print(f'coauthor = {coauthor}')
 
         idea_enumerate = enumerate(new_list, start=1)
 
@@ -49,11 +51,10 @@ class CoAuthorsView(ListView):
         for us22 in us_list:
             for q in us22:
                 for t in q:
-                    print(f'us = {t} type - {type(t)}')
-                    print(f'idea title = {t.idea}')
+                    # print(f'us = {t} type - {type(t)}')
+                    # print(f'idea title = {t.idea}')
                     coauthor_list.append(t)
 
-            idea_coauthors_dict = {}
             for coauthor in coauthor_list:
                 idea = coauthor.idea
                 if idea in ideas:

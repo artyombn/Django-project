@@ -27,7 +27,7 @@ class BaseCommentView(GroupRequiredMixin):
 
 def comments_list_view(request):
 
-    comments = Comment.objects.all()
+    comments = Comment.objects.all().order_by("-created_at")
     return render(request, "comment/list.html", {"comments": comments})
 
 class CommentListView(ListView):

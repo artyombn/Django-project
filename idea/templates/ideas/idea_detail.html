@@ -49,6 +49,108 @@
     background-color: #1e9a03;
 }
 
+
+/*
+=========================
+Idea Cards
+=========================
+*/
+
+:root {
+  --indent: 0;
+}
+
+@media screen and (min-width: 40rem) {
+  :root {
+    --indent: clamp(1.5rem, 4vw, 2.5rem);
+  }
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cardb {
+  margin: 2rem;
+  display: grid;
+    transform: scale(0.75);
+    transform-origin: center;
+  grid-template-columns:
+    var(--indent) calc(3 * var(--indent)) 1fr 1fr calc(2 * var(--indent))
+    var(--indent);
+  grid-template-rows:
+    var(--indent) calc(3 * var(--indent)) 1fr calc(2 * var(--indent))
+    var(--indent);
+  max-width: 80rem;
+}
+
+.cardb::before {
+  content: "";
+  display: block;
+  background: #c9efe0;
+  background-size: cover;
+  grid-column: 2/-1;
+  grid-row: 2/-1;
+  box-shadow: 0 0 2rem hsla(232, 100%, 50%, 0.35);
+}
+
+.cardb::after {
+  content: "";
+  display: block;
+  background: #639584;
+  grid-column: 1/-2;
+  grid-row: 1/-2;
+  z-index: -1;
+}
+
+.cardb img {
+  grid-column: 4/5;
+  grid-row: 3/4;
+  box-shadow: 0 0 1rem hsla(221, 96%, 55%, 0.95);
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.cardb figcaption {
+  grid-column: 3/5;
+  grid-row: 3/4;
+  display: grid;
+  grid-template-columns: 3fr 1fr 2fr;
+}
+
+.cardb blockquote {
+  grid-column: 1/3;
+  margin: 0;
+  padding-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 100;
+  align-self: flex-end;
+}
+
+.cardb cite {
+  grid-column: 1/2;
+  font-size: 1.3rem;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.cardb .credit {
+  grid-column: 2/4;
+  place-self: flex-end;
+  margin: 0;
+  padding: 1rem;
+  text-align: end;
+  color: #ea1616;
+  font-weight: 400;
+}
+
+.cardb a {
+  color: #e82929;
+}
+
 </style>
 
     {% if user.is_authenticated and user.id == idea.author.id or user.is_staff %}
@@ -156,10 +258,10 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                                    <h5 class="modal-title" id="confirmModalLabel" style="color: black">Confirmation</h5>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Are you sure you want to be a co-author of this Idea?</p>
+                                    <p style="color: black">Are you sure you want to be a co-author of this Idea?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

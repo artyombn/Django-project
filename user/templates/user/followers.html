@@ -6,14 +6,13 @@
 
 {% block body %}
 
-<p>My Followers:
+<h3 style="text-transform: uppercase">My Followers</h3>
     <br>
     {% for follower in request.user.follower.all %}
         <li>{{ follower.following.first_name }} {{ follower.following.last_name }}
         <strong><small><a href="{% url 'users:profile' pk=follower.following.id %}" style="text-decoration: none">@{{ follower.following.username }}</a></small></strong>
         </li>
     {% endfor %}
-</p>
 <br>
 
 <p>I'm Following:
