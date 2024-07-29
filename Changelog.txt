@@ -143,6 +143,9 @@ User
 - Подключен postgres
 - Заполнение БД всеми моделями (кроме Investors)
 
+29 Июля:
+- Dockerfile + docker-compose
+
 
 СДЕЛАТЬ ПОСЛЕ:
 - Система DM

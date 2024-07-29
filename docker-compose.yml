@@ -1,21 +1,41 @@
-version: "3.2"
-services:
+version: "3.9"
 
-  pg:
+services:
+  pg_brainwave:
     image: postgres
-    environment:
-      POSTGRES_DB: brainwave
-      POSTGRES_USER: artyombn
-      POSTGRES_PASSWORD: admin
-#    volumes:
-#      - db-data:/var/lib/postgresql/data
+    container_name: brainwave_postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-#    healthcheck:
-#      test: [ "CMD-SHELL", "pg_isready -d blog -U user" ]
-#      interval: 5s
-#      timeout: 3s
-#      retries: 5
+    env_file:
+      - .env
+
+  django_brainwave:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: brainwave_django
+    depends_on:
+      - pg_brainwave
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    env_file:
+      - .env
+    command: bash -c "./run_all.sh"
+
+  nginx_brainwave:
+      image: nginx
+      container_name: brainwave_nginx
+      volumes:
+        - static_volume:/app/static
+        - media_volume:/app/media
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      depends_on:
+        - django_brainwave
+      ports:
+        - "${NGINX_EXTERNAL_PORT}:80"
 
 
   rabbitmq:
@@ -25,9 +45,19 @@ services:
         - 15672:15672
 
 
+volumes:
+  static_volume:
+  media_volume:
+  db-data:
+
+
 # Если рассматривать запуск всех связанных приложений через docker compose
 # 1. postgres
 # 2. django-backend + gunicorn (uwsgi) - celery
 # 3. nginx (apache)
 # 4. celery
+
+
+
+
 
