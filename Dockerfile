@@ -4,16 +4,20 @@ FROM python:3.11.9-bookworm
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+WORKDIR /app
+
+COPY poetry.lock pyproject.toml /app/
+
 RUN pip install --upgrade pip "poetry==1.8.2"
+
 RUN poetry config virtualenvs.create false --local
 
 RUN useradd -rms /bin/bash artyombn && chmod 777 /opt /run
 
-WORKDIR /app
-
-COPY --chown=artyombn:artyombn . .
-
 RUN poetry install
+RUN pip list
+
+COPY --chown=artyombn:artyombn . /app
 
 RUN chmod +x /app/run_all.sh
 
