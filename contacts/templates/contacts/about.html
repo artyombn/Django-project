@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    BrainWave
+{%  endblock %}
+
+{% block body %}
+    <div class="container text-center">
+            <h2>About Us</h2>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+                </ul>
+            </nav>
+
+            <main>
+                <section>
+                    <h3>Welcome to BrainWave!</h3>
+                    <p>BrainWave - YOUR HUB for idea exploration and exchange! Here, you can register your creative concepts, find co-authors and investors to bring them to life, rate ideas from the community, and receive feedback from experienced users. Join our community and turn your thoughts into reality!</p>
+                </section>
+            </main>
+
+
+            <footer>
+                <p class="copyright-text">Copyright &copy; 2024</p>
+            </footer>
+    </div>
+{% endblock %}

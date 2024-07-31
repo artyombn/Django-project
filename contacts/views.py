@@ -38,3 +38,7 @@ def status_view(request, task_id):
 
     context = {"task_result": task_result, "result": result}
     return render(request, "contacts/status.html", context)
+
+
+def about_view(request):
+    return render(request, "contacts/about.html")
