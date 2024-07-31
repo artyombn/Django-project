@@ -23,4 +23,6 @@ RUN chmod +x /app/run_all.sh
 
 USER artyombn
 
+RUN python manage.py collectstatic --noinput
+
 CMD ["bash", "/app/run_all.sh"]
