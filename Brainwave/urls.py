@@ -21,7 +21,8 @@ urlpatterns = [
     path("status/<str:task_id>/", status_view),
     path('partnership/', include('partnership.urls', namespace='partnership')),
     path('investments/', include('investment.urls', namespace='investments')),
-    path('notifications/', include('notifications.urls', namespace='notifications'))
+    path('notifications/', include('notifications.urls', namespace='notifications')),
+    path('direct/', include('direct.urls', namespace='directmessages'))
 ]
 
 

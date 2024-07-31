@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rating',
     'user',
     'contacts',
+    'direct',
     'notifications',
     'django_celery_beat',
 ]
