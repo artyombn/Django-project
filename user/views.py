@@ -8,7 +8,7 @@ from .forms import RegisterForm, UserProfileForm
 from .group_permission import GroupRequiredMixin
 
 from idea.models import Idea, Favourite
-from investment.models import Investor
+from investment.models import InvestorPayment
 from .models import User, Follow
 from partnership.models import CoAuthor
 
@@ -141,6 +141,6 @@ class UserInvestmentIdeas(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['investments_ideas'] = Investor.objects.filter(user=self.request.user)
+        context['user_investments'] = InvestorPayment.objects.filter(user=self.request.user)
 
         return context

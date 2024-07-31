@@ -6,7 +6,60 @@
 
 {% block body %}
 
-    <h3>Investors</h3>
+    <h3>Investments</h3>
+
+    <p><a href="{% url 'investment:list' %}">List</a></p>
+    <p><a href="{% url 'investment:payment' %}">Payment</a></p>
+    <p><a href="{% url 'investment:payment_check' %}">Payment Check</a></p>
+
+    <hr>
+    <h3>Yookassa payments:</h3>
+            <hr>
+            {% for payment in all_payments %}
+                {% for key, value in payment.items %}
+                    {{ key }}: {{ value }}<br>
+                {% endfor %}
+                <hr>
+            {% endfor %}
+
+
+        <h3>All Investors payments:</h3>
+        <hr>
+
+        {% for investor in all_investor_payments %}
+            <ul>
+                <li>
+                    <strong>{{ investor.user.first_name }}</strong>
+                    <a href="{% url 'users:profile' pk=investor.user.id %}" style="text-decoration: none; color: #bdffee"><small> @{{ investor.user.username }}</small></a><br>
+                    <small>
+                        Payment id: {{ investor.payment_id }}<br>
+                        Amount: <strong>{{ investor.amount }} RUB</strong><br>
+                        Description: {{ investor.description }}<br>
+                        Paid:
+                        {% if investor.paid %}
+                            <span style="color: #6ecc4b">{{ investor.paid }}</span><br>
+                        {% else %}
+                            <span style="color: #f45a5a">{{ investor.paid }}</span><br>
+                        {% endif %}
+
+                        Payment method: {{ investor.payment_method }}<br>
+                        Status:
+                        {% if investor.status == "pending" %}
+                            <span style="color: #efef7c">{{ investor.status }}</span><br>
+                        {% elif investor.status == "succeeded" %}
+                            <span style="color: #6ecc4b">{{ investor.status }}</span><br>
+                        {% elif investor.status == "waiting_for_capture" %}
+                            <span style="color: #5c72f8">waiting_for_capture -{{ investor.status }}</span><br>
+                        {% else %}
+                            {{ investor.status }}<br>
+                        {% endif %}
+                    </small>
+                </li>
+            </ul>
+
+        {% endfor %}
+
+
 
 <div class="container">
     {% include "components/back_home.html" %}
