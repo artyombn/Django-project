@@ -12,6 +12,7 @@
 
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="{% url 'users:profile' pk=request.user.id %}">Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'direct:messages' %}">Messages</a></li>
         <li><a class="dropdown-item" href="{% url 'users:user_ideas' pk=request.user.id %}">Ideas</a></li>
         <li><a class="dropdown-item" href="{% url 'users:followers' pk=request.user.id %}">Followers</a></li>
         <li><a class="dropdown-item" href="{% url 'users:partnerships' pk=request.user.id %}">Partnerships</a></li>

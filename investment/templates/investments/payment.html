@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Payments
+{%  endblock %}
+
+{% block body %}
+
+    <h3>Payments</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount">
+        <button type="submit">Pay</button>
+    </form>
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

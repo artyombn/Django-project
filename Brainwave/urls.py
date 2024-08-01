@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from idea import views
 
-from contacts.views import contact_view, status_view
+from contacts.views import contact_view, status_view, about_view
 
 
 urlpatterns = [
@@ -16,11 +16,13 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
     path('users/', include('user.urls', namespace='users')),
-    path("contacts/", contact_view),
+    path("contacts/", contact_view, name='contact_us'),
+    path("about/", about_view, name='about'),
     path("status/<str:task_id>/", status_view),
     path('partnership/', include('partnership.urls', namespace='partnership')),
     path('investments/', include('investment.urls', namespace='investments')),
-    path('notifications/', include('notifications.urls', namespace='notifications'))
+    path('notifications/', include('notifications.urls', namespace='notifications')),
+    path('direct/', include('direct.urls', namespace='directmessages'))
 ]
 
 

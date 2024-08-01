@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'rating',
     'user',
     'contacts',
+    'direct',
     'notifications',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -152,6 +154,12 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "tmp/app-messages"
 
 CELERY_RESULT_BACKEND = "rpc://"
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+
+# CELERY_TASK_SOFT_TIME_LIMIT = 300
+# CELERY_TASK_RESULT_EXPIRES = 3600
+
+
 
 AUTH_USER_MODEL = 'user.User'
 

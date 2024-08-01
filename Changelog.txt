@@ -146,24 +146,24 @@ User
 29 Июля:
 - Dockerfile + docker-compose
 
+30 Июля:
+- Investments model + Yookassaa integration
+- Celery updating (+ Periodic Tasks - not working well)
+
+31 Июля:
+- Investments frontend
+-
+
 
 СДЕЛАТЬ ПОСЛЕ:
 - Система DM
 - Уведомления, Favourite, Investment, Rating, DM
 - Сделать View для IdeaStatus (чтобы одним нажатием менялся статус)
-- Сделать View для Investors
-
 - Модальные окна для всех подтверждений
-
-
-Пофиксить:
-- Модальное окно Update comment - не перезагружает страницу после успешного обновления
-
 
 
 ДАЛЬНЕЙШИЕ ПЛАНЫ:
 - Лента новостей
-- Investment
 - Сделать Rating
 - Значки для групп
 - Попробовать подключить API платежи для Investments
@@ -178,3 +178,6 @@ User
 ВОПРОСЫ:
 - Добавление нескольких изображений в одну модель (через другую модель?)
 - Не работает check_comment_like в представлении comment
+- Docker compose (не подгружает стили)
+- Не работают tasks при попытке получения информации из БД
+- Модальное окно Update comment - не перезагружает страницу после успешного обновления

@@ -86,6 +86,9 @@ class CommentUpdateView(UserPassesTestMixin, UpdateView):
         comment.save()
         return JsonResponse({'text': comment.text})
 
+    # redirect
+    #
+
     def get_object(self, queryset=None):
         comment = super().get_object(queryset)
         self.comment = comment

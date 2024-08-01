@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contacts</title>
-</head>
-<body>
-    <h1>Contacts</h1>
+{% extends 'base.html' %}
+
+{% block title %}
+    Contact US
+{%  endblock %}
+
+{% block body %}
+
+<div class="container text-center">
+    <h3>Contacts</h3>
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Send message</button>
     </form>
-</body>
-</html>
+</div>
+
+<div class="container">
+    {% include "components/back_home.html" %}
+</div>
+
+{% endblock %}

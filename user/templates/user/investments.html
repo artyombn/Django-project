@@ -6,25 +6,38 @@
 
 {% block body %}
 
-<h3 style="text-transform: uppercase">My Investments:</h3>
+<h3 style="text-transform: uppercase">My Investments</h3>
 
+{% for investor in user_investments %}
+            <ul>
+                <li>
+                    <small>
+                        Payment id: {{ investor.payment_id }}<br>
+                        Amount: <strong>{{ investor.amount }} RUB</strong><br>
+                        Description: {{ investor.description }}<br>
+                        Paid:
+                        {% if investor.paid %}
+                            <span style="color: #6ecc4b">{{ investor.paid }}</span><br>
+                        {% else %}
+                            <span style="color: #f45a5a">{{ investor.paid }}</span><br>
+                        {% endif %}
 
-{% for invest in investments_ideas %}
-    <ul>
-        <li>Idea: <a href="{% url 'ideas:detail' pk=invest.idea.id %}" style="text-decoration: none">{{ invest.idea.title }}</a></li>
-        <li>Description: {{ invest.idea.description }}</li>
-        <li>Amount: {{ invest.amount_invested }} USD</li>
-        <li>Type: {{ invest.investment_type }}</li>
-        <li>Status: {{ invest.status }}</li>
-        <li>Note: {{ invest.note }}</li>
-        <li>Date: {{ invest.joined_at }}</li>
+                        Payment method: {{ investor.payment_method }}<br>
+                        Status:
+                        {% if investor.status == "pending" %}
+                            <span style="color: #efef7c">{{ investor.status }}</span><br>
+                        {% elif investor.status == "succeeded" %}
+                            <span style="color: #6ecc4b">{{ investor.status }}</span><br>
+                        {% elif investor.status == "waiting_for_capture" %}
+                            <span style="color: #5c72f8">waiting_for_capture -{{ investor.status }}</span><br>
+                        {% else %}
+                            {{ investor.status }}<br>
+                        {% endif %}
+                    </small>
+                </li>
+            </ul>
 
-{#        <form method="post" action="{% url 'partnership:stop_being_coauthor' pk=co_author_idea.idea.id %}?next=users:partnerships">#}
-{#            {% csrf_token %}#}
-{#            <button type="submit" class="btn btn-warning mb-5">Stop being Co-Author</button>#}
-{#        </form>#}
-    </ul>
-{% endfor %}
+        {% endfor %}
 
 <br>
 <br>
