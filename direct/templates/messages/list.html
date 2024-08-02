@@ -2,37 +2,33 @@
 
 {% block title %}
     My Messages
-{%  endblock %}
+{% endblock %}
 
 {% block body %}
 
 <style>
-body{margin-top:20px;}
-/*************** 1.Variables ***************/
+body {
+    margin-top: 20px;
+}
 
+/*************** 1.Variables ***************/
 
 /* ------------------ Color Pallet ------------------ */
 
-
 /*************** 2.Mixins ***************/
-
 
 /************************************************
     ************************************************
-										Search Box
-	************************************************
+                                    Search Box
+    ************************************************
 ************************************************/
 
 .chat-search-box {
-    -webkit-border-radius: 3px 0 0 0;
-    -moz-border-radius: 3px 0 0 0;
     border-radius: 3px 0 0 0;
     padding: .75rem 1rem;
 }
 
 .chat-search-box .input-group .form-control {
-    -webkit-border-radius: 2px 0 0 2px;
-    -moz-border-radius: 2px 0 0 2px;
     border-radius: 2px 0 0 2px;
     border-right: 0;
 }
@@ -42,15 +38,12 @@ body{margin-top:20px;}
 }
 
 .chat-search-box .input-group .input-group-btn .btn {
-    -webkit-border-radius: 0 2px 2px 0;
-    -moz-border-radius: 0 2px 2px 0;
     border-radius: 0 2px 2px 0;
     margin: 0;
 }
 
 .chat-search-box .input-group .input-group-btn .btn i {
     font-size: 1.2rem;
-    line-height: 100%;
     vertical-align: middle;
 }
 
@@ -60,11 +53,10 @@ body{margin-top:20px;}
     }
 }
 
-
 /************************************************
-	************************************************
-									Users Container
-	************************************************
+    ************************************************
+                                    Users Container
+    ************************************************
 ************************************************/
 
 .users-container {
@@ -72,17 +64,14 @@ body{margin-top:20px;}
     padding: 1rem 0;
     border-right: 1px solid #e6ecf3;
     height: 100%;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column;
     flex-direction: column;
 }
 
-
 /************************************************
-	************************************************
-											Users
-	************************************************
+    ************************************************
+                                    Users
+    ************************************************
 ************************************************/
 
 .users {
@@ -99,33 +88,11 @@ body{margin-top:20px;}
 
 .users .person:hover {
     background-color: #ffffff;
-    /* Fallback Color */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#e9eff5), to(#ffffff));
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(right, #e9eff5, #ffffff);
-    /* Chrome 10+, Saf5.1+, iOS 5+ */
-    background-image: -moz-linear-gradient(right, #e9eff5, #ffffff);
-    /* FF3.6 */
-    background-image: -ms-linear-gradient(right, #e9eff5, #ffffff);
-    /* IE10 */
-    background-image: -o-linear-gradient(right, #e9eff5, #ffffff);
-    /* Opera 11.10+ */
     background-image: linear-gradient(right, #e9eff5, #ffffff);
 }
 
 .users .person.active-user {
     background-color: #ffffff;
-    /* Fallback Color */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f9fb), to(#ffffff));
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(right, #f7f9fb, #ffffff);
-    /* Chrome 10+, Saf5.1+, iOS 5+ */
-    background-image: -moz-linear-gradient(right, #f7f9fb, #ffffff);
-    /* FF3.6 */
-    background-image: -ms-linear-gradient(right, #f7f9fb, #ffffff);
-    /* IE10 */
-    background-image: -o-linear-gradient(right, #f7f9fb, #ffffff);
-    /* Opera 11.10+ */
     background-image: linear-gradient(right, #f7f9fb, #ffffff);
 }
 
@@ -142,16 +109,12 @@ body{margin-top:20px;}
 .users .person .user img {
     width: 48px;
     height: 48px;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
     border-radius: 50px;
 }
 
 .users .person .user .status {
     width: 10px;
     height: 10px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
     border-radius: 100px;
     background: #e6ecf3;
     position: absolute;
@@ -201,11 +164,10 @@ body{margin-top:20px;}
     }
 }
 
-
 /************************************************
-	************************************************
-									Chat right side
-	************************************************
+    ************************************************
+                                    Chat right side
+    ************************************************
 ************************************************/
 
 .selected-user {
@@ -214,8 +176,6 @@ body{margin-top:20px;}
     min-height: 64px;
     line-height: 64px;
     border-bottom: 1px solid #e6ecf3;
-    -webkit-border-radius: 0 3px 0 0;
-    -moz-border-radius: 0 3px 0 0;
     border-radius: 0 3px 0 0;
 }
 
@@ -232,10 +192,15 @@ body{margin-top:20px;}
     padding: 1rem;
 }
 
+.chat-container ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .chat-container li.chat-left,
 .chat-container li.chat-right {
     display: flex;
-    flex: 1;
     flex-direction: row;
     margin-bottom: 40px;
 }
@@ -243,8 +208,6 @@ body{margin-top:20px;}
 .chat-container li img {
     width: 48px;
     height: 48px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
     border-radius: 30px;
 }
 
@@ -269,8 +232,6 @@ body{margin-top:20px;}
 
 .chat-container li .chat-text {
     padding: .4rem 1rem;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px;
     background: #ffffff;
     font-weight: 300;
@@ -369,21 +330,6 @@ body{margin-top:20px;}
     background-color: #ffffff;
     border-top: 1px solid white;
 }
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-.card {
-    border: 0;
-    background: #f4f5fb;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    margin-bottom: 2rem;
-    box-shadow: none;
-}
 </style>
 
 <h3>TEST SECTION</h3>
@@ -410,8 +356,8 @@ ul {
 
 <br>
     <br>
-<div class="container">
 
+<div class="container">
     <!-- Page header start -->
     <div class="page-title">
         <div class="row gutters">
@@ -433,7 +379,7 @@ ul {
 
                 <div class="card m-0">
 
-                        <!-- Row start -->
+                    <!-- Row start -->
                     <div class="row no-gutters">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
                             <div class="users-container">
@@ -448,11 +394,11 @@ ul {
                                     </div>
                                 </div>
 
-                                {% for user in all_users %}
-                                    <ul class="users">
-                                        <li class="person" data-chat="person1">
+                                <ul class="users">
+                                    {% for user in all_users %}
+                                        <li class="person" data-user-id="{{ user.id }}" onclick="loadMessages({{ user.id }})">
                                             <div class="user">
-                                                <img src="{{ user.avatar.url }}" alt="Retail Admin">
+                                                <img src="{{ user.avatar.url }}" alt="User Avatar">
                                                 <span class="status busy"></span>
                                             </div>
                                             <p class="name-time">
@@ -461,100 +407,66 @@ ul {
                                                 <span class="time">15/02/2019</span>
                                             </p>
                                         </li>
-                                    </ul>
-                                {% endfor %}
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
                             <div class="selected-user">
-                                <span>To: <span class="name">Emily Russell</span></span>
+                                <span class="name" id="selected-user-name">Select a user</span>
                             </div>
-                            <div class="chat-container">
-                                <ul class="chat-box chatContainerScroll">
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">Hello, I'm Russell.
-                                            <br>How can I help you today?</div>
-                                        <div class="chat-hour">08:55 <span class="fa fa-check-circle"></span></div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:56 <span class="fa fa-check-circle"></span></div>
-                                        <div class="chat-text">Hi, Russell
-                                            <br> I need more information about Developer Plan.</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Sam</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">Are we meeting today?
-                                            <br>Project has been already finished and I have results to show you.</div>
-                                        <div class="chat-hour">08:57 <span class="fa fa-check-circle"></span></div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:59 <span class="fa fa-check-circle"></span></div>
-                                        <div class="chat-text">Well I am not sure.
-                                            <br>I have results to show you.</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar5.png" alt="Retail Admin">
-                                            <div class="chat-name">Joyse</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">The rest of the team is not here yet.
-                                            <br>Maybe in an hour or so?</div>
-                                        <div class="chat-hour">08:57 <span class="fa fa-check-circle"></span></div>
-                                    </li>
-                                    <li class="chat-right">
-                                        <div class="chat-hour">08:59 <span class="fa fa-check-circle"></span></div>
-                                        <div class="chat-text">Have you faced any problems at the last phase of the project?</div>
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar4.png" alt="Retail Admin">
-                                            <div class="chat-name">Jin</div>
-                                        </div>
-                                    </li>
-                                    <li class="chat-left">
-                                        <div class="chat-avatar">
-                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                            <div class="chat-name">Russell</div>
-                                        </div>
-                                        <div class="chat-text">Actually everything was fine.
-                                            <br>I'm very excited to show this to our team.</div>
-                                        <div class="chat-hour">07:00 <span class="fa fa-check-circle"></span></div>
-                                    </li>
-                                </ul>
-                                <div class="form-group mt-3 mb-0">
-                                    <textarea class="form-control" rows="3" placeholder="Type your message here..."></textarea>
+                            <div class="chat-container" id="chat-container">
+                                <!-- Messages -->
+                            </div>
+                            <div class="chat-form">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Type a message">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">Send</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Row end -->
                 </div>
-
             </div>
-
         </div>
         <!-- Row end -->
-
     </div>
     <!-- Content wrapper end -->
-
 </div>
 
-<br>
-<br>
-<a href="{% url 'index' %}">Back Home page</a>
+<script>
+function loadMessages(userId) {
+    fetch(`/direct/load-messages/?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            const selectedUserName = document.querySelector(`.person[data-user-id="${userId}"] .name`).textContent;
+            const formattedText = `To ${selectedUserName}`;
+            document.getElementById('selected-user-name').textContent = formattedText;
+
+            const messages = data.messages;
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.innerHTML = '';
+
+            messages.forEach(message => {
+                const messageClass = message.sender_id === userId ? 'chat-right' : 'chat-left';
+                chatContainer.innerHTML += `
+                    <li class="${messageClass}">
+                        <div class="chat-avatar">
+                            <img src="${message.avatar_url}" alt="User Avatar">
+                            <div class="chat-name">${message.sender_name}</div>
+                        </div>
+                        <div class="chat-text">${message.content}</div>
+                        <div class="chat-hour">${new Date(message.date).toLocaleTimeString()} <span class="fa fa-check-circle"></span></div>
+                    </li>
+                `;
+            });
+        })
+        .catch(error => console.error('Error loading messages:', error));
+}
+</script>
+
 
 {% endblock %}

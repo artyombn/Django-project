@@ -3,8 +3,9 @@ from django.views.generic.base import View
 from django.db.models import Q
 
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.http import JsonResponse
 
-from .models import Message
+from .models import Message, User
 
 class MessagesList(ListView):
     model = Message
@@ -69,3 +70,27 @@ class MessagesList(ListView):
         context['all_users'] = all_users
         context['messages_by_user'] = messages_by_user
         return context
+
+
+class LoadMessagesView(MessagesList):
+    def get(self, request, *args, **kwargs):
+        user_id = self.request.GET.get('user_id')
+        if not user_id:
+            return JsonResponse({'error': 'user_id not provided'}, status=400)
+
+        user = self.request.user
+
+        messages = Message.objects.filter((Q(sender_id=user_id) & Q(recipient=user)) | (Q(recipient_id=user_id) & Q(sender=user))).order_by('date')
+
+        messages_data = []
+        for message in messages:
+            messages_data.append({
+                'sender_id': message.sender_id,
+                'recipient_id': message.recipient_id,
+                'content': message.content,
+                'date': message.date.isoformat(),
+                'sender_name': message.sender.username,
+                'avatar_url': message.sender.avatar.url if message.sender.avatar else '',
+            })
+
+        return JsonResponse({'messages': messages_data})
