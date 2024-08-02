@@ -14,15 +14,26 @@
 
     <hr>
     <h3>Yookassa payments:</h3>
-            <hr>
-            {% for payment in all_payments %}
-                {% for key, value in payment.items %}
-                    {{ key }}: {{ value }}<br>
-                {% endfor %}
-                <hr>
-            {% endfor %}
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="overflow-auto" style="max-height: 370px;">
+                        {% for payment in all_payments %}
+                            <div class="payment-item">
+                                {% for key, value in payment.items %}
+                                    <strong>{{ key }}</strong>: {{ value }}<br>
+                                {% endfor %}
+                                <hr>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
+        <br>
+        <br>
         <h3>All Investors payments:</h3>
         <hr>
 

@@ -18,6 +18,7 @@ RUN poetry install
 RUN pip list
 
 COPY --chown=artyombn:artyombn . /app
+RUN mkdir -p /app/tmp/app-messages && chown -R artyombn:artyombn /app/tmp
 
 RUN chmod +x /app/run_all.sh
 

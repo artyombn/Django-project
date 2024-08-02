@@ -151,9 +151,15 @@ INTERNAL_IPS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = "tmp/app-messages"
+EMAIL_FILE_PATH = "/app/tmp/app-messages"
 
 CELERY_RESULT_BACKEND = "rpc://"
+CELERY_BROKER_URL = 'amqp://guest:guest@django-project-rabbitmq-1:5672//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
 CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
 
 # CELERY_TASK_SOFT_TIME_LIMIT = 300

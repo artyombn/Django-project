@@ -21,6 +21,7 @@ services:
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
+      - tmp_volume:/app/tmp/app-messages
     env_file:
       - .env
     command: bash -c "./run_all.sh"
@@ -44,11 +45,35 @@ services:
         - 5672:5672
         - 15672:15672
 
+  celery_worker:
+    build:
+      context: ./
+    command: celery -A Brainwave worker -l INFO --pool threads
+    depends_on:
+      - django_brainwave
+      - rabbitmq
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+  celery_beat:
+    build:
+      context: ./
+    command: celery -A Brainwave beat -l INFO
+    depends_on:
+      - celery_worker
+    env_file:
+      - .env
+    volumes:
+      - .:/app
 
 volumes:
   static_volume:
   media_volume:
   db-data:
+  tmp_volume:
+
 
 
 # Если рассматривать запуск всех связанных приложений через docker compose
