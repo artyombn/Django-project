@@ -90,7 +90,6 @@ class LoadMessagesView(MessagesList):
                 'content': message.content,
                 'date': message.date.isoformat(),
                 'sender_name': message.sender.username,
-                'avatar_url': message.sender.avatar.url if message.sender.avatar else '',
             })
 
         return JsonResponse({'messages': messages_data})
